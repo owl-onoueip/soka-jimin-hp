@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+  font-feature-settings: "palt";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* モバイルタップハイライトを無効化 */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* スクロールバーのスタイル */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+/* 固定フッター用のパディング */
+.pb-safe {
+  padding-bottom: calc(80px + env(safe-area-inset-bottom));
+}
+
+/* スクロールバー非表示 */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary-500 text-white px-6 py-3 rounded-lg font-bold 
+           hover:bg-primary-600 transition-colors duration-200
+           active:scale-95 transform;
+  }
+  
+  .btn-cta {
+    @apply bg-cta-500 text-white px-6 py-3 rounded-lg font-bold 
+           hover:bg-cta-600 transition-colors duration-200
+           active:scale-95 transform shadow-lg;
+  }
+  
+  .btn-line {
+    @apply bg-[#06C755] text-white px-6 py-3 rounded-lg font-bold 
+           hover:bg-[#05b04c] transition-colors duration-200
+           active:scale-95 transform shadow-lg;
+  }
+  
+  .section-title {
+    @apply text-xl md:text-2xl font-bold text-primary-500 
+           border-l-4 border-accent-500 pl-3 mb-6;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl shadow-md overflow-hidden
+           hover:shadow-lg transition-shadow duration-200;
+  }
+}

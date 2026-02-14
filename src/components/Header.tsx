@@ -18,50 +18,77 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="bg-primary-500 text-white sticky top-0 z-50 shadow-lg">
+    <header className="bg-primary-900/95 backdrop-blur-md text-white sticky top-0 z-50 border-b border-white/10">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           {/* ロゴ */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="text-lg md:text-xl font-bold leading-tight">
-              <span className="text-accent-500">草加</span>自民・無所属の会
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="w-10 h-10 rounded-full bg-white border-2 border-accent-500 flex items-center justify-center font-bold text-primary-900 group-hover:scale-105 transition-transform">
+              自
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xs opacity-70 font-medium tracking-wider">市議会会派</span>
+              <span className="text-base md:text-lg font-bold leading-none">草加自民党・無所属の会</span>
             </div>
           </Link>
 
           {/* デスクトップナビ */}
           <nav className="hidden lg:flex items-center space-x-6">
-            {navItems.map((item) => (
+            {navItems.slice(0, 5).map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-sm font-medium hover:text-accent-500 transition-colors"
+                className="text-sm font-bold hover:text-accent-500 transition-colors tracking-wide"
               >
                 {item.label}
               </Link>
             ))}
+            <div className="flex items-center gap-3">
+              <Link
+                href="https://line.me/R/"
+                className="bg-[#06C755] hover:bg-[#05b34c] text-white px-5 py-2.5 rounded-full text-sm font-black transition-all shadow-md hover:shadow-lg flex items-center gap-2"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                LINE登録
+              </Link>
+              <Link
+                href="/support"
+                className="bg-accent-500 hover:bg-accent-600 text-white px-5 py-2.5 rounded-full text-sm font-black transition-all shadow-md hover:shadow-lg flex items-center gap-2"
+              >
+                ご支援はこちら
+              </Link>
+            </div>
           </nav>
 
           {/* モバイルメニューボタン */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden p-2 rounded-lg hover:bg-primary-600 transition-colors"
-            aria-label="メニュー"
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
+          <div className="flex items-center gap-3 lg:hidden">
+            <Link
+              href="/support"
+              className="bg-accent-500 text-white text-xs font-bold px-3 py-2 rounded-full shadow-md"
+            >
+              ご支援
+            </Link>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+              aria-label="メニュー"
+            >
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>        </div>
       </div>
 
       {/* モバイルナビ */}
       {isOpen && (
-        <nav className="lg:hidden bg-primary-600 border-t border-primary-400">
-          <div className="container mx-auto px-4 py-4">
+        <nav className="lg:hidden bg-primary-900 border-t border-white/5 animate-fade-in">
+          <div className="container mx-auto px-4 py-6 space-y-2">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className="block py-3 px-4 text-base font-medium hover:bg-primary-500 rounded-lg transition-colors"
+                className="block py-3 px-4 text-base font-bold hover:bg-white/10 rounded-xl transition-colors"
               >
                 {item.label}
               </Link>

@@ -3,8 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-rgb: 255, 255, 255;
+  --foreground-rgb: 31, 41, 55;
+  --background-rgb: 249, 250, 251;
+  --primary: 30, 58, 138;
+  --accent: 249, 115, 22;
+  --cta: 220, 38, 38;
 }
 
 html {
@@ -14,6 +17,7 @@ html {
 body {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));
+  font-family: 'Inter', 'Noto Sans JP', sans-serif;
   font-feature-settings: "palt";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -40,45 +44,57 @@ body {
 
 /* 固定フッター用のパディング */
 .pb-safe {
-  padding-bottom: calc(80px + env(safe-area-inset-bottom));
-}
-
-/* スクロールバー非表示 */
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
+  padding-bottom: calc(85px + env(safe-area-inset-bottom));
 }
 
 @layer components {
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border border-white/20;
+  }
+  
+  .glass-dark {
+    @apply bg-black/30 backdrop-blur-lg border border-white/10;
+  }
+
   .btn-primary {
-    @apply bg-primary-500 text-white px-6 py-3 rounded-lg font-bold 
-           hover:bg-primary-600 transition-colors duration-200
-           active:scale-95 transform;
+    @apply bg-primary-600 text-white px-6 py-3 rounded-full font-bold 
+           hover:bg-primary-700 transition-all duration-300
+           active:scale-95 transform shadow-lg hover:shadow-primary-500/30;
   }
   
   .btn-cta {
-    @apply bg-cta-500 text-white px-6 py-3 rounded-lg font-bold 
-           hover:bg-cta-600 transition-colors duration-200
-           active:scale-95 transform shadow-lg;
+    @apply bg-gradient-to-r from-accent-500 to-accent-600 text-white px-8 py-4 rounded-full font-bold 
+           hover:from-accent-600 hover:to-accent-700 transition-all duration-300
+           active:scale-95 transform shadow-xl hover:shadow-accent-500/40;
   }
   
-  .btn-line {
-    @apply bg-[#06C755] text-white px-6 py-3 rounded-lg font-bold 
-           hover:bg-[#05b04c] transition-colors duration-200
-           active:scale-95 transform shadow-lg;
+  .btn-outline {
+    @apply border-2 border-white text-white px-6 py-3 rounded-full font-bold
+           hover:bg-white hover:text-primary-600 transition-all duration-300;
   }
-  
+
   .section-title {
-    @apply text-xl md:text-2xl font-bold text-primary-500 
-           border-l-4 border-accent-500 pl-3 mb-6;
+    @apply text-2xl md:text-3xl font-bold text-gray-900 
+           relative pb-4 mb-8;
+  }
+  
+  .section-title::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-16 h-1.5 bg-accent-500 rounded-full;
   }
   
   .card {
-    @apply bg-white rounded-xl shadow-md overflow-hidden
-           hover:shadow-lg transition-shadow duration-200;
+    @apply bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden
+           hover:shadow-xl hover:-translate-y-1 transition-all duration-300;
   }
+}
+
+/* ヒーローセクション用のアニメーション */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
 }

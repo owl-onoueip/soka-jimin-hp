@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>草加自民・無所属の会議員団 HP リニューアル提案</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1E3A8A;
+      --primary-light: #3B82F6;
+      --accent: #F97316;
+      --cta: #DC2626;
+      --line-green: #06C755;
+      --dark: #1F2937;
+      --gray: #6B7280;
+      --light: #F3F4F6;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: var(--dark);
+    }
+
+    .slide {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      scroll-snap-align: start;
+    }
+
+    .card {
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      max-width: 1200px;
+      width: 100%;
+      padding: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+    }
+
+    .slide-number {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      font-size: 14px;
+      color: var(--gray);
+      font-weight: 500;
+    }
+
+    h1 {
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 20px;
+      line-height: 1.3;
+    }
+
+    h2 {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 30px;
+      border-bottom: 4px solid var(--accent);
+      padding-bottom: 15px;
+      display: inline-block;
+    }
+
+    h3 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 15px;
+    }
+
+    .subtitle {
+      font-size: 24px;
+      color: var(--gray);
+      margin-bottom: 40px;
+    }
+
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 80px 1fr;
+      gap: 30px;
+      align-items: stretch;
+    }
+
+    .comparison-box {
+      padding: 30px;
+      border-radius: 16px;
+      height: 100%;
+    }
+
+    .old-site {
+      background: #FEE2E2;
+      border: 3px solid #EF4444;
+    }
+
+    .new-site {
+      background: #DCFCE7;
+      border: 3px solid #22C55E;
+    }
+
+    .comparison-box h3 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .old-site h3 {
+      color: #DC2626;
+    }
+
+    .new-site h3 {
+      color: #16A34A;
+    }
+
+    .arrow-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      color: var(--primary);
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    ul li {
+      padding: 12px 0;
+      padding-left: 30px;
+      position: relative;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .old-site ul li::before {
+      content: '✗';
+      position: absolute;
+      left: 0;
+      color: #EF4444;
+      font-weight: bold;
+    }
+
+    .new-site ul li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #22C55E;
+      font-weight: bold;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    .feature-card {
+      background: var(--light);
+      padding: 30px;
+      border-radius: 16px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .feature-icon {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 32px;
+      color: white;
+    }
+
+    .feature-card h4 {
+      font-size: 20px;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white;
+      padding: 30px;
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 48px;
+      font-weight: 900;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-top: 5px;
+    }
+
+    .tech-stack {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .tech-badge {
+      background: var(--dark);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: 16px;
+    }
+
+    .page-preview {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .page-card {
+      background: var(--light);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .page-header {
+      background: var(--primary);
+      color: white;
+      padding: 15px 20px;
+      font-weight: 700;
+    }
+
+    .page-content {
+      padding: 20px;
+    }
+
+    .page-content ul li {
+      font-size: 15px;
+      padding: 8px 0;
+      padding-left: 25px;
+    }
+
+    .page-content ul li::before {
+      content: '•';
+      color: var(--accent);
+    }
+
+    .cta-section {
+      background: linear-gradient(135deg, var(--accent), #EA580C);
+      color: white;
+      padding: 40px;
+      border-radius: 16px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .cta-section h3 {
+      color: white;
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+
+    .cta-section p {
+      font-size: 18px;
+      opacity: 0.95;
+    }
+
+    .timeline {
+      margin-top: 30px;
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    .timeline-phase {
+      background: var(--primary);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 14px;
+      white-space: nowrap;
+      height: fit-content;
+    }
+
+    .timeline-content h4 {
+      font-size: 18px;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+
+    .timeline-content p {
+      color: var(--gray);
+      font-size: 15px;
+    }
+
+    .highlight-box {
+      background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+      border-left: 5px solid var(--accent);
+      padding: 25px 30px;
+      border-radius: 0 16px 16px 0;
+      margin: 30px 0;
+    }
+
+    .highlight-box p {
+      font-size: 18px;
+      color: var(--dark);
+      line-height: 1.8;
+    }
+
+    .mobile-first-demo {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      margin-top: 30px;
+    }
+
+    .phone-mockup {
+      width: 280px;
+      height: 560px;
+      background: #1F2937;
+      border-radius: 40px;
+      padding: 15px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+      flex-shrink: 0;
+    }
+
+    .phone-screen {
+      background: white;
+      border-radius: 30px;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .phone-header {
+      background: var(--primary);
+      color: white;
+      padding: 40px 20px 20px;
+      text-align: center;
+    }
+
+    .phone-header h5 {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .phone-header p {
+      font-size: 11px;
+      opacity: 0.8;
+    }
+
+    .phone-cta {
+      position: absolute;
+      bottom: 30px;
+      left: 15px;
+      right: 15px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .phone-btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .phone-btn.line {
+      background: var(--line-green);
+    }
+
+    .phone-btn.support {
+      background: var(--accent);
+    }
+
+    .mobile-features {
+      flex: 1;
+    }
+
+    .mobile-features li {
+      padding: 15px 0;
+      padding-left: 40px;
+      font-size: 18px;
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    .mobile-features li::before {
+      content: '📱';
+      position: absolute;
+      left: 0;
+    }
+
+    .nav-dots {
+      position: fixed;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 100;
+    }
+
+    .nav-dot {
+      width: 12px;
+      height: 12px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .nav-dot:hover, .nav-dot.active {
+      background: white;
+      transform: scale(1.3);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+    }
+
+    @media (max-width: 768px) {
+      .card {
+        padding: 30px;
+      }
+      
+      h1 {
+        font-size: 32px;
+      }
+      
+      h2 {
+        font-size: 24px;
+      }
+      
+      .comparison {
+        grid-template-columns: 1fr;
+      }
+      
+      .arrow-center {
+        transform: rotate(90deg);
+      }
+      
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .page-preview {
+        grid-template-columns: 1fr;
+      }
+      
+      .mobile-first-demo {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ナビゲーションドット -->
+  <div class="nav-dots">
+    <a href="#slide1" class="nav-dot active"></a>
+    <a href="#slide2" class="nav-dot"></a>
+    <a href="#slide3" class="nav-dot"></a>
+    <a href="#slide4" class="nav-dot"></a>
+    <a href="#slide5" class="nav-dot"></a>
+    <a href="#slide6" class="nav-dot"></a>
+    <a href="#slide7" class="nav-dot"></a>
+    <a href="#slide8" class="nav-dot"></a>
+  </div>
+
+  <!-- スライド1: タイトル -->
+  <section class="slide" id="slide1">
+    <div class="card" style="text-align: center;">
+      <h1>草加自民・無所属の会議員団<br>公式HP リニューアル提案</h1>
+      <p class="subtitle">〜 来年の選挙に向けた戦略的Web刷新 〜</p>
+      <div style="margin-top: 40px;">
+        <p style="font-size: 20px; color: var(--gray);">2025年12月</p>
+      </div>
+      <div class="highlight-box" style="margin-top: 50px; text-align: left;">
+        <p><strong>🎯 目的：</strong>モバイルファーストで支持者獲得に特化した設計<br>
+        <strong>📱 ターゲット：</strong>草加市民（特にスマートフォンユーザー）<br>
+        <strong>🗳️ ゴール：</strong>来年の選挙での認知度向上・後援会入会促進</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- スライド2: 現状の課題 -->
+  <section class="slide" id="slide2">
+    <div class="card">
+      <span class="slide-number">02 / 08</span>
+      <h2>現行サイトの課題</h2>
+      <p style="font-size: 18px; color: var(--gray); margin-bottom: 30px;">
+        現在の jimin-soka.com を分析した結果、以下の課題が明らかになりました
+      </p>
+      
+      <div class="comparison">
+        <div class="comparison-box old-site">
+          <h3>❌ 現行サイト（jimin-soka.com）</h3>
+          <ul>
+            <li>スマートフォン対応が不十分</li>
+            <li>議員情報が名前と連絡先のみ</li>
+            <li>後援会への導線がない</li>
+            <li>LINE登録への誘導が弱い</li>
+            <li>「草加支部」として全議員を掲載<br>（会派の独自性が見えない）</li>
+            <li>デザインが古く、信頼感に欠ける</li>
+            <li>行動喚起（CTA）が不明確</li>
+          </ul>
+        </div>
+        
+        <div class="arrow-center">→</div>
+        
+        <div class="comparison-box new-site">
+          <h3>✓ リニューアル後</h3>
+          <ul>
+            <li>モバイルファースト設計</li>
+            <li>議員の顔・政策・人柄が伝わる</li>
+            <li>後援会入会フォーム完備</li>
+            <li>常時表示のLINE登録ボタン</li>
+            <li>会派「草加自民・無所属の会」<br>として7名の議員を紹介</li>
+            <li>モダンで信頼感のあるデザイン</li>
+            <li>明確なCTAで行動を促進</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- スライド3: 選挙対策3本柱 -->
+  <section class="slide" id="slide3">
+    <div class="card">
+      <span class="slide-number">03 / 08</span>
+      <h2>選挙対策 3本柱</h2>
+      <p style="font-size: 18px; color: var(--gray); margin-bottom: 20px;">
+        リニューアルサイトは、選挙に向けた3つの目標を達成するために設計されています
+      </p>
+      
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">👤</div>
+          <h4>認知度向上</h4>
+          <p>議員の顔と名前を覚えてもらう。<br>担当地域・キャッチフレーズ・政策タグで親しみやすく紹介</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🤝</div>
+          <h4>支持者獲得</h4>
+          <p>後援会入会・LINE登録を促進。<br>固定CTAボタンで常に行動を喚起</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🗳️</div>
+          <h4>投票促進</h4>
+          <p>地域密着アピールで投票行動につなげる。<br>実績・活動報告で信頼を構築</p>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">7</div>
+          <div class="stat-label">所属議員数</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">42</div>
+          <div class="stat-label">要望実現件数</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">128</div>
+          <div class="stat-label">議会質問回数</div>
+        </div>
+        <div class="stat-card" style="background: linear-gradient(135deg, var(--accent), #EA580C);">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">草加への想い</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- スライド4: モバイルファースト -->
+  <section class="slide" id="slide4">
+    <div class="card">
+      <span class="slide-number">04 / 08</span>
+      <h2>モバイルファースト設計</h2>
+      <p style="font-size: 18px; color: var(--gray); margin-bottom: 20px;">
+        有権者の80%以上がスマートフォンでWebを閲覧する時代。モバイル体験を最優先に設計
+      </p>
+      
+      <div class="mobile-first-demo">
+        <div class="phone-mockup">
+          <div class="phone-screen" style="position: relative;">
+            <div class="phone-header">
+              <h5>草加自民・無所属の会</h5>
+              <p style="font-size: 18px; font-weight: bold; margin-top: 10px;">草加の未来を、<br>共に創る。</p>
+            </div>
+            <div style="padding: 15px;">
+              <div style="background: #F3F4F6; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                <p style="font-size: 10px; color: #6B7280;">お知らせ</p>
+                <p style="font-size: 12px;">12月定例会が開会しました</p>
+              </div>
+              <div style="background: #F3F4F6; padding: 10px; border-radius: 8px;">
+                <p style="font-size: 10px; color: #6B7280;">議員紹介</p>
+                <p style="font-size: 12px;">7名の議員をご紹介</p>
+              </div>
+            </div>
+            <div class="phone-cta">
+              <div class="phone-btn line">LINE登録</div>
+              <div class="phone-btn support">後援会入会</div>
+            </div>
+          </div>
+        </div>
+        
+        <ul class="mobile-features">
+          <li><strong>大きなタップターゲット</strong><br>48px以上のボタンサイズで押しやすい</li>
+          <li><strong>固定CTAボタン</strong><br>画面下部に常時表示でいつでも行動可能</li>
+          <li><strong>スワイプ対応カルーセル</strong><br>議員紹介を直感的に閲覧</li>
+          <li><strong>高速読み込み</strong><br>Next.js による最適化で3秒以内に表示</li>
+          <li><strong>レスポンシブデザイン</strong><br>PC・タブレットでも美しく表示</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- スライド5: サイト構成 -->
+  <section class="slide" id="slide5">
+    <div class="card">
+      <span class="slide-number">05 / 08</span>
+      <h2>サイト構成</h2>
+      <p style="font-size: 18px; color: var(--gray); margin-bottom: 20px;">
+        シンプルな4ページ構成で、目的に応じた導線を設計
+      </p>
+      
+      <div class="page-preview">
+        <div class="page-card">
+          <div class="page-header">🏠 トップページ</div>
+          <div class="page-content">
+            <ul>
+              <li>ヒーローセクション（3つの約束）</li>
+              <li>実績数値（要望実現・質問回数）</li>
+              <li>お知らせ一覧</li>
+              <li>議員紹介カルーセル（自動スクロール）</li>
+              <li>後援会入会バナー</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="page-card">
+          <div class="page-header">👥 議員一覧・詳細</div>
+          <div class="page-content">
+            <ul>
+              <li>7名の議員カード表示</li>
+              <li>担当地域・キャッチフレーズ</li>
+              <li>政策タグで特徴を可視化</li>
+              <li>詳細ページでプロフィール・経歴</li>
+              <li>個別の後援会入会CTA</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="page-card">
+          <div class="page-header">🤝 後援会ページ</div>
+          <div class="page-content">
+            <ul>
+              <li>後援会の説明（入会費無料）</li>
+              <li>入会特典の紹介</li>
+              <li>入会申し込みフォーム</li>
+              <li>LINE公式アカウント案内</li>
+              <li>よくある質問</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="page-card">
+          <div class="page-header" style="background: var(--line-green);">💬 固定CTAボタン</div>
+          <div class="page-content">
+            <ul>
+              <li>全ページ下部に常時表示</li>
+              <li>LINE登録ボタン（緑）</li>
+              <li>後援会入会ボタン（オレンジ）</li>
+              <li>ワンタップで行動可能</li>
+              <li>スクロールしても追従</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- スライド6: 技術スタック -->
+  <section class="slide" id="slide6">
+    <div class="card">
+      <span class="slide-number">06 / 08</span>
+      <h2>技術スタック</h2>
+      <p style="font-size: 18px; color: var(--gray); margin-bottom: 20px;">
+        最新のWeb技術で、高速・安全・保守しやすいサイトを構築
+      </p>
+      
+      <div class="tech-stack">
+        <span class="tech-badge">⚛️ Next.js 14</span>
+        <span class="tech-badge">📘 TypeScript</span>
+        <span class="tech-badge">🎨 Tailwind CSS</span>
+        <span class="tech-badge">✨ Lucide Icons</span>
+        <span class="tech-badge">📱 レスポンシブ</span>
+        <span class="tech-badge">🚀 静的エクスポート</span>
+      </div>
+
+      <div class="highlight-box">
+        <p><strong>💡 なぜこの技術？</strong></p>
+        <p style="margin-top: 10px;">
+          • <strong>Next.js</strong>：高速表示・SEO最適化・保守性に優れた最新フレームワーク<br>
+          • <strong>TypeScript</strong>：型安全でバグの少ないコード<br>
+          • <strong>Tailwind CSS</strong>：一貫したデザインシステムで統一感のあるUI<br>
+          • <strong>静的エクスポート</strong>：サーバー不要で低コスト運用、セキュリティも安心
+        </p>
+      </div>
+
+      <div class="feature-grid" style="margin-top: 30px;">
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h4>高速表示</h4>
+          <p>3秒以内にページ表示<br>離脱率を大幅に削減</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h4>セキュリティ</h4>
+          <p>静的サイトで攻撃リスク最小<br>安心して運用可能</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💰</div>
+          <h4>低コスト</h4>
+          <p>サーバー費用が安価<br>月額数百円から運用可能</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- スライド7: 今後の展開 -->
+  <section class="slide" id="slide7">
+    <div class="card">
+      <span class="slide-number">07 / 08</span>
+      <h2>今後の展開</h2>
+      <p style="font-size: 18px; color: var(--gray); margin-bottom: 20px;">
+        選挙に向けて段階的に機能を拡充
+      </p>
+      
+      <div class="timeline">
+        <div class="timeline-item">
+          <span class="timeline-phase">Phase 1</span>
+          <div class="timeline-content">
+            <h4>基盤構築（完了）</h4>
+            <p>トップページ、議員紹介、後援会ページ、固定CTAボタン</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-phase">Phase 2</span>
+          <div class="timeline-content">
+            <h4>コンテンツ充実</h4>
+            <p>議員の実際の写真差し替え、LINE公式アカウントURL設定、お問い合わせページ</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-phase">Phase 3</span>
+          <div class="timeline-content">
+            <h4>機能拡張</h4>
+            <p>政策ページ、お知らせ詳細、会派紹介ページ、フォーム送信バックエンド</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-phase">Phase 4</span>
+          <div class="timeline-content">
+            <h4>分析・最適化</h4>
+            <p>Google Analytics導入、OGP画像設定、SNSシェア最適化、A/Bテスト</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- スライド8: まとめ -->
+  <section class="slide" id="slide8">
+    <div class="card">
+      <span class="slide-number">08 / 08</span>
+      <h2>まとめ</h2>
+      
+      <div class="comparison" style="margin-bottom: 30px;">
+        <div class="comparison-box old-site">
+          <h3>❌ Before</h3>
+          <ul>
+            <li>PC向けの古いデザイン</li>
+            <li>議員情報が不十分</li>
+            <li>行動喚起がない</li>
+            <li>会派の独自性が不明確</li>
+          </ul>
+        </div>
+        
+        <div class="arrow-center">→</div>
+        
+        <div class="comparison-box new-site">
+          <h3>✓ After</h3>
+          <ul>
+            <li>モバイルファースト設計</li>
+            <li>議員の魅力を最大限に紹介</li>
+            <li>常時CTAで後援会・LINE促進</li>
+            <li>会派としてのブランディング確立</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="cta-section">
+        <h3>🗳️ 来年の選挙に向けて、今すぐ準備を！</h3>
+        <p>リニューアルサイトで認知度向上・支持者獲得を加速させましょう</p>
+        <div style="margin-top: 30px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+          <div style="background: white; color: var(--dark); padding: 15px 30px; border-radius: 10px;">
+            <strong>📱 モバイル対応</strong>
+          </div>
+          <div style="background: white; color: var(--dark); padding: 15px 30px; border-radius: 10px;">
+            <strong>🤝 後援会促進</strong>
+          </div>
+          <div style="background: white; color: var(--dark); padding: 15px 30px; border-radius: 10px;">
+            <strong>💬 LINE連携</strong>
+          </div>
+          <div style="background: white; color: var(--dark); padding: 15px 30px; border-radius: 10px;">
+            <strong>⚡ 高速表示</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // ナビゲーションドットのアクティブ状態を更新
+    const dots = document.querySelectorAll('.nav-dot');
+    const slides = document.querySelectorAll('.slide');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          dots.forEach(dot => {
+            dot.classList.remove('active');
+            if (dot.getAttribute('href') === '#' + id) {
+              dot.classList.add('active');
+            }
+          });
+        }
+      });
+    }, { threshold: 0.5 });
+    
+    slides.forEach(slide => observer.observe(slide));
+  </script>
+</body>
+</html>

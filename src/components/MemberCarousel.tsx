@@ -5,10 +5,25 @@ import Link from "next/link";
 import { MapPin, ChevronLeft, ChevronRight } from "lucide-react";
 import { members } from "@/data/members";
 
-export default function MemberCarousel() {
+export default function MemberCarousel({
+  onAnimeModeEnter,
+  onAnimeModeLeave
+}: {
+  onAnimeModeEnter?: () => void;
+  onAnimeModeLeave?: () => void;
+}) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isAutoScrolling, setIsAutoScrolling] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const hasPausedRef = useRef(false); // 2巡目で一度停止したかを管理
+
+  // カードの幅を取得する関数（レスポンシブ対応）
+  const getCardWidth = () => {
+    // モバイル: w-20 (80px) + gap-2 (8px) = 88px
+    // PC: w-44 (176px) + gap-4 (16px) = 192px
+    if (typeof window === "undefined") return 192;
+    return window.innerWidth < 768 ? 88 : 192;
+  };
 
   // 自動スクロール
   useEffect(() => {
@@ -18,23 +33,56 @@ export default function MemberCarousel() {
       if (!scrollRef.current) return;
 
       const container = scrollRef.current;
-      const cardWidth = 160; // w-36 = 144px + gap
+      const cardWidth = getCardWidth();
       const maxScroll = container.scrollWidth - container.clientWidth;
 
-      if (container.scrollLeft >= maxScroll - 10) {
-        // 最後まで行ったら最初に戻る
-        container.scrollTo({ left: 0, behavior: "smooth" });
+      // 現在のインデックスがアニメモード（2巡目）に入ったか判定
+      // members.length (7) 以上なら2巡目
+      // かつ、まだ停止していない場合のみ停止を実行
+      // ただし、バッファゾーン（2巡目終了後）に入ったら停止しない
+      const bufferStartIndex = members.length * 2;
+
+      // ループ処理判定
+      // バッファゾーンに入り込んでいたら、先頭に瞬間移動してループさせる
+      if (container.scrollLeft >= members.length * 2 * cardWidth - 10) {
+        // 瞬間移動 (これは視覚的に変化なし)
+        container.scrollTo({ left: 0, behavior: "auto" });
         setCurrentIndex(0);
-      } else {
-        // 次のカードへスクロール
-        const newScroll = container.scrollLeft + cardWidth;
-        container.scrollTo({ left: newScroll, behavior: "smooth" });
-        setCurrentIndex(Math.floor(newScroll / cardWidth));
+        hasPausedRef.current = false;
+
+        // 次のスクロールまで待つ
+        return;
+      }
+
+      // 2巡目突入時の一時停止ロジック
+      if (currentIndex === members.length && !hasPausedRef.current) {
+        hasPausedRef.current = true; // 停止済みフラグON
+        if (onAnimeModeEnter) onAnimeModeEnter();
+        setIsAutoScrolling(false); // アニメモードに入ったら自動スクロール停止
+
+        // 8秒後に再開（そのまま左へ進む）
+        setTimeout(() => {
+          setIsAutoScrolling(true);
+        }, 8000);
+
+        return;
+      }
+
+      // 通常スクロール（左へ）
+      const newScroll = container.scrollLeft + cardWidth;
+      container.scrollTo({ left: newScroll, behavior: "smooth" });
+      const nextIndex = Math.floor(newScroll / cardWidth);
+      setCurrentIndex(nextIndex);
+
+      // バッファゾーン（1巡目のコピー）に入ったら、即座にアニメモード解除
+      // これにより「通常メンバー＋アニメ背景」の時間をなくす
+      if (nextIndex === members.length * 2) {
+        if (onAnimeModeLeave) onAnimeModeLeave();
       }
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [isAutoScrolling]);
+  }, [isAutoScrolling, currentIndex, onAnimeModeEnter, onAnimeModeLeave]);
 
   // ユーザーがタッチ/マウス操作したら一時停止
   const handleInteractionStart = () => {
@@ -49,7 +97,7 @@ export default function MemberCarousel() {
   // 手動スクロール
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
-    const cardWidth = 160;
+    const cardWidth = getCardWidth();
     const newScroll =
       direction === "left"
         ? scrollRef.current.scrollLeft - cardWidth
@@ -60,7 +108,14 @@ export default function MemberCarousel() {
   };
 
   // 拡張した議員リスト（無限スクロール風に見せるため）
-  const extendedMembers = [...members, ...members];
+  // 1巡目は通常写真、2巡目はアニメ風写真（あれば）を表示
+  // さらに、無限ループのつなぎ目を滑らかにするために先頭の数名を末尾に追加（バッファ）
+  // ワイドスクリーン対応のため、全メンバー分をバッファとして追加
+  const extendedMembers = [
+    ...members.map(m => ({ ...m, displayPhoto: m.photo, isAnime: false })),
+    ...members.map(m => ({ ...m, displayPhoto: m.photoAnime || m.photo, isAnime: true })),
+    ...members.map(m => ({ ...m, displayPhoto: m.photo, isAnime: false }))
+  ];
 
   return (
     <div className="relative">
@@ -76,7 +131,7 @@ export default function MemberCarousel() {
       {/* カルーセル本体 */}
       <div
         ref={scrollRef}
-        className="flex gap-4 overflow-x-auto pb-4 px-4 snap-x snap-mandatory scrollbar-hide"
+        className="flex gap-2 md:gap-4 overflow-x-auto pb-4 px-2 md:px-4 snap-x snap-mandatory scrollbar-hide"
         onMouseEnter={handleInteractionStart}
         onMouseLeave={handleInteractionEnd}
         onTouchStart={handleInteractionStart}
@@ -87,21 +142,32 @@ export default function MemberCarousel() {
           <Link
             key={`${member.id}-${index}`}
             href={`/members/${member.id}`}
-            className="flex-shrink-0 w-36 snap-start transform transition-transform hover:scale-105"
+            className="flex-shrink-0 w-20 md:w-44 snap-start transform transition-all duration-300 hover:scale-105"
           >
-            <div className="card text-center p-4 h-full">
-              {/* プレースホルダー画像 */}
-              <div className="w-20 h-20 mx-auto mb-3 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white text-2xl font-bold shadow-md">
-                {member.name.charAt(0)}
+            <div className="card text-center p-2 md:p-6 h-full flex flex-col items-center border-none shadow-sm hover:shadow-lg bg-gray-50 md:bg-white">
+              {/* 写真（アニメ切替対応） */}
+              <div className={`w-12 h-12 md:w-24 md:h-24 mb-2 md:mb-4 rounded-full flex items-center justify-center text-white text-lg md:text-3xl font-bold shadow-inner border-2 md:border-4 border-white overflow-hidden relative ${member.isAnime ? 'bg-accent-100' : 'bg-gradient-to-br from-primary-400 to-primary-600'
+                }`}>
+                {/* 画像があれば表示、なければイニシャル */}
+                {/* 注: 実際の運用では next/image を使うべきですが、動的パスのため一旦 img タグまたは背景画像で対応 */}
+                <div
+                  className="absolute inset-0 bg-cover bg-center transition-opacity duration-500"
+                  style={{ backgroundImage: `url(${member.displayPhoto})` }}
+                  role="img"
+                  aria-label={member.name}
+                />
+                {/* フォールバック用イニシャル（画像読み込み前やエラー時用） */}
+                <span className="relative z-[-1]">{member.name.charAt(0)}</span>
               </div>
-              <p className="font-bold text-gray-800 text-sm">{member.name}</p>
-              <p className="text-xs text-gray-500 mt-1 flex items-center justify-center gap-1">
-                <MapPin size={12} />
+
+              <p className="font-bold text-gray-900 text-xs md:text-lg mb-1 leading-tight">{member.name}</p>
+              <p className="text-[10px] md:text-sm text-gray-500 flex items-center justify-center gap-1 mb-1 md:mb-3">
+                <MapPin size={10} className="md:w-3.5 md:h-3.5" />
                 {member.area}
               </p>
               {member.position && (
-                <span className="inline-block mt-2 text-xs bg-accent-500 text-white px-2 py-0.5 rounded">
-                  {member.position}
+                <span className="inline-block mt-auto text-[8px] md:text-[10px] font-black tracking-widest uppercase bg-accent-500 text-white px-1.5 py-0.5 md:px-3 md:py-1 rounded-full whitespace-nowrap overflow-hidden text-ellipsis max-w-full">
+                  {member.position.replace("地区幹事長", "幹事長")}
                 </span>
               )}
             </div>
@@ -118,14 +184,14 @@ export default function MemberCarousel() {
         <ChevronRight size={24} className="text-primary-500" />
       </button>
 
-      {/* インジケーター */}
-      <div className="flex justify-center gap-2 mt-4">
+      {/* インジケーター (モバイル非表示) */}
+      <div className="hidden md:flex justify-center gap-2 mt-4">
         {members.map((_, index) => (
           <button
             key={index}
             onClick={() => {
               if (!scrollRef.current) return;
-              const cardWidth = 160;
+              const cardWidth = 192;
               scrollRef.current.scrollTo({
                 left: index * cardWidth,
                 behavior: "smooth",
@@ -134,11 +200,10 @@ export default function MemberCarousel() {
               setIsAutoScrolling(false);
               setTimeout(() => setIsAutoScrolling(true), 5000);
             }}
-            className={`w-2 h-2 rounded-full transition-colors ${
-              currentIndex % members.length === index
-                ? "bg-primary-500"
-                : "bg-gray-300"
-            }`}
+            className={`w-2 h-2 rounded-full transition-colors ${currentIndex % members.length === index
+              ? "bg-primary-500"
+              : "bg-gray-300"
+              }`}
             aria-label={`議員 ${index + 1}`}
           />
         ))}

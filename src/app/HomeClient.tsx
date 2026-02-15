@@ -65,23 +65,35 @@ export default function HomeClient() {
                 date={news[0].date}
             />
             {/* ヒーローセクション (高さ短縮・モバイル最適化) */}
-            <section className="relative h-[50vh] min-h-[400px] md:h-[60vh] flex items-center justify-center overflow-hidden">
+            <section className="relative h-[70vh] min-h-[500px] md:h-[80vh] flex items-center justify-center overflow-hidden">
                 {/* 通常背景 */}
-                <div
-                    className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${isAnimeMode ? 'opacity-0' : 'opacity-100'}`}
+                <motion.div
+                    initial={{ opacity: 1, scale: 1.1 }}
+                    animate={{
+                        opacity: isAnimeMode ? 0 : 1,
+                        scale: isAnimeMode ? 1.1 : 1.0
+                    }}
+                    transition={{ duration: 5.0, ease: "easeOut" }}
+                    className="absolute inset-0 bg-cover bg-bottom"
                     style={{
-                        backgroundImage: `url('https://images.unsplash.com/photo-1542051841857-5f90071e7989?q=80&w=2070&auto=format&fit=crop')`,
+                        backgroundImage: `url('/images/hero-normal.webp')`,
                         filter: 'brightness(0.4) contrast(1.1)'
                     }}
                 />
 
                 {/* アニメ風背景 (ジブリ風の風景) */}
-                <div
-                    className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${isAnimeMode ? 'opacity-100' : 'opacity-0'}`}
+                <motion.div
+                    initial={{ opacity: 0, scale: 1.1 }}
+                    animate={{
+                        opacity: isAnimeMode ? 1 : 0,
+                        scale: isAnimeMode ? 1.0 : 1.1
+                    }}
+                    transition={{ duration: 5.0, ease: "easeOut" }}
+                    className="absolute inset-0 bg-cover bg-bottom"
                     style={{
                         // アニメ風の美しい風景画像
-                        backgroundImage: `url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop')`,
-                        filter: 'brightness(0.6) contrast(1.2) satuarate(1.5)' // コントラストと彩度を上げてアニメ調に
+                        backgroundImage: `url('/images/hero-anime.webp')`,
+                        filter: 'brightness(0.6) contrast(1.2) saturate(1.5)' // コントラストと彩度を上げてアニメ調に
                     }}
                 />
 

@@ -20,9 +20,9 @@ export default function MemberCarousel({
   // カードの幅を取得する関数（レスポンシブ対応）
   const getCardWidth = () => {
     // モバイル: w-20 (80px) + gap-2 (8px) = 88px
-    // PC: w-44 (176px) + gap-4 (16px) = 192px
-    if (typeof window === "undefined") return 192;
-    return window.innerWidth < 768 ? 88 : 192;
+    // PC: w-24 (96px) + gap-2 (8px) = 104px (さらに縮小して1ページにより多く表示)
+    if (typeof window === "undefined") return 104;
+    return window.innerWidth < 768 ? 88 : 104;
   };
 
   // 自動スクロール
@@ -131,7 +131,7 @@ export default function MemberCarousel({
       {/* カルーセル本体 */}
       <div
         ref={scrollRef}
-        className="flex gap-2 md:gap-4 overflow-x-auto pb-4 px-2 md:px-4 snap-x snap-mandatory scrollbar-hide"
+        className="flex gap-2 md:gap-2 overflow-x-auto pb-4 px-2 md:px-2 snap-x snap-mandatory scrollbar-hide"
         onMouseEnter={handleInteractionStart}
         onMouseLeave={handleInteractionEnd}
         onTouchStart={handleInteractionStart}
@@ -142,11 +142,11 @@ export default function MemberCarousel({
           <Link
             key={`${member.id}-${index}`}
             href={`/members/${member.id}`}
-            className="flex-shrink-0 w-20 md:w-44 snap-start transform transition-all duration-300 hover:scale-105"
+            className="flex-shrink-0 w-20 md:w-24 snap-start transform transition-all duration-300 hover:scale-105"
           >
-            <div className="card text-center p-2 md:p-6 h-full flex flex-col items-center border-none shadow-sm hover:shadow-lg bg-gray-50 md:bg-white">
+            <div className="card text-center p-2 md:p-3 h-full flex flex-col items-center border-none shadow-sm hover:shadow-lg bg-gray-50 md:bg-white rounded-xl">
               {/* 写真（アニメ切替対応） */}
-              <div className={`w-12 h-12 md:w-24 md:h-24 mb-2 md:mb-4 rounded-full flex items-center justify-center text-white text-lg md:text-3xl font-bold shadow-inner border-2 md:border-4 border-white overflow-hidden relative ${member.isAnime ? 'bg-accent-100' : 'bg-gradient-to-br from-primary-400 to-primary-600'
+              <div className={`w-12 h-12 md:w-12 md:h-12 mb-2 md:mb-2 rounded-full flex items-center justify-center text-white text-lg md:text-xl font-bold shadow-inner border-2 md:border-2 border-white overflow-hidden relative ${member.isAnime ? 'bg-accent-100' : 'bg-gradient-to-br from-primary-400 to-primary-600'
                 }`}>
                 {/* 画像があれば表示、なければイニシャル */}
                 {/* 注: 実際の運用では next/image を使うべきですが、動的パスのため一旦 img タグまたは背景画像で対応 */}
@@ -160,13 +160,13 @@ export default function MemberCarousel({
                 <span className="relative z-[-1]">{member.name.charAt(0)}</span>
               </div>
 
-              <p className="font-bold text-gray-900 text-xs md:text-lg mb-1 leading-tight">{member.name}</p>
-              <p className="text-[10px] md:text-sm text-gray-500 flex items-center justify-center gap-1 mb-1 md:mb-3">
-                <MapPin size={10} className="md:w-3.5 md:h-3.5" />
+              <p className="font-bold text-gray-900 text-xs md:text-sm mb-1 leading-tight">{member.name}</p>
+              <p className="text-[10px] md:text-[11px] text-gray-500 flex items-center justify-center gap-1 mb-1 md:mb-2 text-center">
+                <MapPin size={10} className="md:w-3 md:h-3" />
                 {member.area}
               </p>
               {member.position && (
-                <span className="inline-block mt-auto text-[8px] md:text-[10px] font-black tracking-widest uppercase bg-accent-500 text-white px-1.5 py-0.5 md:px-3 md:py-1 rounded-full whitespace-nowrap overflow-hidden text-ellipsis max-w-full">
+                <span className="inline-block mt-auto text-[8px] md:text-[9px] font-black tracking-widest uppercase bg-accent-500 text-white px-1.5 py-0.5 md:px-2 md:py-0.5 rounded-full whitespace-nowrap overflow-hidden text-ellipsis max-w-full">
                   {member.position.replace("地区幹事長", "幹事長")}
                 </span>
               )}
@@ -191,7 +191,7 @@ export default function MemberCarousel({
             key={index}
             onClick={() => {
               if (!scrollRef.current) return;
-              const cardWidth = 192;
+              const cardWidth = 104; // PC幅に合わせる (w-24=96 + gap-2=8)
               scrollRef.current.scrollTo({
                 left: index * cardWidth,
                 behavior: "smooth",

@@ -4,9 +4,13 @@ import Link from "next/link";
 import { MapPin, ChevronRight, Users, ArrowRight } from "lucide-react";
 import { members } from "@/data/members";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import * as React from "react";
+import { useState, useEffect, useRef } from "react";
+import { useScroll, useTransform } from "framer-motion";
 
 export default function MembersClient() {
+    const scrollRef = useRef<HTMLDivElement>(null);
+
     return (
         <div className="min-h-screen bg-gray-50/50 pb-20">
             {/* ページヘッダー */}
@@ -42,39 +46,20 @@ export default function MembersClient() {
                 </div>
 
                 {/* スマホ/タブレット用: Radiko風（丸アイコン横スクロール）表示 (lg未満で表示) */}
-                <div className="lg:hidden flex gap-5 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide -mx-4 px-6 items-start">
+                <div
+                    ref={scrollRef}
+                    className="lg:hidden flex gap-0 overflow-x-auto pb-12 snap-x snap-mandatory scrollbar-hide -mx-4 px-[calc(50%-48px)] items-center h-[200px]"
+                >
                     {members.map((member) => (
-                        <Link
+                        <MobileMemberCard
                             key={`mobile-${member.id}`}
-                            href={`/members/${member.id}`}
-                            className="flex-shrink-0 w-24 snap-start flex flex-col items-center group active:scale-95 transition-transform"
-                        >
-                            {/* 丸いアイコン */}
-                            <div className="relative w-20 h-20 rounded-full border-4 border-white shadow-[0_4px_12px_rgba(0,0,0,0.1)] overflow-hidden mb-3 bg-gradient-to-br from-primary-400 to-primary-700">
-                                <div
-                                    className="w-full h-full bg-cover bg-center"
-                                    style={{ backgroundImage: `url(${member.photo})` }}
-                                    role="img"
-                                    aria-label={member.name}
-                                />
-                                {/* 役職ミニバッジ (あれば) */}
-                                {member.position && (
-                                    <div className="absolute bottom-0 right-0 bg-accent-500 text-white text-[8px] font-black px-1.5 py-0.5 rounded-full border border-white shadow-sm">
-                                        {member.position.includes("団長") ? "団長" : "議員"}
-                                    </div>
-                                )}
-                            </div>
-                            {/* 名前と地区 */}
-                            <div className="text-center">
-                                <p className="text-sm font-black text-primary-900 leading-tight mb-1">{member.name}</p>
-                                <p className="text-[10px] font-bold text-gray-400 flex items-center justify-center gap-0.5">
-                                    <MapPin size={10} />
-                                    {member.area}
-                                </p>
-                            </div>
-                        </Link>
+                            member={member}
+                            containerRef={scrollRef}
+                        />
                     ))}
                 </div>
+
+                {/* 団体紹介セクション */}
 
                 {/* 団体紹介セクション */}
                 <motion.div
@@ -214,5 +199,67 @@ function MemberCard({ member }: { member: typeof members[0] }) {
                 </div>
             </div>
         </motion.div>
+    );
+}
+
+// モバイル用スケール議員カード
+function MobileMemberCard({ member, containerRef }: { member: typeof members[0], containerRef: React.RefObject<HTMLDivElement> }) {
+    const cardRef = useRef<HTMLAnchorElement>(null);
+
+    const { scrollXProgress } = useScroll({
+        container: containerRef,
+        target: cardRef,
+        offset: ["start end", "end start"]
+    });
+
+    // 中央付近（0.5）で最大（1.25）、端（0, 1）で最小（0.8）になるようにスケール
+    const scale = useTransform(
+        scrollXProgress,
+        [0.3, 0.5, 0.7],
+        [0.8, 1.25, 0.8]
+    );
+
+    // 不透明度も調整
+    const opacity = useTransform(
+        scrollXProgress,
+        [0.3, 0.5, 0.7],
+        [0.6, 1, 0.6]
+    );
+
+    return (
+        <Link
+            ref={cardRef}
+            href={`/members/${member.id}`}
+            className="flex-shrink-0 w-24 snap-center flex flex-col items-center group py-8"
+        >
+            <motion.div
+                style={{ scale, opacity }}
+                className="flex flex-col items-center"
+            >
+                {/* 丸いアイコン */}
+                <div className="relative w-20 h-20 rounded-full border-4 border-white shadow-[0_4px_12px_rgba(0,0,0,0.15)] overflow-hidden mb-4 bg-gradient-to-br from-primary-400 to-primary-700">
+                    <div
+                        className="w-full h-full bg-cover bg-center"
+                        style={{ backgroundImage: `url(${member.photo})` }}
+                        role="img"
+                        aria-label={member.name}
+                    />
+                    {/* 役職ミニバッジ */}
+                    {member.position && (
+                        <div className="absolute bottom-0 right-0 bg-accent-500 text-white text-[8px] font-black px-1.5 py-0.5 rounded-full border border-white shadow-sm">
+                            {member.position.includes("団長") ? "団長" : "議員"}
+                        </div>
+                    )}
+                </div>
+                {/* 名前と地区 */}
+                <div className="text-center">
+                    <p className="text-sm font-black text-primary-900 leading-tight mb-1">{member.name}</p>
+                    <p className="text-[10px] font-bold text-gray-400 flex items-center justify-center gap-0.5">
+                        <MapPin size={10} />
+                        {member.area}
+                    </p>
+                </div>
+            </motion.div>
+        </Link>
     );
 }

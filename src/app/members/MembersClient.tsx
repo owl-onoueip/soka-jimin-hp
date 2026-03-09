@@ -34,9 +34,45 @@ export default function MembersClient() {
 
             <div className="container mx-auto px-4 -mt-10 relative z-10">
                 {/* 議員グリッド */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {members.map((member, i) => (
+                {/* PC/タブレット用: グリッド表示 (lg以上で表示) */}
+                <div className="hidden lg:grid grid-cols-4 gap-6">
+                    {members.map((member) => (
                         <MemberCard key={member.id} member={member} />
+                    ))}
+                </div>
+
+                {/* スマホ/タブレット用: Radiko風（丸アイコン横スクロール）表示 (lg未満で表示) */}
+                <div className="lg:hidden flex gap-5 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide -mx-4 px-6 items-start">
+                    {members.map((member) => (
+                        <Link
+                            key={`mobile-${member.id}`}
+                            href={`/members/${member.id}`}
+                            className="flex-shrink-0 w-24 snap-start flex flex-col items-center group active:scale-95 transition-transform"
+                        >
+                            {/* 丸いアイコン */}
+                            <div className="relative w-20 h-20 rounded-full border-4 border-white shadow-[0_4px_12px_rgba(0,0,0,0.1)] overflow-hidden mb-3 bg-gradient-to-br from-primary-400 to-primary-700">
+                                <div
+                                    className="w-full h-full bg-cover bg-center"
+                                    style={{ backgroundImage: `url(${member.photo})` }}
+                                    role="img"
+                                    aria-label={member.name}
+                                />
+                                {/* 役職ミニバッジ (あれば) */}
+                                {member.position && (
+                                    <div className="absolute bottom-0 right-0 bg-accent-500 text-white text-[8px] font-black px-1.5 py-0.5 rounded-full border border-white shadow-sm">
+                                        {member.position.includes("団長") ? "団長" : "議員"}
+                                    </div>
+                                )}
+                            </div>
+                            {/* 名前と地区 */}
+                            <div className="text-center">
+                                <p className="text-sm font-black text-primary-900 leading-tight mb-1">{member.name}</p>
+                                <p className="text-[10px] font-bold text-gray-400 flex items-center justify-center gap-0.5">
+                                    <MapPin size={10} />
+                                    {member.area}
+                                </p>
+                            </div>
+                        </Link>
                     ))}
                 </div>
 

@@ -10,7 +10,7 @@ export default function MembersClient() {
     return (
         <div className="min-h-screen bg-gray-50/50 pb-20">
             {/* ページヘッダー */}
-            <section className="relative py-20 overflow-hidden">
+            <section className="relative py-12 overflow-hidden">
                 {/* 背景の装飾 */}
                 <div className="absolute inset-0 bg-primary-900 -skew-y-3 origin-right transform translate-y-12 scale-110" />
 
@@ -34,7 +34,7 @@ export default function MembersClient() {
 
             <div className="container mx-auto px-4 -mt-10 relative z-10">
                 {/* 議員グリッド */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {members.map((member, i) => (
                         <MemberCard key={member.id} member={member} />
                     ))}
@@ -107,7 +107,7 @@ function MemberCard({ member }: { member: typeof members[0] }) {
             className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all border border-gray-100 flex flex-col h-full"
         >
             {/* 写真エリア (スライドショー) */}
-            <div className="relative aspect-[3/4] overflow-hidden bg-gray-100">
+            <div className="relative aspect-[4/5] overflow-hidden bg-gray-100">
                 <AnimatePresence>
                     <motion.div
                         key={currentImageIndex}
@@ -139,40 +139,40 @@ function MemberCard({ member }: { member: typeof members[0] }) {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-transparent opacity-60 group-hover:opacity-80 transition-opacity pointer-events-none" />
 
                 {/* 下部情報 (写真上のオーバーレイ) */}
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform group-hover:-translate-y-2 transition-transform duration-500 pointer-events-none">
-                    <span className="block text-[10px] font-black tracking-widest uppercase text-accent-400 mb-1">
+                <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform group-hover:-translate-y-1 transition-transform duration-500 pointer-events-none">
+                    <span className="block text-[9px] font-black tracking-widest uppercase text-accent-400 mb-0.5">
                         {member.position || "Member of Council"}
                     </span>
-                    <h3 className="text-2xl font-black mb-1 group-hover:text-accent-400 transition-colors">
+                    <h3 className="text-xl font-black mb-0.5 group-hover:text-accent-400 transition-colors">
                         {member.name}
                     </h3>
-                    <p className="text-xs font-bold opacity-70 tracking-wider">
+                    <p className="text-[10px] font-bold opacity-70 tracking-wider">
                         {member.nameKana}
                     </p>
                 </div>
             </div>
 
             {/* 情報エリア */}
-            <div className="p-6 flex flex-col flex-grow bg-white border-t border-gray-50">
-                <div className="flex items-center gap-2 text-primary-600 mb-4 bg-primary-50 px-3 py-1.5 rounded-lg w-fit">
-                    <MapPin size={16} />
-                    <span className="text-sm font-black tracking-tight">{member.area}担当</span>
+            <div className="p-4 flex flex-col flex-grow bg-white border-t border-gray-50">
+                <div className="flex items-center gap-2 text-primary-600 mb-3 bg-primary-50 px-2 py-1 rounded-lg w-fit">
+                    <MapPin size={14} />
+                    <span className="text-xs font-black tracking-tight">{member.area}担当</span>
                 </div>
 
-                <div className="mb-4 flex-grow">
-                    <p className="text-sm text-gray-500 font-bold leading-relaxed line-clamp-2">
+                <div className="mb-3 flex-grow">
+                    <p className="text-xs text-gray-500 font-bold leading-relaxed line-clamp-2">
                         {member.catchphrase}
                     </p>
                 </div>
 
-                <div className="mt-auto pt-4 border-t border-gray-100">
+                <div className="mt-auto pt-3 border-t border-gray-100">
                     <Link
                         href={`/members/${member.id}`}
-                        className="flex items-center justify-between text-primary-600 font-black text-sm group/btn w-full"
+                        className="flex items-center justify-between text-primary-600 font-black text-xs group/btn w-full"
                     >
                         <span>詳細プロフィール</span>
-                        <div className="w-8 h-8 rounded-full bg-primary-50 flex items-center justify-center group-hover/btn:bg-primary-600 group-hover/btn:text-white transition-all">
-                            <ChevronRight size={18} />
+                        <div className="w-7 h-7 rounded-full bg-primary-50 flex items-center justify-center group-hover/btn:bg-primary-600 group-hover/btn:text-white transition-all">
+                            <ChevronRight size={16} />
                         </div>
                     </Link>
                 </div>

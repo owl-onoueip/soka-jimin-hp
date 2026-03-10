@@ -1,18 +1,26 @@
 "use client";
 
 import Link from "next/link";
-import { MapPin, ChevronRight, Users, ArrowRight } from "lucide-react";
+import { MapPin, ChevronRight, Users } from "lucide-react";
 import { members } from "@/data/members";
 import { motion, AnimatePresence } from "framer-motion";
 import * as React from "react";
 import { useState, useEffect, useRef } from "react";
 import { useScroll, useTransform } from "framer-motion";
+import MobileRadikoMembers from "@/components/MobileRadikoMembers";
 
 export default function MembersClient() {
     const scrollRef = useRef<HTMLDivElement>(null);
 
     return (
-        <div className="min-h-screen bg-gray-50/50 pb-20">
+        <>
+            {/* ─── スマホ版: Radiko風フルスクリーン（lg未満） ─── */}
+            <div className="lg:hidden">
+                <MobileRadikoMembers />
+            </div>
+
+            {/* ─── PC/タブレット版: 標準グリッドレイアウト（lg以上） ─── */}
+            <div className="hidden lg:block min-h-screen bg-gray-50/50 pb-20">
             {/* ページヘッダー */}
             <section className="relative py-12 overflow-hidden">
                 {/* 背景の装飾 */}
@@ -44,22 +52,6 @@ export default function MembersClient() {
                         <MemberCard key={member.id} member={member} />
                     ))}
                 </div>
-
-                {/* スマホ/タブレット用: Radiko風（丸アイコン横スクロール）表示 (lg未満で表示) */}
-                <div
-                    ref={scrollRef}
-                    className="lg:hidden flex gap-0 overflow-x-auto pb-12 snap-x snap-mandatory scrollbar-hide -mx-4 px-[calc(50%-48px)] items-center h-[200px]"
-                >
-                    {members.map((member) => (
-                        <MobileMemberCard
-                            key={`mobile-${member.id}`}
-                            member={member}
-                            containerRef={scrollRef}
-                        />
-                    ))}
-                </div>
-
-                {/* 団体紹介セクション */}
 
                 {/* 団体紹介セクション */}
                 <motion.div
@@ -100,6 +92,7 @@ export default function MembersClient() {
                 </motion.div>
             </div>
         </div>
+        </>
     );
 }
 

@@ -22,44 +22,108 @@ const slides = [
     ...members.filter((m) => m.photoAnime).map((member) => ({ member, type: "anime" as const })),
 ];
 
+// slidesを3倍複製して無限スクロール用のトリプルリストを作成
+const SLIDE_LEN = slides.length;
+const tripleSlides = [...slides, ...slides, ...slides];
+const TRIPLE_START = SLIDE_LEN; // 中間の1/3から開始
+
 export default function MobileRadikoMembers() {
     const carouselRef = useRef<HTMLDivElement>(null);
-    const [activeIndex, setActiveIndex] = useState(0);
+    // tripleSlides上のインデックス（中間からスタート）
+    const [tripleIndex, setTripleIndex] = useState(TRIPLE_START);
+    const [isPaused, setIsPaused] = useState(false);
+    const isPausedRef = useRef(false);
 
-    // スクロール監視 → 中央に最も近いカードをアクティブに
+    // 表示上のアクティブ議員はtripleIndexをSLIDE_LENで割った余りで判定
+    const activeIndex = tripleIndex % SLIDE_LEN;
+    const activeMember = slides[activeIndex]?.member;
+    const activeType = slides[activeIndex]?.type;
+
+    // 指定インデックスまでスムーズスクロール
+    const scrollToIndex = (index: number, smooth = true) => {
+        const el = carouselRef.current;
+        if (!el) return;
+        const items = el.querySelectorAll<HTMLElement>(".rc-item");
+        if (!items[index]) return;
+        const itemRect = items[index].getBoundingClientRect();
+        const containerRect = el.getBoundingClientRect();
+        const offset = itemRect.left - containerRect.left - (el.offsetWidth / 2 - items[index].offsetWidth / 2);
+        if (!smooth) {
+            el.scrollLeft += offset;
+        } else {
+            el.scrollBy({ left: offset, behavior: "smooth" });
+        }
+    };
+
+    // スクロール監視 → 中央に最も近いカードのtripleIndexを更新
     useEffect(() => {
         const el = carouselRef.current;
         if (!el) return;
         const onScroll = () => {
             const center = el.getBoundingClientRect().left + el.offsetWidth / 2;
-            let closest = 0;
+            let closest = TRIPLE_START;
             let minDist = Infinity;
             el.querySelectorAll<HTMLElement>(".rc-item").forEach((item, i) => {
                 const rect = item.getBoundingClientRect();
                 const dist = Math.abs(center - (rect.left + rect.width / 2));
                 if (dist < minDist) { minDist = dist; closest = i; }
             });
-            setActiveIndex(closest);
+            setTripleIndex(closest);
         };
         el.addEventListener("scroll", onScroll, { passive: true });
+        // 初期表示：中間の1/3に移動（瞬時）
+        setTimeout(() => scrollToIndex(TRIPLE_START, false), 50);
         setTimeout(onScroll, 100);
         return () => el.removeEventListener("scroll", onScroll);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const activeMember = slides[activeIndex]?.member;
-    const activeType = slides[activeIndex]?.type;
-
-    // 指定インデックスまでスムーズスクロール
-    const goTo = (index: number) => {
-        const el = carouselRef.current;
-        if (!el) return;
-        const items = el.querySelectorAll<HTMLElement>(".rc-item");
-        if (items[index]) {
-            const itemRect = items[index].getBoundingClientRect();
-            const containerRect = el.getBoundingClientRect();
-            const offset = itemRect.left - containerRect.left - (el.offsetWidth / 2 - items[index].offsetWidth / 2);
-            el.scrollBy({ left: offset, behavior: "smooth" });
+    // 端に近づいたら瞬時に中間の対応位置へリセット
+    useEffect(() => {
+        if (tripleIndex <= 2 || tripleIndex >= SLIDE_LEN * 2 + SLIDE_LEN - 3) {
+            // 対応する中間の位置（activeIndexを維持）
+            const resetIndex = TRIPLE_START + (tripleIndex % SLIDE_LEN);
+            setTimeout(() => {
+                scrollToIndex(resetIndex, false);
+                setTripleIndex(resetIndex);
+            }, 400); // スクロールアニメが終わった後にリセット
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [tripleIndex]);
+
+    // 自動スクロール（6秒ごとに次へ。一方通行で無限続く）
+    const autoScrollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+    const startAutoScroll = () => {
+        if (autoScrollRef.current) clearInterval(autoScrollRef.current);
+        if (isPausedRef.current) return; // 一時停止中はセットしない
+        autoScrollRef.current = setInterval(() => {
+            if (isPausedRef.current) return; // インターバル内でも確認
+            setTripleIndex((prev) => {
+                const next = prev + 1;
+                scrollToIndex(next);
+                return next;
+            });
+        }, 6000);
+    };
+
+    useEffect(() => {
+        startAutoScroll();
+        const el = carouselRef.current;
+        const onUserTouch = () => startAutoScroll();
+        el?.addEventListener("touchstart", onUserTouch, { passive: true });
+        el?.addEventListener("mousedown", onUserTouch, { passive: true });
+        return () => {
+            if (autoScrollRef.current) clearInterval(autoScrollRef.current);
+            el?.removeEventListener("touchstart", onUserTouch);
+            el?.removeEventListener("mousedown", onUserTouch);
+        };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // 手動クリックで移動
+    const goTo = (index: number) => {
+        scrollToIndex(index);
     };
 
     return (
@@ -81,19 +145,27 @@ export default function MobileRadikoMembers() {
                 {/* ────── カルーセル ────── */}
                 <div className="relative flex items-center" style={{ height: 280 }}>
                     {/* 左クリックゾーン：前へ */}
-                    {activeIndex > 0 && (
+                    {tripleIndex > 0 && (
                         <button
-                            onClick={() => goTo(activeIndex - 1)}
-                            className="absolute left-0 top-0 bottom-0 z-20 flex items-center justify-start pl-2"
+                            onClick={() => {
+                                const next = tripleIndex - 1;
+                                scrollToIndex(next);
+                                setTripleIndex(next);
+                            }}
+                            className="absolute left-0 top-0 bottom-0 z-20"
                             style={{ width: "28%", background: "transparent" }}
                             aria-label="前の議員へ"
                         />
                     )}
                     {/* 右クリックゾーン：次へ */}
-                    {activeIndex < slides.length - 1 && (
+                    {tripleIndex < tripleSlides.length - 1 && (
                         <button
-                            onClick={() => goTo(activeIndex + 1)}
-                            className="absolute right-0 top-0 bottom-0 z-20 flex items-center justify-end pr-2"
+                            onClick={() => {
+                                const next = tripleIndex + 1;
+                                scrollToIndex(next);
+                                setTripleIndex(next);
+                            }}
+                            className="absolute right-0 top-0 bottom-0 z-20"
                             style={{ width: "28%", background: "transparent" }}
                             aria-label="次の議員へ"
                         />
@@ -113,13 +185,13 @@ export default function MobileRadikoMembers() {
                         {/* 左スペーサー: 最初のカードを中央に */}
                         <div style={{ flexShrink: 0, width: `calc(50vw - ${CARD_W / 2}px)` }} />
 
-                        {slides.map((slide, i) => {
+                        {tripleSlides.map((slide, i) => {
                             const { member, type } = slide;
-                            const isActive = i === activeIndex;
+                            const isActive = i === tripleIndex;
                             const imgSrc = type === "anime" ? member.photoAnime : member.photo;
                             return (
                                 <Link
-                                    key={`${member.id}-${type}`}
+                                    key={`${i}-${member.id}-${type}`}
                                     href={`/members/${member.id}`}
                                     className="rc-item flex-shrink-0 relative cursor-pointer"
                                     style={{
@@ -169,21 +241,41 @@ export default function MobileRadikoMembers() {
                     </div>
                 </div>
 
-                {/* ドットインジケーター */}
-                <div className="flex justify-center gap-1.5 mt-2 mb-5">
-                    {slides.map((slide, i) => (
-                        <div
-                            key={i}
-                            className="rounded-full transition-all duration-300"
-                            style={{
-                                width: i === activeIndex ? 20 : 5,
-                                height: 5,
-                                background: i === activeIndex
-                                    ? (slides[i].type === "anime" ? "#f97316" : "#fff")
-                                    : "rgba(255,255,255,0.3)",
-                            }}
-                        />
-                    ))}
+                {/* ドットインジケーター ＋ STOP/再生ボタン */}
+                <div className="flex items-center justify-center gap-3 mt-2 mb-5">
+                    <div className="flex gap-1.5 items-center">
+                        {slides.map((slide, i) => (
+                            <div
+                                key={i}
+                                className="rounded-full transition-all duration-300"
+                                style={{
+                                    width: i === activeIndex ? 20 : 5,
+                                    height: 5,
+                                    background: i === activeIndex
+                                        ? (slides[activeIndex].type === "anime" ? "#f97316" : "#fff")
+                                        : "rgba(255,255,255,0.3)",
+                                }}
+                            />
+                        ))}
+                    </div>
+                    {/* STOP / 再稼働ボタン */}
+                    <button
+                        onClick={() => {
+                            const next = !isPaused;
+                            isPausedRef.current = next;
+                            setIsPaused(next);
+                            if (!next) startAutoScroll(); // 再稼働
+                            else if (autoScrollRef.current) clearInterval(autoScrollRef.current); // 停止
+                        }}
+                        className="w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-black transition-all active:scale-90"
+                        style={{
+                            background: isPaused ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.12)",
+                            border: "1px solid rgba(255,255,255,0.25)",
+                        }}
+                        aria-label={isPaused ? "自動スクロール再開" : "自動スクロール停止"}
+                    >
+                        {isPaused ? "▶" : "⏸"}
+                    </button>
                 </div>
 
                 {/* ────── 下部情報パネル ────── */}

@@ -1,0 +1,814 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>市民に開かれた議会｜議会改革特別委員会のビジョン（提案の図解）</title>
+  <meta name="description" content="議会改革特別委員会が目指す『市民に開かれた議会』の2つの提案（人口連動の議員定数／持ち時間制）を図解でわかりやすくまとめたページです。" />
+  <style>
+    :root{
+      --bg: #0b1220;
+      --card:#0f1a33;
+      --card2:#0c1730;
+      --text:#eaf1ff;
+      --muted:#b6c4e5;
+      --line: rgba(255,255,255,.14);
+      --accent:#7cf7c2;
+      --accent2:#7aa7ff;
+      --warn:#ffd37a;
+      --shadow: 0 18px 50px rgba(0,0,0,.45);
+      --radius: 18px;
+      --max: 1100px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(1200px 700px at 15% 10%, rgba(122,167,255,.25), transparent 55%),
+        radial-gradient(900px 600px at 75% 15%, rgba(124,247,194,.18), transparent 60%),
+        radial-gradient(1100px 800px at 60% 90%, rgba(255,211,122,.12), transparent 55%),
+        linear-gradient(180deg, #070b14, #0b1220 25%, #070b14);
+      line-height:1.65;
+    }
+    a{color:inherit}
+    .wrap{max-width: var(--max); margin: 0 auto; padding: 28px 18px 72px;}
+    header{
+      position:relative;
+      padding: 22px 0 10px;
+    }
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      padding: 10px 14px;
+      border:1px solid var(--line);
+      background: rgba(15,26,51,.55);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+    .brand{
+      display:flex; align-items:center; gap: 10px;
+      font-weight: 800;
+      letter-spacing: .02em;
+      white-space:nowrap;
+    }
+    .brand svg{width:22px; height:22px}
+    .nav{
+      display:flex; align-items:center; gap: 10px; flex-wrap:wrap;
+      justify-content:flex-end;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .nav a{
+      text-decoration:none;
+      padding: 6px 10px;
+      border:1px solid transparent;
+      border-radius: 999px;
+      transition: .2s ease;
+    }
+    .nav a:hover{
+      border-color: var(--line);
+      color: var(--text);
+      background: rgba(255,255,255,.06);
+    }
+
+    .hero{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+    @media (max-width: 900px){
+      .hero{grid-template-columns: 1fr}
+    }
+    .hero-card{
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(15,26,51,.75), rgba(12,23,48,.55));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px 18px 16px;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-card:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(500px 220px at 15% 20%, rgba(122,167,255,.22), transparent 55%),
+        radial-gradient(500px 240px at 75% 5%, rgba(124,247,194,.18), transparent 60%);
+      pointer-events:none;
+      filter: blur(0px);
+    }
+    .hero-card > *{position:relative}
+    h1{
+      margin: 4px 0 10px;
+      font-size: clamp(22px, 3.2vw, 34px);
+      line-height:1.15;
+      letter-spacing: .01em;
+    }
+    .lead{
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 15.5px;
+      max-width: 68ch;
+    }
+    .pillrow{
+      display:flex; flex-wrap:wrap; gap: 10px;
+      margin: 12px 0 0;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      font-size: 13px;
+      white-space:nowrap;
+    }
+    .pill svg{width:16px;height:16px;opacity:.95}
+
+    .side{
+      display:grid; gap: 16px;
+    }
+    .kpi{
+      padding: 16px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(15,26,51,.55);
+      box-shadow: var(--shadow);
+    }
+    .kpi h2{
+      margin: 0 0 8px;
+      font-size: 16px;
+      letter-spacing:.02em;
+    }
+    .kpi .sub{color: var(--muted); font-size: 13.5px; margin: 0 0 10px;}
+    .kpi .row{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .stat{
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 10px 10px;
+      background: rgba(255,255,255,.04);
+      min-height: 74px;
+    }
+    .stat .label{color: var(--muted); font-size: 12px;}
+    .stat .value{
+      font-size: 20px;
+      font-weight: 850;
+      margin-top: 4px;
+      letter-spacing:.02em;
+    }
+    .stat .note{color: var(--muted); font-size: 12px; margin-top: 2px;}
+    .accent{color: var(--accent)}
+    .accent2{color: var(--accent2)}
+
+    main{margin-top: 18px; display:grid; gap: 16px;}
+    section.card{
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(15,26,51,.52);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card-head{
+      padding: 16px 16px 12px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), transparent);
+      display:flex; align-items:flex-start; justify-content:space-between; gap: 12px;
+    }
+    .card-head h2{margin:0; font-size: 18px; letter-spacing:.01em}
+    .card-head p{margin: 6px 0 0; color: var(--muted); font-size: 14px; max-width: 80ch;}
+    .card-body{padding: 16px;}
+    .grid2{display:grid; grid-template-columns: 1fr 1fr; gap: 14px;}
+    @media (max-width: 900px){ .grid2{grid-template-columns: 1fr;} }
+
+    .box{
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,.04);
+      padding: 14px;
+    }
+    .box h3{margin:0 0 8px; font-size: 15.5px}
+    .box p{margin:0; color: var(--muted); font-size: 14px}
+    .list{
+      margin: 10px 0 0;
+      padding: 0;
+      list-style:none;
+      display:grid;
+      gap: 10px;
+    }
+    .li{
+      display:flex; gap: 10px; align-items:flex-start;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(0,0,0,.10);
+      padding: 10px 10px;
+    }
+    .li svg{width:18px;height:18px;flex:0 0 auto; margin-top: 2px;}
+    .li div{color: var(--muted); font-size: 14px}
+    .li strong{color: var(--text); font-weight: 800}
+
+    .diagram{
+      border: 1px dashed rgba(255,255,255,.20);
+      background: rgba(0,0,0,.10);
+      border-radius: 16px;
+      padding: 12px;
+      overflow:auto;
+    }
+    .hint{
+      color: var(--muted);
+      font-size: 12.5px;
+      margin-top: 8px;
+    }
+
+    .calc{
+      display:grid; grid-template-columns: 1fr auto; gap: 10px; align-items:end;
+      margin-top: 10px;
+    }
+    @media (max-width: 520px){
+      .calc{grid-template-columns: 1fr;}
+    }
+    label{display:block; font-size: 13px; color: var(--muted); margin-bottom: 6px;}
+    input[type="number"]{
+      width:100%;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      outline:none;
+      font-family: var(--mono);
+      font-size: 14px;
+    }
+    .result{
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,.06);
+      min-width: 210px;
+    }
+    .result .big{
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing:.02em;
+    }
+    .result .small{
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .bar{
+      height: 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      overflow:hidden;
+      margin-top: 10px;
+    }
+    .bar > span{
+      display:block; height:100%;
+      width: 100%;
+      background: linear-gradient(90deg, rgba(122,167,255,.65), rgba(124,247,194,.70));
+    }
+    .barlegend{
+      display:flex; justify-content:space-between; gap: 12px;
+      margin-top: 8px; color: var(--muted); font-size: 12.5px;
+      flex-wrap:wrap;
+    }
+
+    .cta{
+      display:flex;
+      gap: 12px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      padding: 14px 16px;
+      border-top: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+    }
+    .cta .msg{color: var(--muted); font-size: 13.5px; max-width: 80ch;}
+    .btn{
+      display:inline-flex; align-items:center; gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(124,247,194,.12);
+      color: var(--text);
+      text-decoration:none;
+      font-weight: 800;
+      transition:.2s ease;
+      user-select:none;
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(124,247,194,.18);}
+    .btn svg{width:16px;height:16px}
+
+    footer{
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 12.5px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,.10);
+    }
+    .tag{
+      display:inline-block;
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      margin-left: 8px;
+      color: var(--muted);
+    }
+    @media print{
+      body{background:#fff; color:#111}
+      .topbar,.btn{box-shadow:none}
+      .hero-card,.kpi,section.card{box-shadow:none; background:#fff}
+      :root{--line: rgba(0,0,0,.18); --muted:#333; --text:#111}
+      a{color:#111}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="topbar" role="navigation" aria-label="ページ内ナビゲーション">
+        <div class="brand" aria-label="ページタイトル">
+          <!-- simple emblem -->
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 10.5L12 5l8 5.5v8.3c0 .6-.5 1.2-1.1 1.2H5.1c-.6 0-1.1-.6-1.1-1.2v-8.3Z" stroke="rgba(255,255,255,.85)" stroke-width="1.6"/>
+            <path d="M8 20V12.2c0-.6.5-1.1 1.1-1.1h5.8c.6 0 1.1.5 1.1 1.1V20" stroke="rgba(124,247,194,.95)" stroke-width="1.6"/>
+          </svg>
+          市民に開かれた議会
+          <span class="tag">図解ページ</span>
+        </div>
+        <div class="nav">
+          <a href="#vision">全体像</a>
+          <a href="#proposal1">提案① 定数</a>
+          <a href="#proposal2">提案② 持ち時間</a>
+          <a href="#summary">まとめ</a>
+        </div>
+      </div>
+
+      <div class="hero" id="vision">
+        <div class="hero-card" aria-label="概要">
+          <h1>「わかりやすい制度」×「全員が議論に参加」へ</h1>
+          <p class="lead">
+            議会改革特別委員会が目指す「市民に開かれた議会」の具体像として、主に2つの改革案が示されています。
+            1つは、人口に連動し、誰もが直感的に理解できる議員定数の基準づくり。
+            もう1つは、委員会で全議員が平等に発言できるようにする持ち時間制の導入です。
+          </p>
+
+          <div class="pillrow" aria-label="改革の柱">
+            <span class="pill">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v18" stroke="rgba(122,167,255,.95)" stroke-width="1.6"/>
+                <path d="M6 7h12" stroke="rgba(122,167,255,.95)" stroke-width="1.6"/>
+                <path d="M6 17h12" stroke="rgba(124,247,194,.95)" stroke-width="1.6"/>
+                <path d="M8 7v10" stroke="rgba(255,255,255,.75)" stroke-width="1.6"/>
+                <path d="M16 7v10" stroke="rgba(255,255,255,.75)" stroke-width="1.6"/>
+              </svg>
+              提案①：人口連動の定数基準
+            </span>
+            <span class="pill">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 7v6l4 2" stroke="rgba(124,247,194,.95)" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" stroke="rgba(255,255,255,.78)" stroke-width="1.6"/>
+              </svg>
+              提案②：委員会の持ち時間制
+            </span>
+            <span class="pill">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M7 12c0-3 2-5 5-5s5 2 5 5-2 5-5 5-5-2-5-5Z" stroke="rgba(255,255,255,.78)" stroke-width="1.6"/>
+                <path d="M9.5 12h5" stroke="rgba(255,211,122,.95)" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M12 9.5v5" stroke="rgba(255,211,122,.95)" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              ねらい：偏りを減らし、納得感を高める
+            </span>
+          </div>
+        </div>
+
+        <div class="side" aria-label="クイック指標">
+          <div class="kpi">
+            <h2>2つの提案の要点（ひと目で）</h2>
+            <p class="sub">「市民にとってのわかりやすさ」と「議員間の公平性」を同時に高める設計</p>
+
+            <div class="row">
+              <div class="stat">
+                <div class="label">定数の基準</div>
+                <div class="value"><span class="accent2">人口1万人</span>につき<span class="accent">議員1人</span></div>
+                <div class="note">人口増減に連動して見直し</div>
+              </div>
+              <div class="stat">
+                <div class="label">発言の公平性</div>
+                <div class="value">委員会に<span class="accent">持ち時間制</span></div>
+                <div class="note">特定議員への偏りを抑制</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi">
+            <h2>ページ内でできること</h2>
+            <p class="sub">人口入力で「議員定数」を試算（1万人→1人）</p>
+            <div class="calc" aria-label="人口から議員定数を計算">
+              <div>
+                <label for="pop">人口（人）</label>
+                <input id="pop" type="number" min="0" step="1000" value="250000" inputmode="numeric" />
+              </div>
+              <div class="result" aria-live="polite">
+                <div class="big">議員定数：<span id="seats">25</span>人</div>
+                <div class="small">計算：人口 ÷ 10,000（四捨五入）</div>
+              </div>
+            </div>
+            <div class="hint">※ このページでは「人口1万人に対して議員1人」という提案の“わかりやすさ”を体感できるよう、簡易計算を載せています。</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Proposal 1 -->
+      <section class="card" id="proposal1" aria-labelledby="p1-title">
+        <div class="card-head">
+          <div>
+            <h2 id="p1-title">提案①：人口に連動した「分かりやすい議員定数」</h2>
+            <p>
+              市民の誰もが理解しやすい基準として「人口1万人に対して議員1人」を採用し、
+              人口の増減に合わせて5年後・10年後などの節目で自然に定数が見直される仕組みを目指します。
+            </p>
+          </div>
+          <div aria-hidden="true" style="min-width:160px; text-align:right;">
+            <span class="pill">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M4 20h16" stroke="rgba(255,255,255,.75)" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M6 17V7" stroke="rgba(122,167,255,.95)" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M12 17V4" stroke="rgba(124,247,194,.95)" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M18 17V10" stroke="rgba(255,211,122,.95)" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              直感で理解
+            </span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="grid2">
+            <div class="box">
+              <h3>ポイント（市民目線のわかりやすさ）</h3>
+              <ul class="list">
+                <li class="li">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 3v18" stroke="rgba(255,255,255,.75)" stroke-width="1.6" stroke-linecap="round"/>
+                    <path d="M5 8h14" stroke="rgba(122,167,255,.95)" stroke-width="1.6" stroke-linecap="round"/>
+                    <path d="M7 16h10" stroke="rgba(124,247,194,.95)" stroke-width="1.6" stroke-linecap="round"/>
+                  </svg>
+                  <div><strong>基準を一本化</strong>：「人口1万人→議員1人」で説明がシンプル</div>
+                </li>
+                <li class="li">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M7 7h10v10H7z" stroke="rgba(255,255,255,.75)" stroke-width="1.6"/>
+                    <path d="M7 10h10" stroke="rgba(124,247,194,.95)" stroke-width="1.6"/>
+                    <path d="M10 7v10" stroke="rgba(122,167,255,.95)" stroke-width="1.6"/>
+                  </svg>
+                  <div><strong>人口増減と連動</strong>：将来の人口に応じて自然に定数を見直す</div>
+                </li>
+                <li class="li">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 2l3 6 7 .9-5 4.7 1.3 6.9L12 17.8 5.7 20.5 7 13.6 2 8.9 9 8z" stroke="rgba(255,211,122,.95)" stroke-width="1.3" fill="rgba(255,211,122,.10)"/>
+                  </svg>
+                  <div><strong>要望も踏まえる</strong>：町会連合会などの「定数削減」要望も背景に</div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="box">
+              <h3>図解：人口→定数が決まるイメージ</h3>
+              <div class="diagram" role="img" aria-label="人口1万人に対して議員1人の図解">
+                <!-- Inline SVG diagram -->
+                <svg viewBox="0 0 860 260" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0" stop-color="rgba(122,167,255,.9)"/>
+                      <stop offset="1" stop-color="rgba(124,247,194,.9)"/>
+                    </linearGradient>
+                    <style>
+                      .s{font-family: ui-sans-serif, system-ui, -apple-system, "Noto Sans JP", sans-serif;}
+                      .t1{fill: rgba(234,241,255,.95); font-weight: 800; font-size: 18px;}
+                      .t2{fill: rgba(182,196,229,.95); font-size: 14px;}
+                      .box{fill: rgba(255,255,255,.05); stroke: rgba(255,255,255,.20); stroke-width: 1.2;}
+                      .arrow{stroke: rgba(255,255,255,.55); stroke-width: 2; fill:none; stroke-linecap:round; stroke-linejoin:round;}
+                      .accent{fill:url(#g1);}
+                      .chip{fill: rgba(0,0,0,.18); stroke: rgba(255,255,255,.18); stroke-width: 1;}
+                    </style>
+                  </defs>
+
+                  <!-- Left: population -->
+                  <rect x="20" y="35" width="260" height="190" rx="18" class="box"/>
+                  <text x="44" y="70" class="s t1">人口（人）</text>
+                  <text x="44" y="96" class="s t2">例：草加市</text>
+
+                  <!-- People icons -->
+                  <g transform="translate(44,120)">
+                    <g opacity=".95">
+                      <circle cx="18" cy="16" r="10" fill="rgba(122,167,255,.85)"/>
+                      <rect x="6" y="30" width="24" height="38" rx="10" fill="rgba(122,167,255,.35)"/>
+                    </g>
+                    <g transform="translate(52,0)" opacity=".95">
+                      <circle cx="18" cy="16" r="10" fill="rgba(124,247,194,.85)"/>
+                      <rect x="6" y="30" width="24" height="38" rx="10" fill="rgba(124,247,194,.35)"/>
+                    </g>
+                    <g transform="translate(104,0)" opacity=".95">
+                      <circle cx="18" cy="16" r="10" fill="rgba(255,211,122,.90)"/>
+                      <rect x="6" y="30" width="24" height="38" rx="10" fill="rgba(255,211,122,.30)"/>
+                    </g>
+                    <text x="0" y="95" class="s t2">人口が増減 → 定数も増減</text>
+                  </g>
+
+                  <!-- Middle formula -->
+                  <rect x="315" y="35" width="230" height="190" rx="18" class="box"/>
+                  <text x="338" y="70" class="s t1">基準</text>
+                  <rect x="338" y="92" width="184" height="44" rx="12" class="chip"/>
+                  <text x="352" y="121" class="s t1" style="font-size:16px;">人口 1万人 → 議員 1人</text>
+                  <text x="338" y="162" class="s t2">計算イメージ</text>
+                  <text x="338" y="188" class="s t1" style="font-size:16px;">人口 ÷ 10,000 = 定数</text>
+
+                  <!-- Arrows -->
+                  <path d="M280 130 C 300 130, 300 130, 315 130" class="arrow"/>
+                  <path d="M545 130 C 565 130, 565 130, 580 130" class="arrow"/>
+
+                  <!-- Right seats -->
+                  <rect x="580" y="35" width="260" height="190" rx="18" class="box"/>
+                  <text x="604" y="70" class="s t1">議員定数（人）</text>
+
+                  <!-- Seats icons -->
+                  <g transform="translate(604,92)">
+                    <rect x="0" y="0" width="210" height="18" rx="9" class="chip"/>
+                    <rect x="0" y="30" width="170" height="18" rx="9" class="chip"/>
+                    <rect x="0" y="60" width="190" height="18" rx="9" class="chip"/>
+                    <text x="0" y="110" class="s t2">例：人口25万人 → 25人</text>
+                    <text x="0" y="134" class="s t2">人口26万人 → 26人</text>
+                  </g>
+
+                  <!-- Accent line -->
+                  <rect x="20" y="228" width="820" height="6" rx="3" class="accent" opacity=".85"/>
+                </svg>
+              </div>
+              <p class="hint">
+                「人口25万人なら25人、将来26万人なら26人」というように、説明が単純で、市民が変化を追いやすい設計を意図しています。
+              </p>
+            </div>
+          </div>
+
+          <div class="cta">
+            <div class="msg">
+              この仕組みの狙いは、定数の議論を“専門的な駆け引き”にしないこと。市民が理解しやすく、人口変動に合わせて見直しやすい基準に寄せます。
+            </div>
+            <a class="btn" href="#proposal2">
+              次の提案へ（持ち時間制）
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" stroke="rgba(255,255,255,.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Proposal 2 -->
+      <section class="card" id="proposal2" aria-labelledby="p2-title">
+        <div class="card-head">
+          <div>
+            <h2 id="p2-title">提案②：全議員が平等に発言できる「持ち時間制」</h2>
+            <p>
+              委員会に持ち時間制を導入し、特定の議員だけが偏って多く質問する状況を避け、
+              各議員が自分の持ち時間の範囲で発言できるようにします。26人の議員全員が、平等かつしっかり意見を述べられる仕組みを目指します。
+            </p>
+          </div>
+          <div aria-hidden="true" style="min-width:160px; text-align:right;">
+            <span class="pill">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M4 8h16" stroke="rgba(255,255,255,.75)" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M7 12h10" stroke="rgba(122,167,255,.95)" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M10 16h4" stroke="rgba(124,247,194,.95)" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              発言の公平性
+            </span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="grid2">
+            <div class="box">
+              <h3>ポイント（議論の偏りを減らす）</h3>
+              <ul class="list">
+                <li class="li">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M7 8c0-2.2 2-4 5-4s5 1.8 5 4-2 4-5 4-5-1.8-5-4Z" stroke="rgba(255,255,255,.75)" stroke-width="1.6"/>
+                    <path d="M5 20c.8-3.5 4-6 7-6s6.2 2.5 7 6" stroke="rgba(124,247,194,.95)" stroke-width="1.6" stroke-linecap="round"/>
+                  </svg>
+                  <div><strong>全員参加</strong>：26人全員が「自分の枠」で発言できる</div>
+                </li>
+                <li class="li">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 7v6l4 2" stroke="rgba(124,247,194,.95)" stroke-width="1.6" stroke-linecap="round"/>
+                    <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" stroke="rgba(255,255,255,.78)" stroke-width="1.6"/>
+                  </svg>
+                  <div><strong>偏りの抑制</strong>：特定議員だけが質問を独占しにくい</div>
+                </li>
+                <li class="li">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M6 8h12v8H10l-4 3v-3H6V8Z" stroke="rgba(122,167,255,.95)" stroke-width="1.6" stroke-linejoin="round"/>
+                    <path d="M9 11h6" stroke="rgba(255,255,255,.75)" stroke-width="1.6" stroke-linecap="round"/>
+                    <path d="M9 14h4" stroke="rgba(255,255,255,.75)" stroke-width="1.6" stroke-linecap="round"/>
+                  </svg>
+                  <div><strong>意見の可視化</strong>：誰が何を論点にしたかが追いやすい</div>
+                </li>
+              </ul>
+
+              <div class="bar" aria-label="発言機会が平準化されるイメージ">
+                <span></span>
+              </div>
+              <div class="barlegend">
+                <span>従来：発言が偏る可能性</span>
+                <span>→</span>
+                <span>持ち時間制：全員に枠がある</span>
+              </div>
+            </div>
+
+            <div class="box">
+              <h3>図解：持ち時間制の流れ（委員会）</h3>
+              <div class="diagram" role="img" aria-label="持ち時間制のフロー図">
+                <svg viewBox="0 0 860 270" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <style>
+                      .s{font-family: ui-sans-serif, system-ui, -apple-system, "Noto Sans JP", sans-serif;}
+                      .t1{fill: rgba(234,241,255,.95); font-weight: 800; font-size: 16px;}
+                      .t2{fill: rgba(182,196,229,.95); font-size: 13px;}
+                      .box{fill: rgba(255,255,255,.05); stroke: rgba(255,255,255,.20); stroke-width: 1.2;}
+                      .arrow{stroke: rgba(255,255,255,.55); stroke-width: 2; fill:none; stroke-linecap:round; stroke-linejoin:round;}
+                      .chip{fill: rgba(0,0,0,.18); stroke: rgba(255,255,255,.18); stroke-width: 1;}
+                      .a{fill: rgba(122,167,255,.95);}
+                      .b{fill: rgba(124,247,194,.95);}
+                      .c{fill: rgba(255,211,122,.95);}
+                    </style>
+                  </defs>
+
+                  <rect x="20" y="40" width="260" height="190" rx="18" class="box"/>
+                  <text x="44" y="74" class="s t1">① 全議員に持ち時間を設定</text>
+                  <text x="44" y="102" class="s t2">誰かに偏らない「枠」を用意</text>
+                  <g transform="translate(44,120)">
+                    <rect x="0" y="0" width="190" height="18" rx="9" class="chip"/>
+                    <rect x="0" y="28" width="160" height="18" rx="9" class="chip"/>
+                    <rect x="0" y="56" width="180" height="18" rx="9" class="chip"/>
+                    <text x="0" y="106" class="s t2">例：各議員が自分の持ち時間で発言</text>
+                  </g>
+
+                  <path d="M280 135 C 310 135, 310 135, 330 135" class="arrow"/>
+                  <path d="M560 135 C 590 135, 590 135, 610 135" class="arrow"/>
+
+                  <rect x="330" y="40" width="230" height="190" rx="18" class="box"/>
+                  <text x="354" y="74" class="s t1">② 持ち時間を使って質疑</text>
+                  <text x="354" y="102" class="s t2">質問の“独占”を抑制</text>
+                  <g transform="translate(354,124)">
+                    <circle cx="18" cy="14" r="10" class="a" opacity=".9"/>
+                    <rect x="6" y="28" width="24" height="36" rx="10" fill="rgba(122,167,255,.35)"/>
+                    <circle cx="70" cy="14" r="10" class="b" opacity=".9"/>
+                    <rect x="58" y="28" width="24" height="36" rx="10" fill="rgba(124,247,194,.35)"/>
+                    <circle cx="122" cy="14" r="10" class="c" opacity=".95"/>
+                    <rect x="110" y="28" width="24" height="36" rx="10" fill="rgba(255,211,122,.30)"/>
+                    <text x="0" y="96" class="s t2">複数の視点が並びやすくなる</text>
+                  </g>
+
+                  <rect x="610" y="40" width="230" height="190" rx="18" class="box"/>
+                  <text x="634" y="74" class="s t1">③ 全員が議論に参加</text>
+                  <text x="634" y="102" class="s t2">26人全員が意見表明しやすい</text>
+                  <g transform="translate(634,124)">
+                    <path d="M0 18h120" stroke="rgba(255,255,255,.28)" stroke-width="10" stroke-linecap="round"/>
+                    <path d="M0 18h120" stroke="rgba(124,247,194,.75)" stroke-width="10" stroke-linecap="round"/>
+                    <text x="0" y="54" class="s t2">発言機会の“均等化”を狙う</text>
+                    <text x="0" y="78" class="s t2">→ 議論の納得感・透明感へ</text>
+                  </g>
+
+                  <rect x="20" y="232" width="820" height="6" rx="3" fill="rgba(122,167,255,.7)"/>
+                  <rect x="430" y="232" width="410" height="6" rx="3" fill="rgba(124,247,194,.75)"/>
+                </svg>
+              </div>
+              <p class="hint">
+                「誰が多く話すか」より「全員が何を論点にするか」へ重心を移し、偏りを抑えつつ議論の質を整える考え方です。
+              </p>
+            </div>
+          </div>
+
+          <div class="cta">
+            <div class="msg">
+              2つの改革（定数の分かりやすさ／発言機会の公平性）を組み合わせ、特定の議員に偏らず、市民が理解しやすい議会を目指すのが特別委員会の姿です。
+            </div>
+            <a class="btn" href="#summary">
+              まとめへ
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" stroke="rgba(255,255,255,.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Summary -->
+      <section class="card" id="summary" aria-labelledby="sum-title">
+        <div class="card-head">
+          <div>
+            <h2 id="sum-title">まとめ：特別委員会が目指す「市民に開かれた議会」</h2>
+            <p>
+              「制度のわかりやすさ」と「議論の公平性」を同時に高めることで、全員が議論に参加し、市民にも伝わる議会運営を目指します。
+            </p>
+          </div>
+          <div aria-hidden="true" style="min-width:160px; text-align:right;">
+            <span class="pill">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3Z" stroke="rgba(255,255,255,.75)" stroke-width="1.6"/>
+                <path d="M8 12l2.5 2.5L16 9" stroke="rgba(124,247,194,.95)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              目指す姿
+            </span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="grid2">
+            <div class="box">
+              <h3>ゴール（短く言うと）</h3>
+              <p>
+                <strong>特定の議員に偏ることなく全員が議論に参加</strong>し、かつ<strong>市民の誰もが理解しやすい制度</strong>を持った議会へ。
+              </p>
+              <ul class="list" style="margin-top:12px;">
+                <li class="li">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M4 12h16" stroke="rgba(122,167,255,.95)" stroke-width="1.6" stroke-linecap="round"/>
+                    <path d="M12 4v16" stroke="rgba(124,247,194,.95)" stroke-width="1.6" stroke-linecap="round"/>
+                  </svg>
+                  <div><strong>分かりやすい基準</strong>：人口連動の定数（説明しやすい）</div>
+                </li>
+                <li class="li">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M6 8h12v8H10l-4 3v-3H6V8Z" stroke="rgba(255,255,255,.78)" stroke-width="1.6" stroke-linejoin="round"/>
+                    <path d="M9 12h6" stroke="rgba(255,211,122,.95)" stroke-width="1.6" stroke-linecap="round"/>
+                  </svg>
+                  <div><strong>平等な発言機会</strong>：持ち時間制（議論の偏りを抑える）</div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="box">
+              <h3>ページの使い方</h3>
+              <p>
+                右上の「人口（人）」入力欄で、人口が変わったときに定数がどう変わるかを試せます。
+                提案の“直感的な伝わり方”を体感するための簡易機能です。
+              </p>
+              <p class="hint">
+                ご希望があれば、<strong>草加市を想定した例のパネル（25万人/26万人）</strong>をさらに強調した版、
+                あるいは<strong>委員会の持ち時間配分例（例：1人あたり◯分）</strong>を入れた版にも調整できます。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div>
+        注記：本ページは、ユーザー提供の文章に基づき、内容の理解を助けるために図解・レイアウト化したサンプルHTMLです（外部画像は使用せず、SVGで構成）。
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function(){
+      const pop = document.getElementById('pop');
+      const seats = document.getElementById('seats');
+
+      function calc(){
+        const p = Math.max(0, Number(pop.value || 0));
+        // 提案の「人口1万人に対して議員1人」を体感するため、四捨五入で表示
+        const s = Math.round(p / 10000);
+        seats.textContent = String(s);
+      }
+
+      pop.addEventListener('input', calc);
+      calc();
+    })();
+  </script>
+</body>
+</html>

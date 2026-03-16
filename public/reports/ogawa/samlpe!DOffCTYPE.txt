@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webサイト リニューアル提案資料</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1D4ED8', /* blue-700 */
+                        secondary: '#0F172A', /* slate-900 */
+                        accent: '#F59E0B', /* amber-500 */
+                    },
+                    fontFamily: {
+                        sans: ['"Helvetica Neue"', 'Arial', '"Hiragino Kaku Gothic ProN"', '"Hiragino Sans"', 'Meiryo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .slide-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        
+        /* Glassmorphism card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-gray-800 leading-relaxed tracking-wide">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm fixed w-full top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-primary flex items-center">
+                <i class="fas fa-landmark text-2xl mr-3"></i>
+                草加市議会 自民党会派
+            </h1>
+            <div class="text-sm font-semibold px-4 py-1.5 bg-blue-50 text-primary rounded-full">
+                2026年度 リニューアル計画
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24 pb-12">
+        <!-- Hero Section -->
+        <section class="max-w-5xl mx-auto px-4 py-16 text-center slide-fade-in">
+            <div class="inline-block px-4 py-2 bg-gradient-to-r from-blue-100 to-indigo-100 text-primary rounded-full text-sm font-bold mb-6">
+                Official Website Renewal Proposal
+            </div>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-secondary mb-6 leading-tight">
+                市民に寄り添い、<br class="md:hidden">未来を共に創る<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">新しいデジタル拠点</span>
+            </h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
+                現在の開発状況（Next.js基盤）を活かし、情報発信にとどまらず、市民の皆さまとの双方向のコミュニケーションを深める、開かれた議会・会派を実現するためのプラットフォームを構築します。
+            </p>
+            <div class="flex justify-center gap-4">
+                <a href="#details" class="px-8 py-4 bg-primary text-white rounded-xl font-bold hover:bg-blue-800 transition shadow-lg shadow-blue-500/30">
+                    具体的な機能を見る
+                </a>
+            </div>
+        </section>
+
+        <!-- Current Issues & Objectives -->
+        <section class="max-w-6xl mx-auto px-4 py-12 slide-fade-in delay-100">
+            <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 border border-gray-100">
+                <div class="flex items-center justify-center mb-10 text-center">
+                    <h3 class="text-3xl font-bold text-secondary">リニューアルの3つの柱</h3>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Point 1 -->
+                    <div class="border border-gray-100 rounded-2xl p-8 bg-slate-50 hover:bg-white hover:shadow-xl transition-all duration-300 group">
+                        <div class="w-16 h-16 bg-blue-100 text-primary rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3 text-secondary">最新のUI / UX</h4>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            スマートフォンでの表示を最優先としたモダンなデザインを採用。表示速度を飛躍的に向上させ、どの世代の方でも直感的に操作できる快適なユーザー体験を提供します。
+                        </p>
+                    </div>
+                    <!-- Point 2 -->
+                    <div class="border border-gray-100 rounded-2xl p-8 bg-slate-50 hover:bg-white hover:shadow-xl transition-all duration-300 group">
+                        <div class="w-16 h-16 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3 text-secondary">Visual Reportの導入</h4>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            テキストだけでは伝わりにくい議会の実績や市政のデータを、グラフや図解（Visual Report技術）を用いて分かりやすく視覚化。説得力のある発信を実現します。
+                        </p>
+                    </div>
+                    <!-- Point 3 -->
+                    <div class="border border-gray-100 rounded-2xl p-8 bg-slate-50 hover:bg-white hover:shadow-xl transition-all duration-300 group">
+                        <div class="w-16 h-16 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3 text-secondary">議員の「顔」が見える化</h4>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            議員ごとの専用ページを拡充。日々の活動報告や動画メッセージと連動し、個々の議員の熱意と政策が市民へダイレクトに伝わる構造を作ります。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Features -->
+        <section id="details" class="max-w-6xl mx-auto px-4 py-16 slide-fade-in delay-200">
+            <h3 class="text-3xl font-bold text-center text-secondary mb-12">開発中の主要コンテンツ</h3>
+            
+            <div class="space-y-8">
+                <!-- Feature 1 -->
+                <div class="flex flex-col md:flex-row items-center gap-10 bg-white p-8 md:p-10 rounded-3xl shadow-md border border-gray-100">
+                    <div class="w-full md:w-1/2">
+                        <div class="bg-slate-100 rounded-2xl h-64 flex items-center justify-center text-gray-400 relative overflow-hidden group">
+                            <i class="fas fa-address-card text-7xl opacity-40 group-hover:scale-110 transition-transform duration-500"></i>
+                            <div class="absolute bottom-4 left-4 right-4 bg-white/80 backdrop-blur-sm p-3 rounded-lg text-xs font-mono text-gray-500">
+                                /src/app/members/[id]/page.tsx<br>
+                                /src/app/members/MembersClient.tsx
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <div class="inline-block px-3 py-1 bg-blue-100 text-primary rounded-md text-xs font-bold mb-3">Members</div>
+                        <h4 class="text-2xl font-bold text-secondary mb-4">メンバープロフィールと活動集約</h4>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            各議員の政策理念、直近の活動報告、SNSリンクを一つのページに集約します。リッチな写真と動画で、有権者が知りたい情報へ最短でアクセス可能なデザインを実現。
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-center text-gray-700 font-medium">
+                                <span class="w-6 h-6 rounded-full bg-blue-100 text-primary flex items-center justify-center mr-3 text-sm"><i class="fas fa-check"></i></span>
+                                個別活動レポートの動的ルーティング
+                            </li>
+                            <li class="flex items-center text-gray-700 font-medium">
+                                <span class="w-6 h-6 rounded-full bg-blue-100 text-primary flex items-center justify-center mr-3 text-sm"><i class="fas fa-check"></i></span>
+                                各SNSとのシームレスな統合
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="flex flex-col md:flex-row-reverse items-center gap-10 bg-white p-8 md:p-10 rounded-3xl shadow-md border border-gray-100">
+                    <div class="w-full md:w-1/2">
+                        <div class="bg-slate-100 rounded-2xl h-64 flex items-center justify-center text-gray-400 relative overflow-hidden group">
+                            <i class="fas fa-chart-line text-7xl opacity-40 group-hover:scale-110 transition-transform duration-500"></i>
+                            <div class="absolute bottom-4 left-4 right-4 bg-white/80 backdrop-blur-sm p-3 rounded-lg text-xs font-mono text-gray-500">
+                                /src/components/VisualReport.tsx
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <div class="inline-block px-3 py-1 bg-green-100 text-green-700 rounded-md text-xs font-bold mb-3">Components</div>
+                        <h4 class="text-2xl font-bold text-secondary mb-4">ビジュアル・レポート（レポートの視覚化）</h4>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            新しいコンポーネントシステムにより、実績や市の予算、政策の進捗をインフォグラフィックで鮮やかに表現。文字を読むのが苦手な方にも一目で伝わります。
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="flex flex-col md:flex-row items-center gap-10 bg-white p-8 md:p-10 rounded-3xl shadow-md border border-gray-100">
+                    <div class="w-full md:w-1/2">
+                        <div class="bg-slate-100 rounded-2xl h-64 flex items-center justify-center text-gray-400 relative overflow-hidden group">
+                            <i class="fas fa-hands-helping text-7xl opacity-40 group-hover:scale-110 transition-transform duration-500"></i>
+                            <div class="absolute bottom-4 left-4 right-4 bg-white/80 backdrop-blur-sm p-3 rounded-lg text-xs font-mono text-gray-500">
+                                /src/app/support/page.tsx<br>
+                                /src/app/about/page.tsx
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <div class="inline-block px-3 py-1 bg-orange-100 text-orange-700 rounded-md text-xs font-bold mb-3">Support & About</div>
+                        <h4 class="text-2xl font-bold text-secondary mb-4">市民サポート＆会派理念の明確化</h4>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            会派としての基本方針や相談窓口を明確に打ち出し、市民の皆さまからのご意見・ご要望を受け止めるオンライン導線を強化。寄り添う姿勢をサイト全体で体現します。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Expected Effects -->
+        <section class="max-w-6xl mx-auto px-4 py-12 slide-fade-in delay-300">
+            <div class="bg-secondary text-white rounded-3xl shadow-2xl p-10 md:p-16 text-center overflow-hidden relative">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-50 transform translate-x-1/2 -translate-y-1/2"></div>
+                <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-50 transform -translate-x-1/2 translate-y-1/2"></div>
+                
+                <h3 class="text-3xl font-bold mb-10 relative z-10">リニューアルによる期待される提供価値</h3>
+                <div class="grid md:grid-cols-4 gap-6 relative z-10">
+                    <div class="glass-card p-6 rounded-2xl">
+                        <div class="text-5xl font-extrabold text-blue-400 mb-2 font-mono">30<span class="text-2xl">%</span></div>
+                        <div class="text-sm text-gray-300 font-medium">若年層リーチ向上<br>(スマホ対応効果)</div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl">
+                        <div class="text-5xl font-extrabold text-blue-400 mb-2 font-mono">100<span class="text-2xl">%</span></div>
+                        <div class="text-sm text-gray-300 font-medium">各種デバイス<br>最適化完了</div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl">
+                        <div class="text-5xl font-extrabold text-blue-400 mb-2 font-mono">24<span class="text-2xl">h</span></div>
+                        <div class="text-sm text-gray-300 font-medium">市政窓口としての<br>常時稼働</div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl">
+                        <div class="text-4xl font-extrabold text-blue-400 mb-3 mt-1"><i class="fas fa-tachometer-alt"></i></div>
+                        <div class="text-sm text-gray-300 font-medium">高速表示による<br>離脱率減少</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-100 text-gray-500 py-10 text-center text-sm border-t border-gray-200">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-lg font-bold text-gray-700 mb-2"><i class="fas fa-leaf mr-2"></i>草加市議会 自民党会派</h2>
+            <p>&copy; 2026 Soka City Council LDP Faction Website Renewal Project.</p>
+            <p class="mt-4 text-xs tracking-widest text-gray-400">P R E S E N T A T I O N &nbsp; M A T E R I A L</p>
+        </div>
+    </footer>
+
+</body>
+</html>

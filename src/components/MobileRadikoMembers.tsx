@@ -27,53 +27,74 @@ const SLIDE_LEN = slides.length;
 const tripleSlides = [...slides, ...slides, ...slides];
 const TRIPLE_START = SLIDE_LEN; // 中間の1/3から開始
 
+// カード1枚あたりの水平占有幅（幅 + 左右マージン各8px）
+const CARD_STEP = CARD_W + 16;
+
 export default function MobileRadikoMembers() {
     const carouselRef = useRef<HTMLDivElement>(null);
     // tripleSlides上のインデックス（中間からスタート）
     const [tripleIndex, setTripleIndex] = useState(TRIPLE_START);
+    const tripleIndexRef = useRef(TRIPLE_START); // インターバル内のステールクロージャ対策
     const [isPaused, setIsPaused] = useState(false);
     const isPausedRef = useRef(false);
+    const isProgrammaticScrollRef = useRef(false); // プログラム的スクロール中フラグ
+    const programmaticScrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     // 表示上のアクティブ議員はtripleIndexをSLIDE_LENで割った余りで判定
     const activeIndex = tripleIndex % SLIDE_LEN;
     const activeMember = slides[activeIndex]?.member;
     const activeType = slides[activeIndex]?.type;
 
-    // 指定インデックスまでスムーズスクロール
+    // 指定インデックスまでスクロール（BoundingClientRect不使用・数学計算で確定位置へ）
     const scrollToIndex = (index: number, smooth = true) => {
         const el = carouselRef.current;
         if (!el) return;
-        const items = el.querySelectorAll<HTMLElement>(".rc-item");
-        if (!items[index]) return;
-        const itemRect = items[index].getBoundingClientRect();
-        const containerRect = el.getBoundingClientRect();
-        const offset = itemRect.left - containerRect.left - (el.offsetWidth / 2 - items[index].offsetWidth / 2);
+        // scrollLeft = index * CARD_STEP + 左マージン8px
+        // （左スペーサーはちょうど50vw-CARD_W/2なので打ち消される）
+        const targetLeft = index * CARD_STEP + 8;
+
+        isProgrammaticScrollRef.current = true;
+        if (programmaticScrollTimerRef.current) clearTimeout(programmaticScrollTimerRef.current);
+
         if (!smooth) {
-            el.scrollLeft += offset;
+            el.style.scrollBehavior = "auto";
+            el.scrollLeft = targetLeft;
+            requestAnimationFrame(() => { el.style.scrollBehavior = ""; });
+            isProgrammaticScrollRef.current = false;
         } else {
-            el.scrollBy({ left: offset, behavior: "smooth" });
+            el.scrollTo({ left: targetLeft, behavior: "smooth" });
+            // スムーズスクロール完了後（約400ms）にフラグ解除
+            programmaticScrollTimerRef.current = setTimeout(() => {
+                isProgrammaticScrollRef.current = false;
+            }, 450);
         }
     };
 
-    // スクロール監視 → 中央に最も近いカードのtripleIndexを更新
+    // インデックスを更新してスクロール（ref・state両方を同期）
+    const goToIndex = (index: number, smooth = true) => {
+        tripleIndexRef.current = index;
+        setTripleIndex(index);
+        scrollToIndex(index, smooth);
+    };
+
+    // スクロール監視 → 手動スワイプ時のみ中央カードを特定してインデックス更新
     useEffect(() => {
         const el = carouselRef.current;
         if (!el) return;
         const onScroll = () => {
-            const center = el.getBoundingClientRect().left + el.offsetWidth / 2;
-            let closest = TRIPLE_START;
-            let minDist = Infinity;
-            el.querySelectorAll<HTMLElement>(".rc-item").forEach((item, i) => {
-                const rect = item.getBoundingClientRect();
-                const dist = Math.abs(center - (rect.left + rect.width / 2));
-                if (dist < minDist) { minDist = dist; closest = i; }
-            });
-            setTripleIndex(closest);
+            // プログラム的スクロール中は無視（飛び越しの原因になるため）
+            if (isProgrammaticScrollRef.current) return;
+            const scrollLeft = el.scrollLeft;
+            const closest = Math.round((scrollLeft - 8) / CARD_STEP);
+            const clamped = Math.max(0, Math.min(tripleSlides.length - 1, closest));
+            if (clamped !== tripleIndexRef.current) {
+                tripleIndexRef.current = clamped;
+                setTripleIndex(clamped);
+            }
         };
         el.addEventListener("scroll", onScroll, { passive: true });
         // 初期表示：中間の1/3に移動（瞬時）
         setTimeout(() => scrollToIndex(TRIPLE_START, false), 50);
-        setTimeout(onScroll, 100);
         return () => el.removeEventListener("scroll", onScroll);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -81,29 +102,24 @@ export default function MobileRadikoMembers() {
     // 端に近づいたら瞬時に中間の対応位置へリセット
     useEffect(() => {
         if (tripleIndex <= 2 || tripleIndex >= SLIDE_LEN * 2 + SLIDE_LEN - 3) {
-            // 対応する中間の位置（activeIndexを維持）
             const resetIndex = TRIPLE_START + (tripleIndex % SLIDE_LEN);
             setTimeout(() => {
-                scrollToIndex(resetIndex, false);
-                setTripleIndex(resetIndex);
-            }, 400); // スクロールアニメが終わった後にリセット
+                goToIndex(resetIndex, false);
+            }, 420);
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [tripleIndex]);
 
-    // 自動スクロール（6秒ごとに次へ。一方通行で無限続く）
+    // 自動スクロール（6秒ごとに次へ）
     const autoScrollRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const startAutoScroll = () => {
         if (autoScrollRef.current) clearInterval(autoScrollRef.current);
-        if (isPausedRef.current) return; // 一時停止中はセットしない
+        if (isPausedRef.current) return;
         autoScrollRef.current = setInterval(() => {
-            if (isPausedRef.current) return; // インターバル内でも確認
-            setTripleIndex((prev) => {
-                const next = prev + 1;
-                scrollToIndex(next);
-                return next;
-            });
+            if (isPausedRef.current) return;
+            const next = tripleIndexRef.current + 1; // refで最新値を参照
+            goToIndex(next);
         }, 6000);
     };
 
@@ -123,7 +139,7 @@ export default function MobileRadikoMembers() {
 
     // 手動クリックで移動
     const goTo = (index: number) => {
-        scrollToIndex(index);
+        goToIndex(index);
     };
 
     return (
@@ -147,11 +163,7 @@ export default function MobileRadikoMembers() {
                     {/* 左クリックゾーン：前へ */}
                     {tripleIndex > 0 && (
                         <button
-                            onClick={() => {
-                                const next = tripleIndex - 1;
-                                scrollToIndex(next);
-                                setTripleIndex(next);
-                            }}
+                            onClick={() => goToIndex(tripleIndex - 1)}
                             className="absolute left-0 top-0 bottom-0 z-20"
                             style={{ width: "28%", background: "transparent" }}
                             aria-label="前の議員へ"
@@ -160,11 +172,7 @@ export default function MobileRadikoMembers() {
                     {/* 右クリックゾーン：次へ */}
                     {tripleIndex < tripleSlides.length - 1 && (
                         <button
-                            onClick={() => {
-                                const next = tripleIndex + 1;
-                                scrollToIndex(next);
-                                setTripleIndex(next);
-                            }}
+                            onClick={() => goToIndex(tripleIndex + 1)}
                             className="absolute right-0 top-0 bottom-0 z-20"
                             style={{ width: "28%", background: "transparent" }}
                             aria-label="次の議員へ"
@@ -267,14 +275,21 @@ export default function MobileRadikoMembers() {
                             if (!next) startAutoScroll(); // 再稼働
                             else if (autoScrollRef.current) clearInterval(autoScrollRef.current); // 停止
                         }}
-                        className="w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-black transition-all active:scale-90"
+                        className="h-8 px-3 rounded-full flex items-center gap-2 text-[10px] font-black tracking-tighter transition-all active:scale-95 shadow-lg overflow-hidden group"
                         style={{
-                            background: isPaused ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.12)",
-                            border: "1px solid rgba(255,255,255,0.25)",
+                            background: isPaused ? "rgba(239, 68, 68, 0.25)" : "rgba(34, 197, 94, 0.25)",
+                            border: `1px solid ${isPaused ? "rgba(239, 68, 68, 0.4)" : "rgba(34, 197, 94, 0.4)"}`,
+                            backdropFilter: "blur(8px)",
                         }}
                         aria-label={isPaused ? "自動スクロール再開" : "自動スクロール停止"}
                     >
-                        {isPaused ? "▶" : "⏸"}
+                        <div className={`w-2 h-2 rounded-full animate-pulse ${isPaused ? "bg-red-500" : "bg-green-500"}`} />
+                        <span className={isPaused ? "text-red-400" : "text-green-400"}>
+                            {isPaused ? "STOP" : "MOVE"}
+                        </span>
+                        <span className="text-white/40 ml-0.5">
+                            {isPaused ? "▶" : "⏸"}
+                        </span>
                     </button>
                 </div>
 

@@ -1,10 +1,60 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowLeft, MapPin, Award, Target, Briefcase, Twitter, Facebook, Instagram, Globe, ChevronRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { ArrowLeft, MapPin, Award, Target, Briefcase, Twitter, Facebook, Instagram, Globe, ChevronRight, Heart } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function MemberDetailClient({ member }: { member: any }) {
+    const [likes, setLikes] = useState<Record<number, number>>({});
+    const [isLiking, setIsLiking] = useState<Record<number, boolean>>({});
+
+    // 初期いいね数の取得
+    useEffect(() => {
+        const fetchLikes = async () => {
+            try {
+                const res = await fetch(`/api/likes?memberId=${member.id}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    setLikes(data);
+                }
+            } catch (error) {
+                console.error("Failed to fetch likes:", error);
+            }
+        };
+        fetchLikes();
+    }, [member.id]);
+
+    // いいねボタンの処理
+    const handleLike = async (policyIndex: number) => {
+        if (isLiking[policyIndex]) return;
+
+        // 楽観的更新
+        setLikes(prev => ({
+            ...prev,
+            [policyIndex]: (prev[policyIndex] || 0) + 1
+        }));
+        setIsLiking(prev => ({ ...prev, [policyIndex]: true }));
+
+        try {
+            const res = await fetch('/api/likes', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ memberId: member.id, policyIndex })
+            });
+            if (res.ok) {
+                const data = await res.json();
+                setLikes(prev => ({ ...prev, [policyIndex]: data.count }));
+            }
+        } catch (error) {
+            console.error("Failed to send like:", error);
+        } finally {
+            // 少し待ってから再度押せるようにする
+            setTimeout(() => {
+                setIsLiking(prev => ({ ...prev, [policyIndex]: false }));
+            }, 1000);
+        }
+    };
     return (
         <div className="min-h-screen bg-black lg:bg-gray-50/50 pb-20 lg:pb-20">
             {/* ───── PC版表示 (hidden lg:block) ───── */}
@@ -117,11 +167,40 @@ export default function MemberDetailClient({ member }: { member: any }) {
                                 </h2>
                                 <div className="grid grid-cols-1 gap-4">
                                     {member.policies.map((policy: string, i: number) => (
-                                        <div key={i} className="flex items-start gap-6 p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:border-primary-200 hover:bg-white transition-all group">
-                                            <span className="flex-shrink-0 w-12 h-12 bg-white text-primary-600 rounded-2xl flex items-center justify-center text-xl font-black shadow-sm group-hover:bg-primary-600 group-hover:text-white transition-all">
-                                                {i + 1}
-                                            </span>
-                                            <span className="text-gray-800 text-lg font-bold leading-relaxed pt-1">{policy}</span>
+                                        <div key={i} className="flex items-center justify-between p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:border-primary-200 hover:bg-white transition-all group">
+                                            <div className="flex items-start gap-6">
+                                                <span className="flex-shrink-0 w-12 h-12 bg-white text-primary-600 rounded-2xl flex items-center justify-center text-xl font-black shadow-sm group-hover:bg-primary-600 group-hover:text-white transition-all">
+                                                    {i + 1}
+                                                </span>
+                                                <div className="flex flex-col gap-2 pt-1">
+                                                    <span className="text-gray-800 text-lg font-bold leading-relaxed">{policy}</span>
+                                                    {member.policyUrls?.[i] && (
+                                                        <Link 
+                                                            href={member.policyUrls[i]}
+                                                            className="flex items-center gap-1 text-xs font-black text-accent-500 hover:text-accent-600 transition-colors bg-white px-3 py-1.5 rounded-full border border-gray-100 w-fit shadow-sm"
+                                                        >
+                                                            詳細レポートを見る <ChevronRight size={14} />
+                                                        </Link>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            
+                                            {/* PC版いいねボタン */}
+                                            <button 
+                                                onClick={() => handleLike(i)}
+                                                disabled={isLiking[i]}
+                                                className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all ${
+                                                    likes[i] ? 'text-rose-500 bg-rose-50' : 'text-gray-400 bg-white hover:bg-gray-100'
+                                                }`}
+                                            >
+                                                <motion.div
+                                                    animate={isLiking[i] ? { scale: [1, 1.4, 1] } : {}}
+                                                    transition={{ duration: 0.3 }}
+                                                >
+                                                    <Heart size={20} fill={likes[i] ? "currentColor" : "none"} />
+                                                </motion.div>
+                                                <span className="font-black text-sm">{likes[i] || 0}</span>
+                                            </button>
                                         </div>
                                     ))}
                                 </div>
@@ -216,6 +295,37 @@ export default function MemberDetailClient({ member }: { member: any }) {
                                     </Link>
                                 </div>
                             </motion.div>
+
+                            {/* [NEW] PC版 ショート動画セクション */}
+                            {member.videos && member.videos.length > 0 && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    className="card p-6 border-none shadow-sm bg-gray-50 mt-8"
+                                >
+                                    <h3 className="font-black text-lg mb-6 flex items-center gap-2">
+                                        <div className="w-2 h-6 bg-red-500 rounded-full" />
+                                        ショート動画
+                                    </h3>
+                                    <div className="space-y-6">
+                                        {member.videos.map((video: any, i: number) => (
+                                            <div key={i} className="flex flex-col gap-3">
+                                                <div className="relative aspect-[9/16] w-full bg-black rounded-2xl overflow-hidden shadow-xl ring-1 ring-black/5">
+                                                    <iframe
+                                                        src={video.url}
+                                                        title={video.title}
+                                                        className="absolute inset-0 w-full h-full border-0"
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                        allowFullScreen
+                                                    />
+                                                </div>
+                                                <p className="text-xs font-black text-gray-400 uppercase tracking-widest">{video.title}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </motion.div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -234,25 +344,41 @@ export default function MemberDetailClient({ member }: { member: any }) {
                     </button>
                 </div>
 
-                {/* メインビジュアル */}
-                <div className="relative aspect-[4/5] overflow-hidden">
+                {/* メインビジュアル (デザイン調整: 背景ぼかし + 中央写真) */}
+                <div className="relative aspect-[4/3] overflow-hidden bg-zinc-900">
+                    {/* 背景 (ぼかし) */}
                     <div
-                        className="w-full h-full bg-cover bg-center"
+                        className="absolute inset-0 bg-cover bg-center blur-2xl opacity-40 scale-110"
                         style={{ backgroundImage: `url(${member.photoAnime || member.photo})` }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-
-                    <div className="absolute bottom-0 left-0 right-0 p-8">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
+                    
+                    {/* コンテンツレイヤー */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-center pt-8">
+                        {/* 中央写真 (円形) */}
+                        <motion.div 
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            className="relative w-40 h-40 rounded-full border-4 border-white/20 shadow-2xl overflow-hidden z-10"
                         >
-                            <span className="inline-block bg-accent-500 text-white text-[10px] font-black px-3 py-1 rounded-sm mb-4 tracking-tighter shadow-lg">
-                                {member.area}担当・当選{member.term}
-                            </span>
-                            <h1 className="text-5xl font-black mb-1 tracking-tighter drop-shadow-xl">{member.name}</h1>
-                            <p className="text-lg font-bold text-gray-400 mb-6">{member.nameKana}</p>
+                            <div
+                                className="w-full h-full bg-cover bg-center"
+                                style={{ backgroundImage: `url(${member.photoAnime || member.photo})` }}
+                            />
                         </motion.div>
+
+                        <div className="mt-6 text-center z-10">
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.2 }}
+                            >
+                                <span className="inline-block bg-accent-500 text-white text-[10px] font-black px-3 py-1 rounded-full mb-3 tracking-tighter shadow-lg uppercase">
+                                    {member.area}担当・当選{member.term}
+                                </span>
+                                <h1 className="text-4xl font-black mb-1 tracking-tighter drop-shadow-xl">{member.name}</h1>
+                                <p className="text-sm font-bold text-gray-400">{member.nameKana}</p>
+                            </motion.div>
+                        </div>
                     </div>
                 </div>
 
@@ -276,16 +402,72 @@ export default function MemberDetailClient({ member }: { member: any }) {
                         </p>
                     </div>
 
-                    {/* 重点政策 */}
+                    {/* [NEW] スマホ版 ショート動画セクション */}
+                    {member.videos && member.videos.length > 0 && (
+                        <div className="space-y-6">
+                            <h3 className="text-xs font-black text-accent-500 tracking-[0.2em] uppercase">SHORTS MOVIE</h3>
+                            <div className="flex gap-4 overflow-x-auto pb-6 -mx-6 px-6 no-scrollbar snap-x">
+                                {member.videos.map((video: any, i: number) => (
+                                    <div key={i} className="flex-shrink-0 w-64 snap-center">
+                                        <div className="relative aspect-[9/16] bg-zinc-900 rounded-3xl overflow-hidden shadow-2xl ring-1 ring-white/10">
+                                            <iframe
+                                                src={video.url}
+                                                title={video.title}
+                                                className="absolute inset-0 w-full h-full border-0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowFullScreen
+                                            />
+                                        </div>
+                                        <p className="mt-3 text-[10px] font-black text-gray-500 uppercase tracking-widest">{video.title}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* 重点政策 (スマホ版) */}
                     <div className="space-y-4">
                         <h3 className="text-xs font-black text-accent-500 tracking-[0.2em] uppercase">POLICIES</h3>
                         <div className="space-y-3">
                             {member.policies.map((policy: string, i: number) => (
-                                <div key={i} className="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
-                                    <span className="w-8 h-8 rounded-lg bg-accent-500 flex items-center justify-center text-sm font-black shrink-0">
-                                        {i + 1}
-                                    </span>
-                                    <p className="text-sm font-bold text-gray-200">{policy}</p>
+                                <div key={i} className="flex flex-col gap-4 bg-white/5 p-5 rounded-xl border border-white/5 group">
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-4">
+                                            <span className="w-8 h-8 rounded-lg bg-accent-500 flex items-center justify-center text-sm font-black shrink-0">
+                                                {i + 1}
+                                            </span>
+                                            <p className="text-sm font-bold text-gray-200">{policy}</p>
+                                        </div>
+
+                                        {/* スマホ版いいねボタン */}
+                                        <button 
+                                            onClick={() => handleLike(i)}
+                                            disabled={isLiking[i]}
+                                            className={`flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all active:scale-90 ${
+                                                likes[i] 
+                                                ? 'text-rose-500 bg-rose-500/10 border-rose-500/30' 
+                                                : 'text-gray-500 bg-white/5 border-white/5'
+                                            }`}
+                                        >
+                                            <motion.div
+                                                animate={isLiking[i] ? { scale: [1, 1.4, 1] } : {}}
+                                                transition={{ duration: 0.3 }}
+                                            >
+                                                <Heart size={16} fill={likes[i] ? "currentColor" : "none"} />
+                                            </motion.div>
+                                            <span className="font-black text-xs">{likes[i] || 0}</span>
+                                        </button>
+                                    </div>
+                                    
+                                    {/* スマホ版詳細リンクボタン */}
+                                    {member.policyUrls?.[i] && (
+                                        <Link 
+                                            href={member.policyUrls[i]}
+                                            className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-white/10 text-white text-xs font-black border border-white/10 active:bg-white/20 transition-all"
+                                        >
+                                            詳細レポートを読む <ChevronRight size={14} />
+                                        </Link>
+                                    )}
                                 </div>
                             ))}
                         </div>

@@ -207,27 +207,27 @@ export default function HomeClient() {
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    {/* サブ記事リスト (右側縦並び) */}
-                    <div className="lg:col-span-5 flex flex-col gap-4">
-                        {news.slice(1).map((item) => (
-                            <Link key={item.id} href={`/news/${item.id}`} className="group flex gap-4 bg-white p-3 rounded-xl shadow-sm hover:shadow-md transition-all h-full">
-                                <div className="w-24 md:w-32 aspect-video rounded-lg bg-gray-200 bg-cover bg-center shrink-0"
-                                    style={{ backgroundImage: `url(${item.image})` }} />
-                                <div className="flex flex-col justify-center">
-                                    <div className="flex items-center gap-2 mb-1">
-                                        <span className="text-[10px] font-black text-primary-600 bg-primary-50 px-2 py-0.5 rounded">
-                                            {item.category}
-                                        </span>
-                                        <span className="text-[10px] text-gray-400 font-bold">{item.date}</span>
+                        {/* サブ記事リスト (右側縦並び) */}
+                        <div className="lg:col-span-5 flex flex-col gap-4">
+                            {news.slice(1).map((item) => (
+                                <Link key={item.id} href={`/news/${item.id}`} className="group flex gap-4 bg-white p-3 rounded-xl shadow-sm hover:shadow-md transition-all h-full">
+                                    <div className="w-24 md:w-32 aspect-video rounded-lg bg-gray-200 bg-cover bg-center shrink-0"
+                                        style={{ backgroundImage: `url(${item.image})` }} />
+                                    <div className="flex flex-col justify-center">
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <span className="text-[10px] font-black text-primary-600 bg-primary-50 px-2 py-0.5 rounded">
+                                                {item.category}
+                                            </span>
+                                            <span className="text-[10px] text-gray-400 font-bold">{item.date}</span>
+                                        </div>
+                                        <h4 className="text-sm md:text-base font-bold text-gray-900 leading-snug group-hover:text-primary-600 transition-colors line-clamp-2">
+                                            {item.title}
+                                        </h4>
                                     </div>
-                                    <h4 className="text-sm md:text-base font-bold text-gray-900 leading-snug group-hover:text-primary-600 transition-colors line-clamp-2">
-                                        {item.title}
-                                    </h4>
-                                </div>
-                            </Link>
-                        ))}
+                                </Link>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </section>

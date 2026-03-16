@@ -10,6 +10,7 @@ export interface Member {
   catchphrase: string;
   message: string;
   policies: string[];
+  policyUrls?: Record<number, string>; // 政策インデックスごとの詳細URL (例: { 0: "/reports/ogawa/policy-01/" })
   career: string[];
   sns?: {
     twitter?: string;
@@ -107,7 +108,7 @@ export const members: Member[] = [
     id: "3",
     name: "田中 宣光",
     nameKana: "たなか のぶみつ",
-    photo: "/images/members/TANAKA.jpg",
+    photo: "/images/members/tanaka.jpg",
     photoAnime: "/images/members/tanaka2.gif",
     area: "谷塚地区",
     position: "団長",
@@ -163,6 +164,9 @@ export const members: Member[] = [
 
 人口減少社会にあって、起こり得る様々な問題や課題を解決するには、政治だけではなく、危機意識を共有できる全ての人たちと、一緒に行動して結果を導いていきたいと考えます。`,
     policies: ["選ばれる街・草加の実現", "教育・医療インフラの整備", "公共施設の充実と地域活性化"],
+    policyUrls: {
+      0: "/reports/ogawa/policy-01/public/SAMPLEtype html.html"
+    },
     career: ["草加市議会議員（7期）", "前草加市議会議長（令和4年-5年）", "総務文教委員会前委員長"],
     sns: {
       website: "https://www.ogawa-team8.com/"
@@ -244,7 +248,7 @@ export const members: Member[] = [
       "教育の充実 子供に やさしい街づくり",
       "障害者・高齢者 にやさしい街づくり"
     ],
-    career: ["草加市議会議員（1回）", "建設環境委員会委員", "議会運営委員会"],
+    career: ["草加市議会議員（4期）", "建設環境委員会委員", "議会運営委員会"],
     sns: {
       website: "https://soka-kimura.com/"
     },
@@ -284,7 +288,7 @@ export const members: Member[] = [
       "女性や母親の目線での子育て支援の強化",
       "生活困窮による子どもへの影響原因解消の取り組み"
     ],
-    career: ["草加市議会議員（7回）", "福祉子ども委員会委員", "議会運営委員会委員"],
+    career: ["草加市議会議員（3期）", "福祉子ども委員会委員", "議会運営委員会委員"],
     sns: {
       website: "https://www.soka-jsg.com/matuipg"
     },

@@ -2,12 +2,22 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowLeft, MapPin, Award, Target, Briefcase, Twitter, Facebook, Instagram, Globe, ChevronRight, Heart } from "lucide-react";
+import { ArrowLeft, MapPin, Award, Target, Briefcase, Twitter, Facebook, Instagram, Globe, ChevronRight, Heart, ChevronDown } from "lucide-react";
+
+const CATEGORY_ICONS: Record<string, string> = {
+    "子育て・教育": "👶",
+    "医療・福祉": "🏥",
+    "まちづくり・防災": "🏙️",
+    "高齢者支援": "👴",
+};
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function MemberDetailClient({ member }: { member: any }) {
     const [likes, setLikes] = useState<Record<number, number>>({});
     const [isLiking, setIsLiking] = useState<Record<number, boolean>>({});
+    const [openCategory, setOpenCategory] = useState<string | null>(
+        member.policyCategories ? Object.keys(member.policyCategories)[0] : null
+    );
 
     // 初期いいね数の取得
     useEffect(() => {
@@ -154,56 +164,100 @@ export default function MemberDetailClient({ member }: { member: any }) {
                                 </div>
                             </motion.div>
 
-                            {/* 政策 */}
+                            {/* 政策（カテゴリ別アコーディオン） */}
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 className="card p-8 md:p-12 border-none shadow-sm"
                             >
-                                <h2 className="section-title text-2xl font-black flex items-center gap-3">
+                                <h2 className="section-title text-2xl font-black flex items-center gap-3 mb-6">
                                     <Target className="text-accent-500" size={32} />
                                     重点目標・政策
                                 </h2>
-                                <div className="grid grid-cols-1 gap-4">
-                                    {member.policies.map((policy: string, i: number) => (
-                                        <div key={i} className="flex items-center justify-between p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:border-primary-200 hover:bg-white transition-all group">
-                                            <div className="flex items-start gap-6">
-                                                <span className="flex-shrink-0 w-12 h-12 bg-white text-primary-600 rounded-2xl flex items-center justify-center text-xl font-black shadow-sm group-hover:bg-primary-600 group-hover:text-white transition-all">
-                                                    {i + 1}
-                                                </span>
-                                                <div className="flex flex-col gap-2 pt-1">
-                                                    <span className="text-gray-800 text-lg font-bold leading-relaxed">{policy}</span>
-                                                    {member.policyUrls?.[i] && (
-                                                        <Link 
-                                                            href={member.policyUrls[i]}
-                                                            className="flex items-center gap-1 text-xs font-black text-accent-500 hover:text-accent-600 transition-colors bg-white px-3 py-1.5 rounded-full border border-gray-100 w-fit shadow-sm"
-                                                        >
-                                                            詳細レポートを見る <ChevronRight size={14} />
-                                                        </Link>
-                                                    )}
-                                                </div>
-                                            </div>
-                                            
-                                            {/* PC版いいねボタン */}
-                                            <button 
-                                                onClick={() => handleLike(i)}
-                                                disabled={isLiking[i]}
-                                                className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all ${
-                                                    likes[i] ? 'text-rose-500 bg-rose-50' : 'text-gray-400 bg-white hover:bg-gray-100'
-                                                }`}
-                                            >
-                                                <motion.div
-                                                    animate={isLiking[i] ? { scale: [1, 1.4, 1] } : {}}
-                                                    transition={{ duration: 0.3 }}
+                                {member.policyCategories ? (
+                                    <div className="space-y-3">
+                                        {Object.entries(member.policyCategories).map(([cat, items]) => (
+                                            <div key={cat} className="rounded-2xl border border-gray-100 overflow-hidden">
+                                                <button
+                                                    onClick={() => setOpenCategory(openCategory === cat ? null : cat)}
+                                                    className="w-full flex items-center justify-between px-6 py-4 bg-gray-50 hover:bg-gray-100 transition-colors text-left"
                                                 >
-                                                    <Heart size={20} fill={likes[i] ? "currentColor" : "none"} />
-                                                </motion.div>
-                                                <span className="font-black text-sm">{likes[i] || 0}</span>
-                                            </button>
-                                        </div>
-                                    ))}
-                                </div>
+                                                    <span className="flex items-center gap-3 font-black text-gray-800">
+                                                        <span className="text-xl">{CATEGORY_ICONS[cat] ?? "📌"}</span>
+                                                        {cat}
+                                                        <span className="text-xs font-bold text-gray-400 bg-white px-2 py-0.5 rounded-full border">{(items as string[]).length}件</span>
+                                                    </span>
+                                                    <ChevronDown size={18} className={`text-gray-400 transition-transform ${openCategory === cat ? "rotate-180" : ""}`} />
+                                                </button>
+                                                {openCategory === cat && (
+                                                    <div className="divide-y divide-gray-50">
+                                                        {(items as string[]).map((policy, i) => {
+                                                            const globalIndex = member.policies.indexOf(policy);
+                                                            return (
+                                                                <div key={i} className="flex items-center justify-between px-6 py-4 bg-white hover:bg-gray-50 transition-colors group">
+                                                                    <div className="flex items-start gap-4 flex-1">
+                                                                        <span className="flex-shrink-0 w-8 h-8 bg-primary-50 text-primary-600 rounded-xl flex items-center justify-center text-sm font-black group-hover:bg-primary-600 group-hover:text-white transition-all">
+                                                                            {i + 1}
+                                                                        </span>
+                                                                        <div className="flex flex-col gap-1.5 pt-0.5">
+                                                                            <span className="text-gray-800 font-bold leading-relaxed">{policy}</span>
+                                                                            {globalIndex >= 0 && member.policyUrls?.[globalIndex] && (
+                                                                                <Link
+                                                                                    href={member.policyUrls[globalIndex]}
+                                                                                    className="flex items-center gap-1 text-xs font-black text-accent-500 hover:text-accent-600 transition-colors w-fit"
+                                                                                >
+                                                                                    詳細レポートを見る <ChevronRight size={12} />
+                                                                                </Link>
+                                                                            )}
+                                                                        </div>
+                                                                    </div>
+                                                                    {globalIndex >= 0 && (
+                                                                        <button
+                                                                            onClick={() => handleLike(globalIndex)}
+                                                                            disabled={isLiking[globalIndex]}
+                                                                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all ml-3 ${
+                                                                                likes[globalIndex] ? 'text-rose-500 bg-rose-50' : 'text-gray-400 bg-gray-50 hover:bg-gray-100'
+                                                                            }`}
+                                                                        >
+                                                                            <motion.div animate={isLiking[globalIndex] ? { scale: [1, 1.4, 1] } : {}} transition={{ duration: 0.3 }}>
+                                                                                <Heart size={16} fill={likes[globalIndex] ? "currentColor" : "none"} />
+                                                                            </motion.div>
+                                                                            <span className="font-black text-xs">{likes[globalIndex] || 0}</span>
+                                                                        </button>
+                                                                    )}
+                                                                </div>
+                                                            );
+                                                        })}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div className="grid grid-cols-1 gap-4">
+                                        {member.policies.map((policy: string, i: number) => (
+                                            <div key={i} className="flex items-center justify-between p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:border-primary-200 hover:bg-white transition-all group">
+                                                <div className="flex items-start gap-6">
+                                                    <span className="flex-shrink-0 w-12 h-12 bg-white text-primary-600 rounded-2xl flex items-center justify-center text-xl font-black shadow-sm group-hover:bg-primary-600 group-hover:text-white transition-all">
+                                                        {i + 1}
+                                                    </span>
+                                                    <span className="text-gray-800 text-lg font-bold leading-relaxed pt-2">{policy}</span>
+                                                </div>
+                                                <button
+                                                    onClick={() => handleLike(i)}
+                                                    disabled={isLiking[i]}
+                                                    className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all ${likes[i] ? 'text-rose-500 bg-rose-50' : 'text-gray-400 bg-white hover:bg-gray-100'}`}
+                                                >
+                                                    <motion.div animate={isLiking[i] ? { scale: [1, 1.4, 1] } : {}} transition={{ duration: 0.3 }}>
+                                                        <Heart size={20} fill={likes[i] ? "currentColor" : "none"} />
+                                                    </motion.div>
+                                                    <span className="font-black text-sm">{likes[i] || 0}</span>
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </motion.div>
                         </div>
 
@@ -425,52 +479,95 @@ export default function MemberDetailClient({ member }: { member: any }) {
                         </div>
                     )}
 
-                    {/* 重点政策 (スマホ版) */}
+                    {/* 重点政策 (スマホ版・カテゴリアコーディオン) */}
                     <div className="space-y-4">
                         <h3 className="text-xs font-black text-accent-500 tracking-[0.2em] uppercase">POLICIES</h3>
-                        <div className="space-y-3">
-                            {member.policies.map((policy: string, i: number) => (
-                                <div key={i} className="flex flex-col gap-4 bg-white/5 p-5 rounded-xl border border-white/5 group">
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center gap-4">
-                                            <span className="w-8 h-8 rounded-lg bg-accent-500 flex items-center justify-center text-sm font-black shrink-0">
-                                                {i + 1}
+                        {member.policyCategories ? (
+                            <div className="space-y-3">
+                                {Object.entries(member.policyCategories).map(([cat, items]) => (
+                                    <div key={cat} className="rounded-2xl overflow-hidden border border-white/10">
+                                        <button
+                                            onClick={() => setOpenCategory(openCategory === cat ? null : cat)}
+                                            className="w-full flex items-center justify-between px-5 py-4 bg-white/5 active:bg-white/10 transition-colors text-left"
+                                        >
+                                            <span className="flex items-center gap-3 font-black text-white text-sm">
+                                                <span className="text-lg">{CATEGORY_ICONS[cat] ?? "📌"}</span>
+                                                {cat}
+                                                <span className="text-[10px] font-bold text-white/40">{(items as string[]).length}件</span>
                                             </span>
-                                            <p className="text-sm font-bold text-gray-200">{policy}</p>
-                                        </div>
-
-                                        {/* スマホ版いいねボタン */}
-                                        <button 
-                                            onClick={() => handleLike(i)}
-                                            disabled={isLiking[i]}
-                                            className={`flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all active:scale-90 ${
-                                                likes[i] 
-                                                ? 'text-rose-500 bg-rose-500/10 border-rose-500/30' 
-                                                : 'text-gray-500 bg-white/5 border-white/5'
-                                            }`}
-                                        >
-                                            <motion.div
-                                                animate={isLiking[i] ? { scale: [1, 1.4, 1] } : {}}
-                                                transition={{ duration: 0.3 }}
-                                            >
-                                                <Heart size={16} fill={likes[i] ? "currentColor" : "none"} />
-                                            </motion.div>
-                                            <span className="font-black text-xs">{likes[i] || 0}</span>
+                                            <ChevronDown size={16} className={`text-white/40 transition-transform ${openCategory === cat ? "rotate-180" : ""}`} />
                                         </button>
+                                        {openCategory === cat && (
+                                            <div className="divide-y divide-white/5">
+                                                {(items as string[]).map((policy, i) => {
+                                                    const globalIndex = member.policies.indexOf(policy);
+                                                    return (
+                                                        <div key={i} className="flex flex-col gap-3 px-5 py-4 bg-white/[0.03]">
+                                                            <div className="flex items-center justify-between">
+                                                                <div className="flex items-center gap-3 flex-1">
+                                                                    <span className="w-7 h-7 rounded-lg bg-accent-500/80 flex items-center justify-center text-xs font-black shrink-0">{i + 1}</span>
+                                                                    <p className="text-sm font-bold text-gray-200">{policy}</p>
+                                                                </div>
+                                                                {globalIndex >= 0 && (
+                                                                    <button
+                                                                        onClick={() => handleLike(globalIndex)}
+                                                                        disabled={isLiking[globalIndex]}
+                                                                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border transition-all active:scale-90 ml-2 ${
+                                                                            likes[globalIndex] ? 'text-rose-500 bg-rose-500/10 border-rose-500/30' : 'text-gray-500 bg-white/5 border-white/5'
+                                                                        }`}
+                                                                    >
+                                                                        <motion.div animate={isLiking[globalIndex] ? { scale: [1, 1.4, 1] } : {}} transition={{ duration: 0.3 }}>
+                                                                            <Heart size={14} fill={likes[globalIndex] ? "currentColor" : "none"} />
+                                                                        </motion.div>
+                                                                        <span className="font-black text-xs">{likes[globalIndex] || 0}</span>
+                                                                    </button>
+                                                                )}
+                                                            </div>
+                                                            {globalIndex >= 0 && member.policyUrls?.[globalIndex] && (
+                                                                <Link
+                                                                    href={member.policyUrls[globalIndex]}
+                                                                    className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-white/10 text-white text-xs font-black border border-white/10 active:bg-white/20 transition-all"
+                                                                >
+                                                                    詳細レポートを読む <ChevronRight size={14} />
+                                                                </Link>
+                                                            )}
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        )}
                                     </div>
-                                    
-                                    {/* スマホ版詳細リンクボタン */}
-                                    {member.policyUrls?.[i] && (
-                                        <Link 
-                                            href={member.policyUrls[i]}
-                                            className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-white/10 text-white text-xs font-black border border-white/10 active:bg-white/20 transition-all"
-                                        >
-                                            詳細レポートを読む <ChevronRight size={14} />
-                                        </Link>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="space-y-3">
+                                {member.policies.map((policy: string, i: number) => (
+                                    <div key={i} className="flex flex-col gap-4 bg-white/5 p-5 rounded-xl border border-white/5">
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex items-center gap-4">
+                                                <span className="w-8 h-8 rounded-lg bg-accent-500 flex items-center justify-center text-sm font-black shrink-0">{i + 1}</span>
+                                                <p className="text-sm font-bold text-gray-200">{policy}</p>
+                                            </div>
+                                            <button
+                                                onClick={() => handleLike(i)}
+                                                disabled={isLiking[i]}
+                                                className={`flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all active:scale-90 ${likes[i] ? 'text-rose-500 bg-rose-500/10 border-rose-500/30' : 'text-gray-500 bg-white/5 border-white/5'}`}
+                                            >
+                                                <motion.div animate={isLiking[i] ? { scale: [1, 1.4, 1] } : {}} transition={{ duration: 0.3 }}>
+                                                    <Heart size={16} fill={likes[i] ? "currentColor" : "none"} />
+                                                </motion.div>
+                                                <span className="font-black text-xs">{likes[i] || 0}</span>
+                                            </button>
+                                        </div>
+                                        {member.policyUrls?.[i] && (
+                                            <Link href={member.policyUrls[i]} className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-white/10 text-white text-xs font-black border border-white/10 active:bg-white/20 transition-all">
+                                                詳細レポートを読む <ChevronRight size={14} />
+                                            </Link>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
 

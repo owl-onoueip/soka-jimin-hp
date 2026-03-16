@@ -325,17 +325,47 @@ export default function MobileRadikoMembers() {
                         &ldquo;{activeMember?.catchphrase}&rdquo;
                     </p>
 
-                    {/* 政策3件 */}
-                    <div className="space-y-2">
-                        {activeMember?.policies.slice(0, 3).map((p, i) => (
-                            <div key={i} className="flex items-center gap-3"
-                                style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", paddingBottom: 8 }}>
-                                <span className="w-6 h-6 rounded-lg flex items-center justify-center text-xs font-black shrink-0"
-                                    style={{ background: "rgba(255,255,255,0.12)" }}>{i + 1}</span>
-                                <p className="text-sm font-bold opacity-90">{p}</p>
-                            </div>
-                        ))}
-                    </div>
+                    {/* カテゴリバッジ */}
+                    {activeMember?.policyCategories ? (
+                        <div className="flex flex-wrap gap-2 mt-1">
+                            {Object.entries(activeMember.policyCategories).map(([cat, items]) => {
+                                const icons: Record<string, string> = {
+                                    "子育て・教育": "👶",
+                                    "医療・福祉": "🏥",
+                                    "まちづくり・防災": "🏙️",
+                                    "高齢者支援": "👴",
+                                };
+                                return (
+                                    <div key={cat}
+                                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black"
+                                        style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.18)" }}
+                                    >
+                                        <span>{icons[cat] ?? "📌"}</span>
+                                        <span>{cat}</span>
+                                        <span className="opacity-50 text-[10px]">{(items as string[]).length}件</span>
+                                    </div>
+                                );
+                            })}
+                            <Link
+                                href={`/members/${activeMember?.id}`}
+                                className="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-black"
+                                style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.5)" }}
+                            >
+                                全政策を見る →
+                            </Link>
+                        </div>
+                    ) : (
+                        <div className="space-y-2 mt-2">
+                            {activeMember?.policies.slice(0, 3).map((p, i) => (
+                                <div key={i} className="flex items-center gap-3"
+                                    style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", paddingBottom: 8 }}>
+                                    <span className="w-6 h-6 rounded-lg flex items-center justify-center text-xs font-black shrink-0"
+                                        style={{ background: "rgba(255,255,255,0.12)" }}>{i + 1}</span>
+                                    <p className="text-sm font-bold opacity-90">{p}</p>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
 

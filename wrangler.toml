@@ -1,0 +1,7 @@
+name = "soka-jimin-hp"
+pages_build_output_dir = ".next"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "soka-jimin-db"
+database_id = "5a868f58-076e-4ffe-b6a4-fd16cc6da94c"

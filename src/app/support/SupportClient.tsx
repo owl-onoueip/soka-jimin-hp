@@ -1,26 +1,39 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle2, Users, Heart, MessageCircle, Send, ChevronRight } from "lucide-react";
+import { CheckCircle2, Users, Heart, MessageCircle, Send, ChevronRight, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
 export default function SupportClient() {
     const [formData, setFormData] = useState({
         name: "",
-        kana: "",
         email: "",
-        phone: "",
-        address: "",
         area: "",
         message: "",
         supportMember: "",
     });
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setIsSubmitted(true);
+        setIsLoading(true);
+        setError("");
+        try {
+            const res = await fetch("/api/support", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            });
+            if (!res.ok) throw new Error("送信に失敗しました");
+            setIsSubmitted(true);
+        } catch {
+            setError("送信に失敗しました。時間をおいて再度お試しください。");
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -131,30 +144,7 @@ export default function SupportClient() {
                             </div>
                         </motion.div>
 
-                        {/* LINE案内 */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="card bg-[#06C755] p-10 text-white border-none shadow-2xl relative overflow-hidden group"
-                        >
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-700" />
-                            <div className="relative z-10 flex flex-col items-center text-center">
-                                <MessageCircle size={64} className="mb-6 drop-shadow-lg" />
-                                <h3 className="text-2xl font-black mb-3">LINE公式アカウント</h3>
-                                <p className="text-white/80 font-bold text-sm mb-8 leading-relaxed">
-                                    もっと手軽に情報をチェック。<br />
-                                    公式LINEで友だち募集中です！
-                                </p>
-                                <Link
-                                    href="https://line.me/R/"
-                                    target="_blank"
-                                    className="inline-block w-full bg-white text-[#06C755] font-black px-6 py-4 rounded-2xl hover:bg-gray-50 transition-all shadow-xl hover:-translate-y-1"
-                                >
-                                    LINEで友だち追加
-                                </Link>
-                            </div>
-                        </motion.div>
+                        {/* LINE案内：アカウント準備中のため一時非表示 */}
                     </div>
 
                     {/* 右側：フォーム */}
@@ -193,24 +183,6 @@ export default function SupportClient() {
                                         />
                                     </div>
 
-                                    {/* フリガナ */}
-                                    <div className="space-y-4">
-                                        <label className="block text-sm font-black text-gray-700 tracking-wider">
-                                            フリガナ <span className="text-accent-500 font-black ml-1">*</span>
-                                        </label>
-                                        <input
-                                            type="text"
-                                            name="kana"
-                                            required
-                                            value={formData.kana}
-                                            onChange={handleChange}
-                                            className="w-full px-6 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none font-bold placeholder:text-gray-300"
-                                            placeholder="ソウカ タロウ"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                                     {/* メールアドレス */}
                                     <div className="space-y-4">
                                         <label className="block text-sm font-black text-gray-700 tracking-wider">
@@ -224,21 +196,6 @@ export default function SupportClient() {
                                             onChange={handleChange}
                                             className="w-full px-6 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none font-bold placeholder:text-gray-300"
                                             placeholder="example@email.com"
-                                        />
-                                    </div>
-
-                                    {/* 電話番号 */}
-                                    <div className="space-y-4">
-                                        <label className="block text-sm font-black text-gray-700 tracking-wider">
-                                            電話番号
-                                        </label>
-                                        <input
-                                            type="tel"
-                                            name="phone"
-                                            value={formData.phone}
-                                            onChange={handleChange}
-                                            className="w-full px-6 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none font-bold placeholder:text-gray-300"
-                                            placeholder="048-XXX-XXXX"
                                         />
                                     </div>
                                 </div>
@@ -320,12 +277,23 @@ export default function SupportClient() {
                                     </label>
                                 </div>
 
+                                {/* エラーメッセージ */}
+                                {error && (
+                                    <p className="text-red-500 font-bold text-sm text-center">{error}</p>
+                                )}
+
                                 {/* 送信ボタン */}
                                 <button
                                     type="submit"
-                                    className="w-full btn-cta text-xl md:text-2xl py-6 shadow-2xl scale-100 hover:scale-[1.02]"
+                                    disabled={isLoading}
+                                    className="w-full btn-cta text-xl md:text-2xl py-6 shadow-2xl scale-100 hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3"
                                 >
-                                    確認して入会を申し込む
+                                    {isLoading ? (
+                                        <>
+                                            <Loader2 size={24} className="animate-spin" />
+                                            送信中...
+                                        </>
+                                    ) : "確認して入会を申し込む"}
                                 </button>
                             </form>
                         </motion.div>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronRight, Users, FileText, CheckCircle2, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import MemberCarousel from "@/components/MemberCarousel";
 import VisualReport from "@/components/VisualReport";
 import NewsletterModal from "@/components/NewsletterModal";
@@ -12,41 +12,39 @@ import { motion } from "framer-motion";
 const news = [
     {
         id: 1,
-        date: "2026.02.14",
-        title: "最新号発行：2026年 活動報告書を公開しました",
-        category: "報告",
+        date: "2026.01",
+        title: "令和8年 新春号 会派ニュースを発行しました",
+        category: "会派ニュース",
         image: "https://images.unsplash.com/photo-1575320181282-9afab399332c?q=80&w=2070&auto=format&fit=crop",
-        pdf: "/pdf/report_2026_newyear.pdf"
+        pdf: "/pdf/report_2026_newyear.pdf",
+        link: "/reports#r8-newyear",
     },
     {
         id: 2,
-        date: "2024.01.20",
-        title: "先進技術の活用：株式会社マクニカへの視察報告",
-        category: "視察",
-        image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070&auto=format&fit=crop"
+        date: "2026.01.09",
+        title: "物価高騰対応交付金の全世帯給付型支援への活用を山川市長へ要望",
+        category: "要望",
+        image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070&auto=format&fit=crop",
+        link: "/reports#r8-newyear",
     },
     {
         id: 3,
-        date: "2024.01.05",
-        title: "2024年 新年のご挨拶を掲載いたしました",
-        category: "会派",
-        image: "https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?q=80&w=2070&auto=format&fit=crop"
+        date: "2025.04.21",
+        title: "令和7年春号 会派ニュースを発行しました",
+        category: "会派ニュース",
+        image: "https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?q=80&w=2070&auto=format&fit=crop",
+        link: "/reports#r7-spring",
     },
     {
         id: 4,
-        date: "2023.12.15",
-        title: "令和6年度予算要望書を草加市長へ提出しました",
-        category: "要望",
-        image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto=format&fit=crop"
+        date: "2023.12.01",
+        title: "自動運転技術の活用に向け株式会社マクニカを視察",
+        category: "視察",
+        image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto=format&fit=crop",
+        link: "/reports#r6-newyear",
     },
 ];
 
-// 実績データ
-const achievements = [
-    { number: "42", label: "要望実現", unit: "件" },
-    { number: "128", label: "議会質問", unit: "回" },
-    { number: "7", label: "所属議員", unit: "名" },
-];
 
 export default function HomeClient() {
     // アニメモード（ジブリ風）の状態管理
@@ -211,7 +209,7 @@ export default function HomeClient() {
                         {/* サブ記事リスト (右側縦並び) */}
                         <div className="lg:col-span-5 flex flex-col gap-4">
                             {news.slice(1).map((item) => (
-                                <Link key={item.id} href={`/news/${item.id}`} className="group flex gap-4 bg-white p-3 rounded-xl shadow-sm hover:shadow-md transition-all h-full">
+                                <Link key={item.id} href={item.link || "/news"} className="group flex gap-4 bg-white p-3 rounded-xl shadow-sm hover:shadow-md transition-all h-full">
                                     <div className="w-24 md:w-32 aspect-video rounded-lg bg-gray-200 bg-cover bg-center shrink-0"
                                         style={{ backgroundImage: `url(${item.image})` }} />
                                     <div className="flex flex-col justify-center">

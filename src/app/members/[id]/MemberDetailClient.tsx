@@ -456,6 +456,39 @@ export default function MemberDetailClient({ member }: { member: any }) {
                         </p>
                     </div>
 
+                    {/* [NEW] スマホ版 SNSリンク */}
+                    {member.sns && (
+                        <div className="space-y-4">
+                            <h3 className="text-xs font-black text-accent-500 tracking-[0.2em] uppercase">SNS & LINKS</h3>
+                            <div className="grid grid-cols-2 gap-3">
+                                {member.sns.twitter && (
+                                    <Link href={member.sns.twitter} className="flex items-center gap-3 p-4 rounded-2xl bg-white/5 border border-white/10 active:bg-white/10 transition-colors">
+                                        <Twitter size={18} className="text-blue-400" />
+                                        <span className="text-xs font-black">X (Twitter)</span>
+                                    </Link>
+                                )}
+                                {member.sns.facebook && (
+                                    <Link href={member.sns.facebook} className="flex items-center gap-3 p-4 rounded-2xl bg-white/5 border border-white/10 active:bg-white/10 transition-colors">
+                                        <Facebook size={18} className="text-blue-600" />
+                                        <span className="text-xs font-black">Facebook</span>
+                                    </Link>
+                                )}
+                                {member.sns.instagram && (
+                                    <Link href={member.sns.instagram} className="flex items-center gap-3 p-4 rounded-2xl bg-white/5 border border-white/10 active:bg-white/10 transition-colors">
+                                        <Instagram size={18} className="text-pink-500" />
+                                        <span className="text-xs font-black">Instagram</span>
+                                    </Link>
+                                )}
+                                {member.sns.website && (
+                                    <Link href={member.sns.website} className="flex items-center gap-3 p-4 rounded-2xl bg-white/5 border border-white/10 active:bg-white/10 transition-colors">
+                                        <Globe size={18} className="text-accent-500" />
+                                        <span className="text-xs font-black">Official Web</span>
+                                    </Link>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
                     {/* [NEW] スマホ版 ショート動画セクション */}
                     {member.videos && member.videos.length > 0 && (
                         <div className="space-y-6">

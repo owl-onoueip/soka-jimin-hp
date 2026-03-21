@@ -153,149 +153,15 @@ export default function SupportClient() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="card bg-white p-10 md:p-16 border-none shadow-2xl"
+                            className="card bg-white p-10 md:p-16 border-none shadow-2xl flex flex-col items-center justify-center text-center min-h-[400px]"
                         >
-                            <div className="flex items-center gap-4 mb-10">
-                                <div className="w-12 h-12 bg-primary-100 text-primary-600 rounded-2xl flex items-center justify-center">
-                                    <Send size={28} />
-                                </div>
-                                <div>
-                                    <h2 className="text-2xl font-black text-gray-900 tracking-tight">入会お申し込みフォーム</h2>
-                                    <p className="text-sm font-bold text-gray-400 mt-1 uppercase tracking-widest">Support Registration</p>
-                                </div>
-                            </div>
-
-                            <form onSubmit={handleSubmit} className="space-y-10">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                                    {/* お名前 */}
-                                    <div className="space-y-4">
-                                        <label className="block text-sm font-black text-gray-700 tracking-wider">
-                                            お名前 <span className="text-accent-500 font-black ml-1">*</span>
-                                        </label>
-                                        <input
-                                            type="text"
-                                            name="name"
-                                            required
-                                            value={formData.name}
-                                            onChange={handleChange}
-                                            className="w-full px-6 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none font-bold placeholder:text-gray-300"
-                                            placeholder="草加 太郎"
-                                        />
-                                    </div>
-
-                                    {/* メールアドレス */}
-                                    <div className="space-y-4">
-                                        <label className="block text-sm font-black text-gray-700 tracking-wider">
-                                            メールアドレス <span className="text-accent-500 font-black ml-1">*</span>
-                                        </label>
-                                        <input
-                                            type="email"
-                                            name="email"
-                                            required
-                                            value={formData.email}
-                                            onChange={handleChange}
-                                            className="w-full px-6 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none font-bold placeholder:text-gray-300"
-                                            placeholder="example@email.com"
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* お住まいの地域 */}
-                                <div className="space-y-4">
-                                    <label className="block text-sm font-black text-gray-700 tracking-wider">
-                                        お住まいの地域 <span className="text-accent-500 font-black ml-1">*</span>
-                                    </label>
-                                    <select
-                                        name="area"
-                                        required
-                                        value={formData.area}
-                                        onChange={handleChange}
-                                        className="w-full px-6 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-primary-500 transition-all outline-none font-black appearance-none"
-                                    >
-                                        <option value="">地域を選択してください</option>
-                                        <option value="新田地区">新田地区</option>
-                                        <option value="中央地区">中央地区</option>
-                                        <option value="谷塚地区">谷塚地区</option>
-                                        <option value="松原地区">松原地区</option>
-                                        <option value="新栄地区">新栄地区</option>
-                                        <option value="草加地区">草加地区</option>
-                                        <option value="柳島地区">柳島地区</option>
-                                        <option value="その他">その他・市外</option>
-                                    </select>
-                                </div>
-
-                                {/* 応援する議員 */}
-                                <div className="space-y-4">
-                                    <label className="block text-sm font-black text-gray-700 tracking-wider">
-                                        特に応援したい議員（任意）
-                                    </label>
-                                    <select
-                                        name="supportMember"
-                                        value={formData.supportMember}
-                                        onChange={handleChange}
-                                        className="w-full px-6 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-primary-500 transition-all outline-none font-black appearance-none"
-                                    >
-                                        <option value="">議員を選択してください</option>
-                                        <option value="shibano">芝野 勝利</option>
-                                        <option value="shiraishi">白石 孝雄</option>
-                                        <option value="tanaka">田中 宣光</option>
-                                        <option value="ogawa">小川 としや</option>
-                                        <option value="yabe">矢部 正平</option>
-                                        <option value="kimura">木村 忠義</option>
-                                        <option value="matsui">松井 優美子</option>
-                                        <option value="all">会派全体を応援</option>
-                                    </select>
-                                </div>
-
-                                {/* メッセージ */}
-                                <div className="space-y-4">
-                                    <label className="block text-sm font-black text-gray-700 tracking-wider">
-                                        メッセージ・ご意見（任意）
-                                    </label>
-                                    <textarea
-                                        name="message"
-                                        value={formData.message}
-                                        onChange={handleChange}
-                                        rows={4}
-                                        className="w-full px-6 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-primary-500 outline-none font-bold placeholder:text-gray-300 min-h-[160px]"
-                                        placeholder="市政へのご意見やご要望がございましたら、お気軽にお書きください。"
-                                    />
-                                </div>
-
-                                {/* 同意事項 */}
-                                <div className="bg-gray-50 p-6 rounded-3xl border border-gray-100">
-                                    <label className="flex items-start gap-4 cursor-pointer group">
-                                        <input
-                                            type="checkbox"
-                                            required
-                                            className="mt-1 w-6 h-6 text-primary-600 rounded-lg border-gray-300 focus:ring-primary-500 transition-all cursor-pointer"
-                                        />
-                                        <span className="text-sm text-gray-600 font-bold group-hover:text-gray-900 transition-colors">
-                                            <Link href="/privacy" className="text-primary-600 underline underline-offset-4 font-black">プライバシーポリシー</Link>
-                                            に同意の上、入会を申し込みます。
-                                        </span>
-                                    </label>
-                                </div>
-
-                                {/* エラーメッセージ */}
-                                {error && (
-                                    <p className="text-red-500 font-bold text-sm text-center">{error}</p>
-                                )}
-
-                                {/* 送信ボタン */}
-                                <button
-                                    type="submit"
-                                    disabled={isLoading}
-                                    className="w-full btn-cta text-xl md:text-2xl py-6 shadow-2xl scale-100 hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3"
-                                >
-                                    {isLoading ? (
-                                        <>
-                                            <Loader2 size={24} className="animate-spin" />
-                                            送信中...
-                                        </>
-                                    ) : "確認して入会を申し込む"}
-                                </button>
-                            </form>
+                            <div className="text-6xl mb-6">🚧</div>
+                            <h2 className="text-2xl font-black text-gray-900 mb-3">準備中</h2>
+                            <p className="text-gray-500 font-bold leading-relaxed max-w-sm">
+                                後援会入会フォームは現在準備中です。<br />
+                                もうしばらくお待ちください。
+                            </p>
+                            {/* TODO: 準備完了後、このブロックを削除してフォームを復活させる */}
                         </motion.div>
                     </div>
                 </div>

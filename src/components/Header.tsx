@@ -10,6 +10,7 @@ const navItems = [
   { href: "/members", label: "議員紹介" },
   { href: "/policy", label: "政策・実績" },
   { href: "/news", label: "お知らせ" },
+  { href: "/reports", label: "会派ニュース" },
   { href: "/contact", label: "お問い合わせ" },
   { href: "/support", label: "後援会" },
 ];
@@ -34,7 +35,7 @@ export default function Header() {
 
           {/* デスクトップナビ */}
           <nav className="hidden lg:flex items-center space-x-6">
-            {navItems.slice(0, 6).map((item) => (
+            {navItems.slice(0, 7).map((item) => (
               <Link
                 key={item.href}
                 href={item.href}

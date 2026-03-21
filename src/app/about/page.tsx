@@ -4,14 +4,14 @@ import { motion } from "framer-motion";
 import { MapPin, Phone, Globe, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
-// 議員役職（令和7年春号・最新）
+// 議員役職（令和8年新春号・最新）
 const memberRoles = [
     { name: "田中 宣光", role: "団長", photo: "/images/members/tanaka.jpg", color: "bg-primary-600", emoji: "👑" },
-    { name: "芝野 勝利", role: "団員", photo: "/images/members/shibano.jpg", color: "bg-blue-600", emoji: "⭐" },
+    { name: "木村 忠義", role: "幹事長", photo: "/images/members/kimura.jpg", color: "bg-blue-600", emoji: "⭐" },
+    { name: "矢部 正平", role: "会計", photo: "/images/members/YABE.jpg", color: "bg-indigo-600", emoji: "💼" },
     { name: "小川 利八", role: "議会改革特別委員会委員長", photo: "/images/members/ogawa.jpg", color: "bg-purple-600", emoji: "🏛️" },
-    { name: "矢部 正平", role: "議会広報委員会委員長\n総務文教委員会委員長", photo: "/images/members/YABE.jpg", color: "bg-indigo-600", emoji: "📢" },
-    { name: "松井 優美子", role: "会計", photo: "/images/members/matui.jpg", color: "bg-pink-500", emoji: "💼" },
-    { name: "木村 忠義", role: "団員", photo: "/images/members/kimura.jpg", color: "bg-green-600", emoji: "🌿" },
+    { name: "芝野 勝利", role: "団員", photo: "/images/members/shibano.jpg", color: "bg-green-600", emoji: "🌿" },
+    { name: "松井 優美子", role: "団員", photo: "/images/members/matui.jpg", color: "bg-pink-500", emoji: "🌸" },
     { name: "白石 孝雄", role: "団員", photo: "/images/members/shiraishi.jpg", color: "bg-orange-500", emoji: "🌟" },
 ];
 

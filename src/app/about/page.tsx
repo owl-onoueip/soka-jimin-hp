@@ -6,8 +6,8 @@ import Link from "next/link";
 
 // 議員役職（令和7年春号・最新）
 const memberRoles = [
-    { name: "芝野 勝利", role: "団長", photo: "/images/members/shibano.jpg", color: "bg-primary-600", emoji: "👑" },
-    { name: "田中 宣光", role: "幹事長・草加市議会副議長", photo: "/images/members/tanaka.jpg", color: "bg-blue-600", emoji: "⭐" },
+    { name: "田中 宣光", role: "団長", photo: "/images/members/tanaka.jpg", color: "bg-primary-600", emoji: "👑" },
+    { name: "芝野 勝利", role: "団員", photo: "/images/members/shibano.jpg", color: "bg-blue-600", emoji: "⭐" },
     { name: "小川 利八", role: "議会改革特別委員会委員長", photo: "/images/members/ogawa.jpg", color: "bg-purple-600", emoji: "🏛️" },
     { name: "矢部 正平", role: "議会広報委員会委員長\n総務文教委員会委員長", photo: "/images/members/YABE.jpg", color: "bg-indigo-600", emoji: "📢" },
     { name: "松井 優美子", role: "会計", photo: "/images/members/matui.jpg", color: "bg-pink-500", emoji: "💼" },
@@ -79,20 +79,20 @@ export default function AboutPage() {
                             <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-primary-200 mx-auto mb-3 shadow-lg">
                                 <div
                                     className="w-full h-full bg-cover bg-center bg-top"
-                                    style={{ backgroundImage: `url(/images/members/shibano.jpg)` }}
+                                    style={{ backgroundImage: `url(/images/members/tanaka.jpg)` }}
                                 />
                             </div>
                             <p className="text-xs font-black text-gray-400 tracking-widest">団長</p>
-                            <p className="text-base font-black text-primary-900">芝野 勝利</p>
+                            <p className="text-base font-black text-primary-900">田中 宣光</p>
                         </div>
                         <div>
                             <div className="inline-block text-xs font-black text-primary-600 bg-primary-50 px-3 py-1 rounded-full mb-4">
                                 ご挨拶
                             </div>
                             <p className="text-gray-700 font-bold leading-loose text-sm md:text-base">
-                                市民の皆様、新たな年を迎えました。市民の皆様にとって本年も良い年でありますよう心より祈念いたします。同時に、市民生活上、何かお困りの事があれば、私たち会派の議員に気軽にお声かけて下さい。<br /><br />
-                                来年度予算は大変厳しいものがありますが、執行部が頭を抱えていることとして、<span className="text-primary-700 font-black">市民の声を直接聞いて、事業の優先順位を見直す事、事業の優先順位を提言</span>していく事、そして七名全員一丸となって市民の新年を誓ったところです。<br /><br />
-                                皆さんの御協力・御理解をお願いいたしますとともに、都度、ホームページや会報でお知らせしていきたいと思います。昨年末から、熱発が多くございます。皆様どうぞご自愛ください。
+                                市民の皆様、草加自民党・無所属の会の団長を務めております、田中宣光です。<br /><br />
+                                私たちは「市民の声を市政に届ける」をモットーに、日々の議会活動に取り組んでおります。市民生活上、何かお困りのことがあれば、会派の議員にどうぞお気軽にお声がけください。<br /><br />
+                                令和7年度も、<span className="text-primary-700 font-black">市民の声を直接聞き、事業の優先順位を見直し、提言</span>していくことを、七名全員一丸となって進めてまいります。引き続き、皆様のご協力・ご理解をよろしくお願いいたします。
                             </p>
                         </div>
                     </div>

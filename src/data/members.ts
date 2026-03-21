@@ -11,7 +11,6 @@ export interface Member {
   message: string;
   policies: string[];
   policyCategories?: Record<string, string[]>; // カテゴリ別政策（"子育て・教育" | "医療・福祉" | "まちづくり・防災" | "高齢者支援"）
-  policyUrls?: Record<number, string>; // 政策インデックスごとの詳細URL (例: { 0: "/reports/ogawa/policy-01/" })
   career: string[];
   sns?: {
     twitter?: string;
@@ -59,23 +58,6 @@ export const members: Member[] = [
       "まちづくり・防災": ["県内20万人以上の市で唯一ない硬式野球場建設の検討", "政令指定都市への移行検討による地域力の維持"],
     },
     career: ["草加市議会議員（6期）", "百条委員会委員長", "総務文教委員会"],
-    sns: {
-      website: "http://shibano.info",
-    },
-    videos: [
-      {
-        title: "芝野勝利 活動ビデオメッセージ",
-        url: "https://player.vimeo.com/video/519515664?h=2ce58eb0b4" // ※ダミー動画枠
-      }
-    ],
-    reports: [
-      {
-        title: "芝野勝利 Activity Report",
-        date: "2023.10",
-        thumbnail: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2074&auto=format&fit=crop",
-        pdfUrl: "/pdf/dummy_report.pdf" // ※ダミーPDF枠
-      }
-    ]
   },
   {
     id: "2",
@@ -105,23 +87,6 @@ export const members: Member[] = [
       "まちづくり・防災": ["避難所の見直しとルールの見直し", "電線地中化", "消防職員の増員"],
     },
     career: ["草加市議会議員（3期）", "建設環境委員会委員"],
-    sns: {
-      website: "https://www.soka-jsg.com/shiraishipg"
-    },
-    videos: [
-      {
-        title: "白石孝雄 活動ビデオメッセージ",
-        url: "https://player.vimeo.com/video/519515664?h=2ce58eb0b4" // ※ダミー動画枠
-      }
-    ],
-    reports: [
-      {
-        title: "白石孝雄 Activity Report",
-        date: "2023.10",
-        thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
-        pdfUrl: "/pdf/dummy_report.pdf" // ※ダミーPDF枠
-      }
-    ]
   },
   {
     id: "3",
@@ -158,23 +123,6 @@ export const members: Member[] = [
       "高齢者支援": ["「生涯現役!」 団塊世代の働く場の提供や地域活動への参加、そして健康増進に取り組みます"],
     },
     career: ["草加市議会議員（3期）", "文教委員会委員"],
-    sns: {
-      website: "https://www.soka-jsg.com/tanakapg"
-    },
-    videos: [
-      {
-        title: "田中宣光 活動ビデオメッセージ",
-        url: "https://player.vimeo.com/video/519515664?h=2ce58eb0b4" // ※ダミー動画枠
-      }
-    ],
-    reports: [
-      {
-        title: "田中宣光 Activity Report",
-        date: "2023.10",
-        thumbnail: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2074&auto=format&fit=crop",
-        pdfUrl: "/pdf/dummy_report.pdf" // ※ダミーPDF枠
-      }
-    ]
   },
   {
     id: "4",
@@ -207,33 +155,7 @@ export const members: Member[] = [
       "子育て・教育": ["子育てしやすく、住みたい街づくり", "教育・医療環境の整備"],
       "まちづくり・防災": ["選ばれる街・草加の実現", "防災インフラの基盤整備", "地域の活性化と公共施設の充実", "未来に向けた決断と行動による街づくり"],
     },
-    policyUrls: {
-      0: "/reports/ogawa/policy-01/public/SAMPLEtype html.html"
-    },
     career: ["草加市議会議員（7期）", "前草加市議会議長（令和4年-5年）", "総務文教委員会前委員長"],
-    sns: {
-      website: "https://www.ogawa-team8.com/"
-    },
-    videos: [
-      {
-        title: "小川としや 活動ビデオメッセージ",
-        url: "https://player.vimeo.com/video/519515664?h=2ce58eb0b4" // ※旧サイトにあるダミーVimeo想定
-      }
-    ],
-    reports: [
-      {
-        title: "Activity Report 第20号",
-        date: "2023.10",
-        thumbnail: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=2070&auto=format&fit=crop", // 仮サムネイル
-        pdfUrl: "/pdf/ogawa_report_20.pdf" // 実際には配置するPDFへのパス
-      },
-      {
-        title: "Activity Report 第19号",
-        date: "2023.04",
-        thumbnail: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?q=80&w=2071&auto=format&fit=crop",
-        pdfUrl: "/pdf/ogawa_report_19.pdf"
-      }
-    ]
   },
   {
     id: "5",
@@ -273,23 +195,6 @@ export const members: Member[] = [
       "高齢者支援": ["高齢者の働き場の拡充"],
     },
     career: ["草加市議会議員（2期）", "総務文教委員会(委員長)", "議会広報委員会(委員長)", "議会運営委員会"],
-    sns: {
-      website: "https://www.soka-jsg.com/yabepg"
-    },
-    videos: [
-      {
-        title: "矢部正平 活動ビデオメッセージ",
-        url: "https://player.vimeo.com/video/519515664?h=2ce58eb0b4" // ※ダミー動画枠
-      }
-    ],
-    reports: [
-      {
-        title: "矢部正平 Activity Report",
-        date: "2023.10",
-        thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
-        pdfUrl: "/pdf/dummy_report.pdf" // ※ダミーPDF枠
-      }
-    ]
   },
   {
     id: "6",
@@ -327,23 +232,6 @@ export const members: Member[] = [
       "高齢者支援": ["高齢者の就労支援の推進", "特別養護老人ホーム・小規模特別養護老人ホームの増設"],
     },
     career: ["草加市議会議員（4期）", "建設環境委員会委員", "議会運営委員会"],
-    sns: {
-      website: "https://soka-kimura.com/"
-    },
-    videos: [
-      {
-        title: "木村忠義 活動ビデオメッセージ",
-        url: "https://player.vimeo.com/video/519515664?h=2ce58eb0b4" // ※ダミー動画枠
-      }
-    ],
-    reports: [
-      {
-        title: "木村忠義 Activity Report",
-        date: "2023.10",
-        thumbnail: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=2070&auto=format&fit=crop",
-        pdfUrl: "/pdf/dummy_report.pdf" // ※ダミーPDF枠
-      }
-    ]
   },
   {
     id: "7",
@@ -373,22 +261,5 @@ export const members: Member[] = [
       "高齢者支援": ["単身高齢者の見守り・認知症予防", "出張介護講座による健康づくり", "孤独・孤立を防ぐ高齢者の居場所づくり", "親が亡くなった後も安心して暮らせる地域の整備"],
     },
     career: ["草加市議会議員（3期）", "福祉子ども委員会委員", "議会運営委員会委員"],
-    sns: {
-      website: "https://www.soka-jsg.com/matuipg"
-    },
-    videos: [
-      {
-        title: "松井優美子 活動ビデオメッセージ",
-        url: "https://player.vimeo.com/video/519515664?h=2ce58eb0b4" // ※ダミー動画枠
-      }
-    ],
-    reports: [
-      {
-        title: "松井優美子 Activity Report",
-        date: "2023.10",
-        thumbnail: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?q=80&w=2071&auto=format&fit=crop",
-        pdfUrl: "/pdf/dummy_report.pdf" // ※ダミーPDF枠
-      }
-    ]
   },
 ];

@@ -5,7 +5,8 @@ import { FileText, Download, ExternalLink } from "lucide-react";
 
 const reports = [
     {
-        title: "会派ニュース 2026年 新春号",
+        id: "r8-newyear",
+        title: "会派ニュース 令和8年 新春号",
         date: "令和8年（2026年）1月",
         file: "/pdf/report_2026_newyear.pdf",
         badge: "最新号",
@@ -17,6 +18,7 @@ const reports = [
         ],
     },
     {
+        id: "r7-spring",
         title: "会派ニュース 令和7年春号",
         date: "令和7年（2025年）4月",
         file: "/pdf/2025自民党4.21-02.pdf",
@@ -29,6 +31,7 @@ const reports = [
         ],
     },
     {
+        id: "r7-newyear",
         title: "会派ニュース 令和7年 新春号",
         date: "令和7年（2025年）1月",
         file: "/pdf/草加自民党・無所属の会202501.pdf",
@@ -41,6 +44,7 @@ const reports = [
         ],
     },
     {
+        id: "r6-newyear",
         title: "会派ニュース Vol.2（令和6年 新春号）",
         date: "令和6年（2024年）1月",
         file: "/pdf/自由市民議員団会派ニュースvol.２.pdf",
@@ -53,6 +57,7 @@ const reports = [
         ],
     },
     {
+        id: "r5-newyear",
         title: "会派ニュース Vol.1（令和5年 新春号）",
         date: "令和5年（2023年）1月",
         file: "/pdf/自由市民議員団会派ニュースvol.1 - コピー.pdf",
@@ -96,7 +101,8 @@ export default function ReportsPage() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: i * 0.07 }}
-                        className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow p-6"
+                        id={report.id}
+                        className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow p-6 scroll-mt-24"
                     >
                         {/* ヘッダー行 */}
                         <div className="flex items-start gap-4">

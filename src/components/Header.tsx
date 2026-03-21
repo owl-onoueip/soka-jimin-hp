@@ -10,8 +10,8 @@ const navItems = [
   { href: "/members", label: "議員紹介" },
   { href: "/policy", label: "政策・実績" },
   { href: "/news", label: "お知らせ" },
-  { href: "/support", label: "後援会" },
   { href: "/contact", label: "お問い合わせ" },
+  { href: "/support", label: "後援会" },
 ];
 
 export default function Header() {
@@ -34,7 +34,7 @@ export default function Header() {
 
           {/* デスクトップナビ */}
           <nav className="hidden lg:flex items-center space-x-6">
-            {navItems.slice(0, 5).map((item) => (
+            {navItems.slice(0, 6).map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -43,22 +43,12 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
-            <div className="flex items-center gap-3">
-              <Link
-                href="https://line.me/R/"
-                className="bg-[#06C755] hover:bg-[#05b34c] text-white px-5 py-2.5 rounded-full text-sm font-black transition-all shadow-md hover:shadow-lg flex items-center gap-2"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                LINE登録
-              </Link>
-              <Link
-                href="/support"
-                className="bg-accent-500 hover:bg-accent-600 text-white px-5 py-2.5 rounded-full text-sm font-black transition-all shadow-md hover:shadow-lg flex items-center gap-2"
-              >
-                ご支援はこちら
-              </Link>
-            </div>
+            <Link
+              href="/support"
+              className="bg-accent-500 hover:bg-accent-600 text-white px-5 py-2.5 rounded-full text-sm font-black transition-all shadow-md hover:shadow-lg"
+            >
+              ご支援はこちら
+            </Link>
           </nav>
 
           {/* モバイルメニューボタン */}

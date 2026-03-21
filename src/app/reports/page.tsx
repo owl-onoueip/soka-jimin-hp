@@ -44,6 +44,26 @@ const reports = [
         iconColor: "text-purple-600",
         iconBg: "bg-purple-100",
     },
+    {
+        title: "会派ニュース vol.2",
+        date: "旧・自由市民議員団",
+        file: "/pdf/自由市民議員団会派ニュースvol.２.pdf",
+        color: "border-t-4 border-teal-500",
+        bg: "bg-gradient-to-br from-teal-50 to-cyan-50",
+        badgeColor: "bg-teal-500",
+        iconColor: "text-teal-600",
+        iconBg: "bg-teal-100",
+    },
+    {
+        title: "会派ニュース vol.1",
+        date: "旧・自由市民議員団",
+        file: "/pdf/自由市民議員団会派ニュースvol.1 - コピー.pdf",
+        color: "border-t-4 border-gray-400",
+        bg: "bg-gradient-to-br from-gray-50 to-slate-50",
+        badgeColor: "bg-gray-500",
+        iconColor: "text-gray-600",
+        iconBg: "bg-gray-100",
+    },
 ];
 
 export default function ReportsPage() {

@@ -29,6 +29,19 @@ export interface Member {
     thumbnail: string;
     pdfUrl: string;
   }[];
+  accentColor?: string; // 議員カラー（例: "#a855f7"）
+  presentation?: {      // スライドプレゼンテーション
+    title: string;      // 例: "前編：議会改革への想い（1分50秒）"
+    audioSrc: string;   // 例: "/slides/ogawa/audio/part1_audio.mp3"
+    slides: {
+      id: number;
+      title: string;
+      content: string;
+      startTime: number;
+      endTime: number;
+      icon: string;
+    }[];
+  };
 }
 
 export const members: Member[] = [
@@ -59,6 +72,20 @@ export const members: Member[] = [
     },
     career: ["草加市議会議員（6期）", "百条委員会委員長", "総務文教委員会"],
     sns: { website: "http://shibano.info" },
+    accentColor: "#16a34a",
+    presentation: {
+      title: "震災15年、そして草加の未来へ（約2分15秒）",
+      audioSrc: "/slides/shibano/sss2026-03-20 10-30-14.mp3",
+      slides: [
+        { id: 1, title: "震災から15年",                   content: "草加市議会議員・元会派団長の芝野勝利です。今日は令和8年3月11日。東日本大震災から15年が経ちました。",                                           startTime: 0,  endTime: 8,   icon: "🌊" },
+        { id: 2, title: "復興への敬意",                   content: "街の復興は続いていますが、心の傷は癒えません。それでも一歩一歩前に進む皆さんに、深く敬意を表します。私たちも精一杯応援してまいります。",         startTime: 8,  endTime: 29,  icon: "🙏" },
+        { id: 3, title: "私自身の3.11",                   content: "15年前、埼玉でも統一地方選挙がありました。3.11の影響を受け、私にとって非常に厳しい選挙結果となりました。",                                   startTime: 29, endTime: 47,  icon: "📋" },
+        { id: 4, title: "支えてくれた皆様への感謝",       content: "それでも市議に復活できたのは、支え理解してくださった多くの方々のおかげです。その感謝が今の私の礎。これからも皆様への感謝を胸に活動を続けます。", startTime: 47, endTime: 66,  icon: "❤️" },
+        { id: 5, title: "自然災害への備えを",             content: "自然災害に勝てません。皆さんには、できる範囲で備蓄や防災対策に取り組んでいただきたいと思います。",                                           startTime: 66, endTime: 76,  icon: "🏠" },
+        { id: 6, title: "世界の平和と日本の安全保障",     content: "ウクライナや中東で戦争が続いています。唯一の被爆国として対話による解決を望みます。防衛費や安全保障については、政府には国民への丁寧な説明と情報開示を求めています。", startTime: 76, endTime: 125, icon: "🕊️" },
+        { id: 7, title: "何かあればお声がけください",     content: "今年度も来年度も、何かありましたらぜひお声がけください。どうぞよろしくお願いいたします。",                                                   startTime: 125, endTime: 134, icon: "🌿" },
+      ],
+    },
   },
   {
     id: "2",
@@ -124,6 +151,19 @@ export const members: Member[] = [
       "高齢者支援": ["「生涯現役!」 団塊世代の働く場の提供や地域活動への参加、そして健康増進に取り組みます"],
     },
     career: ["草加市議会議員（3期）", "文教委員会委員"],
+    accentColor: "#1e3a8a",
+    presentation: {
+      title: "草加自民党・無所属の会 団長からのご報告（約1分30秒）",
+      audioSrc: "/slides/tanaka/tttPXL_20260311_030653637.mp3",
+      slides: [
+        { id: 1, title: "団長 田中宣光です",               content: "草加自民党・無所属の会の団長を務めております。田中宣光です。",                                                                                   startTime: 2,  endTime: 6,  icon: "👋" },
+        { id: 2, title: "衆議院総選挙のご支援に感謝",       content: "先の第51回衆議院総選挙において、皆様から多大なるご支援をいただきました。誠にありがとうございました。",                                         startTime: 6,  endTime: 15, icon: "🙏" },
+        { id: 3, title: "草加に自民党の国会議員が誕生",     content: "ついに草加から自民党の国会議員を誕生させることができました。市議会でも自民党の議席を多数確保しています。",                                   startTime: 15, endTime: 26, icon: "🎉" },
+        { id: 4, title: "草加市の深刻な財政状況",           content: "国・県・市が一体となって取り組む必要があります。草加市の経常収支率は100.7%を超え、新規事業がほとんどできない深刻な状況です。",             startTime: 26, endTime: 53, icon: "💰" },
+        { id: 5, title: "国・県の予算で財政を立て直す",     content: "経常収支率を100%以下に戻すため、国・県からの予算をしっかり獲得し、新規事業を推進していきます。",                                           startTime: 53, endTime: 65, icon: "🏛️" },
+        { id: 6, title: "自民党と一体で草加の発展へ",       content: "与党・自民党と一体となり、草加の魅力を引き出し、さらなる発展のために全力で働いてまいります。引き続きよろしくお願い申し上げます。",           startTime: 65, endTime: 86, icon: "🌟" },
+      ],
+    },
   },
   {
     id: "4",
@@ -158,6 +198,29 @@ export const members: Member[] = [
     },
     career: ["草加市議会議員（7期）", "前草加市議会議長（令和4年-5年）", "総務文教委員会前委員長"],
     sns: { website: "https://www.ogawa-team8.com/" },
+    accentColor: "#a855f7",
+    presentation: {
+      title: "完全版：議会改革への想いと具体案（約3分40秒）",
+      audioSrc: "/slides/ogawa/audio/unified_audio.mp3",
+      slides: [
+        { id: 1,  title: "小川敏也です",                   content: "皆さん、こんにちは。小川敏也でございます。",                                                                                                                                                                                 startTime: 0,   endTime: 5,   icon: "👋" },
+        { id: 2,  title: "ご視聴ありがとうございます",     content: "本日はこの動画までたどり着いていただきまして、ありがとうございます。",                                                                                                                                                   startTime: 5,   endTime: 9,   icon: "🙏" },
+        { id: 3,  title: "7期目を務めさせていただいております", content: "現在7期目を務めさせていただいております。",                                                                                                                                                                     startTime: 9,   endTime: 13,  icon: "📋" },
+        { id: 4,  title: "ご支援に感謝申し上げます",       content: "4年前の選挙の折には、本当に多くの皆さんにご支援いただき、また、本日までいろんな方に支えていただいたことを、まず感謝申し上げます。",                                                                               startTime: 13,  endTime: 24,  icon: "❤️" },
+        { id: 5,  title: "議会改革特別委員会の委員長",     content: "現在、私は議会改革特別委員会の委員長を務めさせていただいております。",                                                                                                                                               startTime: 26,  endTime: 33,  icon: "🏛️" },
+        { id: 6,  title: "13回の委員会を開催",             content: "昨年の3月19日に第1回目を開催し、現在まで第13回議会改革の特別委員会を開催しているわけですが、その中身を少し紹介させていただきたいと思います。",                                                                   startTime: 33,  endTime: 48,  icon: "📊" },
+        { id: 7,  title: "改革の目的",                     content: "まず、なぜこの議会改革特別委員会を作ったかというと、平等に各議員が委員会でしっかりとした発言をしていこうだとか、また、議員定数について、今回、町会連合会から削減していこうという要望も出ております。",       startTime: 48,  endTime: 66,  icon: "🎯" },
+        { id: 8,  title: "市民に開かれた分かりやすい議会へ", content: "そういった形で議員削減をしたらどうだとか、我々が思うことを、この議会改革をすることによって市民に開かれて、また分かりやすい議会を作り上げていこうというような趣旨で、この議会改革特別委員会を現在作らせていただきました。", startTime: 66,  endTime: 83,  icon: "✨" },
+        { id: 9,  title: "人口1万人に対して議員1人",       content: "我々の案としては、人口1万人に対して議員1人。そのように分かりやすく、例えば5年後、10年後であっても、人口が増減する中で議員の定数が自然と調整されていくという提案です。",                         startTime: 83,  endTime: 99,  icon: "📊" },
+        { id: 10, title: "現在、草加市は25万人",           content: "現在、草加市は25万人ですが、もし26万人になったら26人にしていこうとか、そのような形で、誰もが分かりやすい形の議員定数を作り上げていこうということを提案しております。",                               startTime: 99,  endTime: 117, icon: "🏙️" },
+        { id: 11, title: "他の会派との調整",               content: "なかなか他の会派、また他の議員の同意を得ることが、現在まで至ることができておりません。しかし、改革への想いは変わりません。",                                                                               startTime: 117, endTime: 129, icon: "🤝" },
+        { id: 12, title: "委員会の持ち時間制",             content: "委員会の持ち時間制を今回提案させていただいております。例えば、1人の議員がたくさんいろんな質問をしていくのではなく、議員がそれぞれの持ち時間の中で、自分の持ち時間を使った形で委員会でしっかりとした発言をしていく、そんな提案をさせていただいております。", startTime: 129, endTime: 158, icon: "⏱️" },
+        { id: 13, title: "26人の議員がしっかりと発言",     content: "今現在、議員が26人いるわけですが、その議員の中でしっかりとした発言をそれぞれがしていく仕組みを作っていけたらな、そんな活動を現在させていただいております。",                                 startTime: 158, endTime: 165, icon: "🗣️" },
+        { id: 14, title: "10月選挙への決意",               content: "今回10月選挙という年に来るわけですけれども、本当に多くの皆様方にしっかりとしたご支援をいただいて、しっかりとした議員を選んでもらえるような、そんな我々も体制を作っていかなければいけないのではないかと考えております。", startTime: 165, endTime: 188, icon: "🗳️" },
+        { id: 15, title: "3月11日、15年前の震災",          content: "結びになりますけれども、本日は3月11日。15年前の震災がありました。本当に多くの人々の命が亡くなったわけですが、この教訓をしっかりと活かした形で、災害に強い街を作っていく、そんな活動も心がけていきたいと思っております。", startTime: 188, endTime: 207, icon: "🙏" },
+        { id: 16, title: "ご視聴ありがとうございました",   content: "動画をご視聴いただき、誠にありがとうございました。引き続き、皆様のご支援をどうぞよろしくお願い申し上げます。",                                                                               startTime: 207, endTime: 240, icon: "🌸" },
+      ],
+    },
   },
   {
     id: "5",
@@ -197,6 +260,22 @@ export const members: Member[] = [
       "高齢者支援": ["高齢者の働き場の拡充"],
     },
     career: ["草加市議会議員（2期）", "総務文教委員会(委員長)", "議会広報委員会(委員長)", "議会運営委員会"],
+    accentColor: "#6366f1",
+    presentation: {
+      title: "現役子育てパパ議員の活動報告（約2分20秒）",
+      audioSrc: "/slides/yabe/yyyPXL_20260311_025052122.mp3",
+      slides: [
+        { id: 1, title: "草加市議会議員 矢部翔平です",   content: "皆さんこんにちは。草加市議会議員の矢部翔平です。",                                                                               startTime: 1,   endTime: 7,   icon: "👋" },
+        { id: 2, title: "現役子育てパパ議員",           content: "41歳、5歳と3歳の2人の子どもを育てる現役子育てパパです。市議会でがっつり子育て中なのは私だけではないでしょうか。",             startTime: 7,   endTime: 22,  icon: "👨‍👧‍👦" },
+        { id: 3, title: "子育ての現場から市政へ",       content: "実際の子育てを通じて感じた課題や悩みを、直接市政に反映させていきます。",                                                       startTime: 22,  endTime: 31,  icon: "🏙️" },
+        { id: 4, title: "病後児保育を実現！",           content: "子どもが病気の時に保育園に預けられない問題を解消するため病後児保育を提案。今年度予算が確定し、来年度から実施へ！",             startTime: 31,  endTime: 55,  icon: "🏥" },
+        { id: 5, title: "草加市で子育てしやすく",       content: "子育て世帯の皆様が草加市で安心して子育てできるよう、基盤整備をしっかり進めます。",                                           startTime: 55,  endTime: 64,  icon: "🌱" },
+        { id: 6, title: "給食費の無償化を実現！",       content: "学校給食の無償化・負担軽減を訴え続け、国の協力も得て今年度ついに給食費無償化が実現しました。",                               startTime: 64,  endTime: 89,  icon: "🍱" },
+        { id: 7, title: "草加市の財政課題",             content: "草加市は収入より支出が多い厳しい財政状況です。変えるべきところを変え、必要な決断をしていきます。",                           startTime: 89,  endTime: 115, icon: "💰" },
+        { id: 8, title: "市民サービスを守りながら変革を", content: "市民サービスへの影響を最小限に抑えながら、変化に対応できる強い市政を実現します。",                                         startTime: 115, endTime: 133, icon: "🛡️" },
+        { id: 9, title: "引き続きよろしくお願いします", content: "市民の皆様のために全力で頑張ってまいります。引き続きよろしくお願いいたします。",                                               startTime: 133, endTime: 142, icon: "🙏" },
+      ],
+    },
   },
   {
     id: "6",
@@ -235,6 +314,17 @@ export const members: Member[] = [
     },
     career: ["草加市議会議員（4期）", "建設環境委員会委員", "議会運営委員会"],
     sns: { website: "https://soka-kimura.com/" },
+    accentColor: "#3b82f6",
+    presentation: {
+      title: "安全・安心な草加のために（約50秒）",
+      audioSrc: "/slides/kimura/kkkPXL_20260311_025952869.mp3",
+      slides: [
+        { id: 1, title: "草加市議会議員 木村忠義です",     content: "皆さんこんにちは。草加市自民党会派の木村忠義です。",                                                                                     startTime: 1,  endTime: 7,  icon: "👋" },
+        { id: 2, title: "安全・安心な草加のために",         content: "常日頃から、安全で安心な草加の街のために活動しています。これからも変わらず草加のために尽力してまいります。",                         startTime: 7,  endTime: 19, icon: "🛡️" },
+        { id: 3, title: "自民党への期待を信頼へ",           content: "先の衆議院総選挙で自民党は大勝しました。これは国民の皆様からの大きな期待の表れ。その期待を確かな信頼に変えるべく、日々活動してまいります。", startTime: 19, endTime: 34, icon: "🗳️" },
+        { id: 4, title: "国・県・市のパイプ役として",       content: "草加市を変えるには、国・県・市が一体となって動くことが不可欠です。そのパイプ役として、これからも全力で取り組んでまいります。どうぞよろしくお願いいたします。", startTime: 34, endTime: 53, icon: "🔗" },
+      ],
+    },
   },
   {
     id: "7",

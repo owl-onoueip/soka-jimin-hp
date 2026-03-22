@@ -134,6 +134,30 @@ export default function MemberDetailClient({ member }: { member: any }) {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         {/* メインコンテンツ */}
                         <div className="lg:col-span-2 space-y-8">
+                            {/* 活動報告スライド（対象議員のみ） */}
+                            {member.presentation && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.15 }}
+                                >
+                                    <Link
+                                        href={`/members/${member.id}/presentation`}
+                                        className="flex items-center justify-between w-full bg-slate-900 hover:bg-slate-800 text-white rounded-2xl p-6 shadow-xl border border-purple-500/30 group transition-all"
+                                    >
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-12 h-12 rounded-full bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-2xl">▶</div>
+                                            <div>
+                                                <p className="text-purple-400 text-xs font-black tracking-widest uppercase mb-1">Activity Report</p>
+                                                <p className="text-white font-black text-lg">活動報告スライドを見る</p>
+                                                <p className="text-white/50 text-xs font-bold">前編：議会改革への想い（1分50秒）</p>
+                                            </div>
+                                        </div>
+                                        <ChevronRight size={24} className="text-purple-400 group-hover:translate-x-1 transition-transform" />
+                                    </Link>
+                                </motion.div>
+                            )}
+
                             {/* キャッチフレーズ */}
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.95 }}
@@ -435,6 +459,25 @@ export default function MemberDetailClient({ member }: { member: any }) {
                         </div>
                     </div>
                 </div>
+
+                {/* 活動報告スライド（対象議員のみ） */}
+                {member.presentation && (
+                    <div className="px-4 pt-4">
+                        <Link
+                            href={`/members/${member.id}/presentation`}
+                            className="flex items-center justify-between w-full bg-slate-900 text-white rounded-2xl p-4 border border-purple-500/40 group"
+                        >
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-full bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-lg">▶</div>
+                                <div>
+                                    <p className="text-purple-400 text-[10px] font-black tracking-widest uppercase">Activity Report</p>
+                                    <p className="text-white font-black text-sm">活動報告スライドを見る</p>
+                                </div>
+                            </div>
+                            <ChevronRight size={20} className="text-purple-400" />
+                        </Link>
+                    </div>
+                )}
 
                 {/* キャッチフレーズ & メッセージ */}
                 <div className="px-6 py-8 space-y-10">

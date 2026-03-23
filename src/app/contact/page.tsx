@@ -4,15 +4,7 @@ import { motion } from "framer-motion";
 import { Phone, MapPin, ExternalLink, Send, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 
-const PREFECTURES = [
-    "北海道","青森県","岩手県","宮城県","秋田県","山形県","福島県",
-    "茨城県","栃木県","群馬県","埼玉県","千葉県","東京都","神奈川県",
-    "新潟県","富山県","石川県","福井県","山梨県","長野県","岐阜県",
-    "静岡県","愛知県","三重県","滋賀県","京都府","大阪府","兵庫県",
-    "奈良県","和歌山県","鳥取県","島根県","岡山県","広島県","山口県",
-    "徳島県","香川県","愛媛県","高知県","福岡県","佐賀県","長崎県",
-    "熊本県","大分県","宮崎県","鹿児島県","沖縄県",
-];
+const SOKA_AREAS = ["新田地区", "中央地区", "谷塚地区", "松原地区", "新栄地区", "草加地区", "柳島地区", "その他・分からない"];
 
 export default function ContactPage() {
     const [submitted, setSubmitted] = useState(false);
@@ -20,42 +12,17 @@ export default function ContactPage() {
     const [form, setForm] = useState({
         name: "", email: "",
         tel1: "", tel2: "", tel3: "",
-        zip1: "", zip2: "", prefecture: "", city: "", street: "", building: "",
+        residence: "",   // "県外" | "県内（草加市外）" | "草加市内"
+        area: "",        // 草加市内の地区
         message: "",
     });
+    const [sending, setSending] = useState(false);
+    const [error, setError] = useState("");
 
     const toggleCategory = (cat: string) => {
         setCategories(prev =>
             prev.includes(cat) ? prev.filter(c => c !== cat) : [...prev, cat]
         );
-    };
-
-    const [sending, setSending] = useState(false);
-    const [error, setError] = useState("");
-    const [zipLoading, setZipLoading] = useState(false);
-    const [zipError, setZipError] = useState("");
-
-    const lookupZip = async (zip1: string, zip2: string) => {
-        if (zip1.length !== 3 || zip2.length !== 4) return;
-        setZipLoading(true);
-        setZipError("");
-        const controller = new AbortController();
-        const timer = setTimeout(() => controller.abort(), 5000);
-        try {
-            const res = await fetch(`https://zipcloud.ibsrv.net/api/search?zipcode=${zip1}${zip2}`, { signal: controller.signal });
-            const data = await res.json() as { results: { address1: string; address2: string; address3: string }[] | null };
-            if (data.results && data.results.length > 0) {
-                const r = data.results[0];
-                setForm(f => ({ ...f, prefecture: r.address1, city: r.address2, street: r.address3 }));
-            } else {
-                setZipError("該当する住所が見つかりませんでした");
-            }
-        } catch {
-            setZipError("住所を自動取得できませんでした。手動で入力してください");
-        } finally {
-            clearTimeout(timer);
-            setZipLoading(false);
-        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -64,20 +31,18 @@ export default function ContactPage() {
             setError("お問い合わせの種別を選択してください");
             return;
         }
-
         setSending(true);
         setError("");
         try {
             const tel = [form.tel1, form.tel2, form.tel3].filter(Boolean).join("-");
-            const address = [
-                form.zip1 && form.zip2 ? `〒${form.zip1}-${form.zip2}` : "",
-                form.prefecture, form.city, form.street, form.building
-            ].filter(Boolean).join(" ");
+            const area = form.residence === "草加市内" && form.area
+                ? `草加市内（${form.area}）`
+                : form.residence || "";
 
             const res = await fetch("/api/contact", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ ...form, tel, address, categories }),
+                body: JSON.stringify({ ...form, tel, address: area, categories }),
             });
             const data = await res.json() as { success?: boolean; error?: string };
             if (!res.ok) throw new Error(data.error || "送信に失敗しました");
@@ -294,8 +259,8 @@ export default function ContactPage() {
                             </div>
 
                             {/* メールアドレス */}
-                            <div className="space-y-3">
-                                <label className="block text-sm font-black text-gray-700">
+                            <div>
+                                <label className="block text-sm font-black text-gray-700 mb-2">
                                     メールアドレス
                                     <span className="ml-2 text-[10px] text-red-500 font-black bg-red-50 px-2 py-0.5 rounded-full">必須</span>
                                 </label>
@@ -342,81 +307,54 @@ export default function ContactPage() {
                                 </div>
                             </div>
 
-                            {/* 住所 */}
+                            {/* お住まいの地域 */}
                             <div>
-                                <label className="block text-sm font-black text-gray-700 mb-3">住所</label>
-                                <div className="space-y-3">
-                                    {/* 郵便番号 */}
-                                    <div className="space-y-1.5">
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-sm font-black text-gray-500">〒</span>
-                                            <input
-                                                type="tel"
-                                                maxLength={3}
-                                                value={form.zip1}
-                                                onChange={e => {
-                                                    const v = e.target.value;
-                                                    setForm(f => ({ ...f, zip1: v }));
-                                                    lookupZip(v, form.zip2);
-                                                }}
-                                                className="w-20 px-4 py-3 bg-gray-50 border-2 border-transparent rounded-xl focus:bg-white focus:border-primary-500 transition-all outline-none font-bold text-sm text-center"
-                                                placeholder="340"
-                                            />
-                                            <span className="font-black text-gray-400">-</span>
-                                            <input
-                                                type="tel"
-                                                maxLength={4}
-                                                value={form.zip2}
-                                                onChange={e => {
-                                                    const v = e.target.value;
-                                                    setForm(f => ({ ...f, zip2: v }));
-                                                    lookupZip(form.zip1, v);
-                                                }}
-                                                className="w-24 px-4 py-3 bg-gray-50 border-2 border-transparent rounded-xl focus:bg-white focus:border-primary-500 transition-all outline-none font-bold text-sm text-center"
-                                                placeholder="8550"
-                                            />
-                                            {zipLoading && (
-                                                <span className="text-xs text-primary-500 font-bold animate-pulse">検索中...</span>
-                                            )}
-                                        </div>
-                                        {zipError && (
-                                            <p className="text-xs text-red-500 font-bold pl-1">{zipError}</p>
-                                        )}
-                                    </div>
-                                    {/* 都道府県 */}
-                                    <select
-                                        value={form.prefecture}
-                                        onChange={e => setForm(f => ({ ...f, prefecture: e.target.value }))}
-                                        className="w-full px-5 py-3 bg-gray-50 border-2 border-transparent rounded-xl focus:bg-white focus:border-primary-500 transition-all outline-none font-bold text-sm appearance-none"
-                                    >
-                                        <option value="">都道府県</option>
-                                        {PREFECTURES.map(p => <option key={p} value={p}>{p}</option>)}
-                                    </select>
-                                    {/* 市区町村 */}
-                                    <input
-                                        type="text"
-                                        value={form.city}
-                                        onChange={e => setForm(f => ({ ...f, city: e.target.value }))}
-                                        className="w-full px-5 py-3 bg-gray-50 border-2 border-transparent rounded-xl focus:bg-white focus:border-primary-500 transition-all outline-none font-bold text-sm"
-                                        placeholder="市区町村"
-                                    />
-                                    {/* 町名番地 */}
-                                    <input
-                                        type="text"
-                                        value={form.street}
-                                        onChange={e => setForm(f => ({ ...f, street: e.target.value }))}
-                                        className="w-full px-5 py-3 bg-gray-50 border-2 border-transparent rounded-xl focus:bg-white focus:border-primary-500 transition-all outline-none font-bold text-sm"
-                                        placeholder="町名・番地"
-                                    />
-                                    {/* 建物名 */}
-                                    <input
-                                        type="text"
-                                        value={form.building}
-                                        onChange={e => setForm(f => ({ ...f, building: e.target.value }))}
-                                        className="w-full px-5 py-3 bg-gray-50 border-2 border-transparent rounded-xl focus:bg-white focus:border-primary-500 transition-all outline-none font-bold text-sm"
-                                        placeholder="建物名・部屋番号（任意）"
-                                    />
+                                <label className="block text-sm font-black text-gray-700 mb-3">
+                                    お住まいの地域
+                                    <span className="ml-2 text-[10px] text-gray-400 font-bold bg-gray-100 px-2 py-0.5 rounded-full">任意</span>
+                                </label>
+                                <div className="flex flex-wrap gap-3 mb-3">
+                                    {["草加市内", "県内（草加市外）", "県外"].map(opt => (
+                                        <button
+                                            key={opt}
+                                            type="button"
+                                            onClick={() => setForm(f => ({ ...f, residence: f.residence === opt ? "" : opt, area: "" }))}
+                                            className={`px-5 py-2.5 rounded-full border-2 font-bold text-sm transition-all ${
+                                                form.residence === opt
+                                                    ? "border-primary-500 bg-primary-50 text-primary-700"
+                                                    : "border-gray-200 bg-gray-50 text-gray-600 hover:border-gray-300"
+                                            }`}
+                                        >
+                                            {opt}
+                                        </button>
+                                    ))}
                                 </div>
+
+                                {/* 草加市内の場合：地区選択 */}
+                                {form.residence === "草加市内" && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: -6 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                    >
+                                        <p className="text-xs font-bold text-gray-500 mb-2">地区を選択してください（任意）</p>
+                                        <div className="flex flex-wrap gap-2">
+                                            {SOKA_AREAS.map(area => (
+                                                <button
+                                                    key={area}
+                                                    type="button"
+                                                    onClick={() => setForm(f => ({ ...f, area: f.area === area ? "" : area }))}
+                                                    className={`px-4 py-2 rounded-xl border-2 font-bold text-xs transition-all ${
+                                                        form.area === area
+                                                            ? "border-primary-500 bg-primary-50 text-primary-700"
+                                                            : "border-gray-200 bg-gray-50 text-gray-600 hover:border-gray-300"
+                                                    }`}
+                                                >
+                                                    {area}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </motion.div>
+                                )}
                             </div>
 
                             {/* エラーメッセージ */}

@@ -40,7 +40,7 @@ export default function ContactPage() {
         setZipLoading(true);
         setZipError("");
         try {
-            const res = await fetch(`https://zipcloud.ibsrv.net/api/search?zipcode=${zip1}${zip2}`);
+            const res = await fetch(`/api/zipcode?zipcode=${zip1}${zip2}`);
             const data = await res.json() as { results: { address1: string; address2: string; address3: string }[] | null };
             if (data.results && data.results.length > 0) {
                 const r = data.results[0];

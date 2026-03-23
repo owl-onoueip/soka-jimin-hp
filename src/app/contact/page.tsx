@@ -32,6 +32,28 @@ export default function ContactPage() {
 
     const [sending, setSending] = useState(false);
     const [error, setError] = useState("");
+    const [zipLoading, setZipLoading] = useState(false);
+    const [zipError, setZipError] = useState("");
+
+    const lookupZip = async (zip1: string, zip2: string) => {
+        if (zip1.length !== 3 || zip2.length !== 4) return;
+        setZipLoading(true);
+        setZipError("");
+        try {
+            const res = await fetch(`https://zipcloud.ibsrv.net/api/search?zipcode=${zip1}${zip2}`);
+            const data = await res.json() as { results: { address1: string; address2: string; address3: string }[] | null };
+            if (data.results && data.results.length > 0) {
+                const r = data.results[0];
+                setForm(f => ({ ...f, prefecture: r.address1, city: r.address2, street: r.address3 }));
+            } else {
+                setZipError("該当する住所が見つかりませんでした");
+            }
+        } catch {
+            setZipError("住所の取得に失敗しました");
+        } finally {
+            setZipLoading(false);
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -333,25 +355,41 @@ export default function ContactPage() {
                                 <label className="block text-sm font-black text-gray-700 mb-3">住所</label>
                                 <div className="space-y-3">
                                     {/* 郵便番号 */}
-                                    <div className="flex items-center gap-2">
-                                        <span className="text-sm font-black text-gray-500">〒</span>
-                                        <input
-                                            type="tel"
-                                            maxLength={3}
-                                            value={form.zip1}
-                                            onChange={e => setForm(f => ({ ...f, zip1: e.target.value }))}
-                                            className="w-20 px-4 py-3 bg-gray-50 border-2 border-transparent rounded-xl focus:bg-white focus:border-primary-500 transition-all outline-none font-bold text-sm text-center"
-                                            placeholder="340"
-                                        />
-                                        <span className="font-black text-gray-400">-</span>
-                                        <input
-                                            type="tel"
-                                            maxLength={4}
-                                            value={form.zip2}
-                                            onChange={e => setForm(f => ({ ...f, zip2: e.target.value }))}
-                                            className="w-24 px-4 py-3 bg-gray-50 border-2 border-transparent rounded-xl focus:bg-white focus:border-primary-500 transition-all outline-none font-bold text-sm text-center"
-                                            placeholder="8550"
-                                        />
+                                    <div className="space-y-1.5">
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-sm font-black text-gray-500">〒</span>
+                                            <input
+                                                type="tel"
+                                                maxLength={3}
+                                                value={form.zip1}
+                                                onChange={e => {
+                                                    const v = e.target.value;
+                                                    setForm(f => ({ ...f, zip1: v }));
+                                                    lookupZip(v, form.zip2);
+                                                }}
+                                                className="w-20 px-4 py-3 bg-gray-50 border-2 border-transparent rounded-xl focus:bg-white focus:border-primary-500 transition-all outline-none font-bold text-sm text-center"
+                                                placeholder="340"
+                                            />
+                                            <span className="font-black text-gray-400">-</span>
+                                            <input
+                                                type="tel"
+                                                maxLength={4}
+                                                value={form.zip2}
+                                                onChange={e => {
+                                                    const v = e.target.value;
+                                                    setForm(f => ({ ...f, zip2: v }));
+                                                    lookupZip(form.zip1, v);
+                                                }}
+                                                className="w-24 px-4 py-3 bg-gray-50 border-2 border-transparent rounded-xl focus:bg-white focus:border-primary-500 transition-all outline-none font-bold text-sm text-center"
+                                                placeholder="8550"
+                                            />
+                                            {zipLoading && (
+                                                <span className="text-xs text-primary-500 font-bold animate-pulse">検索中...</span>
+                                            )}
+                                        </div>
+                                        {zipError && (
+                                            <p className="text-xs text-red-500 font-bold pl-1">{zipError}</p>
+                                        )}
                                     </div>
                                     {/* 都道府県 */}
                                     <select

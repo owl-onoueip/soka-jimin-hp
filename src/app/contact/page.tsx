@@ -18,7 +18,7 @@ export default function ContactPage() {
     const [submitted, setSubmitted] = useState(false);
     const [categories, setCategories] = useState<string[]>([]);
     const [form, setForm] = useState({
-        name: "", email: "", emailConfirm: "",
+        name: "", email: "",
         tel1: "", tel2: "", tel3: "",
         zip1: "", zip2: "", prefecture: "", city: "", street: "", building: "",
         message: "",
@@ -61,10 +61,7 @@ export default function ContactPage() {
             setError("お問い合わせの種別を選択してください");
             return;
         }
-        if (form.email !== form.emailConfirm) {
-            setError("メールアドレスが一致しません");
-            return;
-        }
+
         setSending(true);
         setError("");
         try {
@@ -306,14 +303,6 @@ export default function ContactPage() {
                                     onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
                                     className="w-full px-5 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-primary-500 transition-all outline-none font-bold text-sm"
                                     placeholder="example@email.com"
-                                />
-                                <input
-                                    type="email"
-                                    required
-                                    value={form.emailConfirm}
-                                    onChange={e => setForm(f => ({ ...f, emailConfirm: e.target.value }))}
-                                    className="w-full px-5 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-primary-500 transition-all outline-none font-bold text-sm"
-                                    placeholder="確認用（もう一度入力）"
                                 />
                             </div>
 

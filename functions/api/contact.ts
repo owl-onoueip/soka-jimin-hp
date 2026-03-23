@@ -84,7 +84,7 @@ ${body.address || "未記入"}
     if (!response.ok && response.status !== 202) {
       const error = await response.text();
       console.error("MailChannels error:", error);
-      return new Response(JSON.stringify({ error: "送信に失敗しました" }), {
+      return new Response(JSON.stringify({ error: `MailChannels error (${response.status}): ${error}` }), {
         status: 500,
         headers: { "Content-Type": "application/json" },
       });

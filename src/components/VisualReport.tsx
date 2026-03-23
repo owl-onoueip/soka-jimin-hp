@@ -14,7 +14,7 @@ const accentColors = [
 
 export default function VisualReport() {
     return (
-        <section className="bg-primary-950 py-16 md:py-24 px-4">
+        <section className="bg-primary-900 py-16 md:py-24 px-4">
             <div className="container mx-auto max-w-5xl">
 
                 {/* ヘッダー */}
@@ -64,7 +64,7 @@ export default function VisualReport() {
                                     <div className={`rounded-xl px-4 py-3 ${color.tag.replace("text-", "bg-").replace("border-", "border-").split(" ")[0]} bg-white/5 border border-white/10`}>
                                         <p className="text-primary-400 text-xs font-bold mb-1">{step.stat.label}</p>
                                         <p className="text-white text-2xl md:text-3xl font-black tracking-tight">
-                                            ¥{Number(step.stat.value).toLocaleString()}
+                                            ¥{Number(step.stat.value.replace(/,/g, "")).toLocaleString()}
                                         </p>
                                     </div>
                                 )}

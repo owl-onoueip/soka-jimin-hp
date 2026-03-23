@@ -19,9 +19,10 @@ export default function PresentationClient({ member }: { member: Member }) {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
+    if (!isPlaying && currentTime === 0) return;
     const slide = slides.find(s => currentTime >= s.startTime && currentTime < s.endTime);
     if (slide) setCurrentSlideId(slide.id);
-  }, [currentTime, slides]);
+  }, [currentTime, slides, isPlaying]);
 
   const togglePlay = () => {
     if (!audioRef.current) return;

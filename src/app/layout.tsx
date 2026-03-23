@@ -26,6 +26,17 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <link rel="icon" href="/favicon.ico" />
+        <script dangerouslySetInnerHTML={{ __html: `
+          (function() {
+            var ua = navigator.userAgent;
+            var chromeMatch = ua.match(/Chrome\\/(\\d+)/);
+            var isOldChrome = chromeMatch && parseInt(chromeMatch[1]) <= 109;
+            var isIE = ua.indexOf('Trident/') !== -1 || ua.indexOf('MSIE ') !== -1;
+            if (isOldChrome || isIE) {
+              document.write('<div style="background:#fefce8;border-bottom:1px solid #fde047;padding:12px 16px;display:flex;align-items:flex-start;gap:8px;font-family:sans-serif;"><span style="color:#ca8a04;font-size:18px;flex-shrink:0;">⚠️</span><p style="color:#854d0e;font-size:14px;font-weight:bold;margin:0;line-height:1.6;">お使いのブラウザは古いバージョンです。正しく表示されない場合があります。最新のChrome・Edge・Safariか、スマートフォンでのご利用をお勧めします。</p></div>');
+            }
+          })();
+        ` }} />
       </head>
       <body className="min-h-screen bg-gray-50">
         <Header />

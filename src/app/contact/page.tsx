@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Phone, MapPin, ExternalLink, Send, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 
-const SOKA_AREAS = ["新田地区", "中央地区", "谷塚地区", "松原地区", "新栄地区", "草加地区", "柳島地区", "その他・分からない"];
+const SOKA_AREAS = ["新田地区", "中央地区", "谷塚地区", "松原地区", "新栄地区", "草加地区", "柳島地区", "その他"];
 
 export default function ContactPage() {
     const [submitted, setSubmitted] = useState(false);
@@ -14,6 +14,7 @@ export default function ContactPage() {
         tel1: "", tel2: "", tel3: "",
         residence: "",   // "県外" | "県内（草加市外）" | "草加市内"
         area: "",        // 草加市内の地区
+        areaOther: "",   // その他の場合の自由入力
         message: "",
     });
     const [sending, setSending] = useState(false);
@@ -35,8 +36,11 @@ export default function ContactPage() {
         setError("");
         try {
             const tel = [form.tel1, form.tel2, form.tel3].filter(Boolean).join("-");
-            const area = form.residence === "草加市内" && form.area
-                ? `草加市内（${form.area}）`
+            const areaLabel = form.area === "その他" && form.areaOther
+                ? `その他（${form.areaOther}）`
+                : form.area;
+            const area = form.residence === "草加市内" && areaLabel
+                ? `草加市内（${areaLabel}）`
                 : form.residence || "";
 
             const res = await fetch("/api/contact", {
@@ -335,14 +339,15 @@ export default function ContactPage() {
                                     <motion.div
                                         initial={{ opacity: 0, y: -6 }}
                                         animate={{ opacity: 1, y: 0 }}
+                                        className="space-y-3"
                                     >
-                                        <p className="text-xs font-bold text-gray-500 mb-2">地区を選択してください（任意）</p>
+                                        <p className="text-xs font-bold text-gray-500">地区を選択してください（任意）</p>
                                         <div className="flex flex-wrap gap-2">
                                             {SOKA_AREAS.map(area => (
                                                 <button
                                                     key={area}
                                                     type="button"
-                                                    onClick={() => setForm(f => ({ ...f, area: f.area === area ? "" : area }))}
+                                                    onClick={() => setForm(f => ({ ...f, area: f.area === area ? "" : area, areaOther: "" }))}
                                                     className={`px-4 py-2 rounded-xl border-2 font-bold text-xs transition-all ${
                                                         form.area === area
                                                             ? "border-primary-500 bg-primary-50 text-primary-700"
@@ -353,6 +358,17 @@ export default function ContactPage() {
                                                 </button>
                                             ))}
                                         </div>
+                                        {form.area === "その他" && (
+                                            <motion.input
+                                                initial={{ opacity: 0, y: -4 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                type="text"
+                                                value={form.areaOther}
+                                                onChange={e => setForm(f => ({ ...f, areaOther: e.target.value }))}
+                                                className="w-full px-4 py-3 bg-gray-50 border-2 border-transparent rounded-xl focus:bg-white focus:border-primary-500 transition-all outline-none font-bold text-sm"
+                                                placeholder="地区名をご入力ください（任意）"
+                                            />
+                                        )}
                                     </motion.div>
                                 )}
                             </div>

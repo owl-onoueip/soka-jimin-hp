@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import FixedCTA from "@/components/FixedCTA";
+import BrowserWarning from "@/components/BrowserWarning";
 
 export const metadata: Metadata = {
   title: "草加自民党・無所属の会 | 公式サイト",
@@ -28,6 +29,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-gray-50">
         <Header />
+        <BrowserWarning />
         <main className="pb-safe">
           {children}
         </main>

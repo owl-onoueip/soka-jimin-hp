@@ -24,13 +24,6 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       });
     }
 
-    if (body.email !== body.emailConfirm) {
-      return new Response(JSON.stringify({ error: "メールアドレスが一致しません" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
-
     // メール本文
     const mailBody = `
 草加自民党・無所属の会 お問い合わせフォームより

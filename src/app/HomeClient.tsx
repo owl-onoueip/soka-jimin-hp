@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import MemberCarousel from "@/components/MemberCarousel";
+import { members } from "@/data/members";
 import VisualReport from "@/components/VisualReport";
 import NewsletterModal from "@/components/NewsletterModal";
 import { motion } from "framer-motion";
@@ -165,6 +166,44 @@ export default function HomeClient() {
                             onAnimeModeEnter={() => setIsAnimeMode(true)}
                             onAnimeModeLeave={() => setIsAnimeMode(false)}
                         />
+                    </div>
+                </div>
+            </section>
+
+            {/* 7人の声を聞く */}
+            <section className="py-12 bg-gradient-to-b from-primary-950 to-primary-900">
+                <div className="container mx-auto px-4">
+                    <div className="text-center mb-8">
+                        <h2 className="text-2xl md:text-4xl font-black text-white tracking-tight mb-2">
+                            🎙 7人の声を聞く
+                        </h2>
+                        <p className="text-primary-300 text-sm">各議員の活動報告をスライドでお届けします</p>
+                    </div>
+                    <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+                        {members.filter(m => m.presentation).map(member => (
+                            <a
+                                key={member.id}
+                                href={`/members/${member.id}/presentation`}
+                                className="flex flex-col items-center gap-2 group"
+                            >
+                                <div
+                                    className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 group-hover:scale-110 transition-all duration-300 shadow-lg"
+                                    style={{ borderColor: member.accentColor || "#f97316" }}
+                                >
+                                    <div
+                                        className="w-full h-full bg-cover bg-center"
+                                        style={{ backgroundImage: `url(${member.photo})` }}
+                                    />
+                                </div>
+                                <span className="text-white text-xs font-bold">{member.name.split(" ")[0]}</span>
+                                <span
+                                    className="text-[10px] font-black px-3 py-1 rounded-full flex items-center gap-1"
+                                    style={{ backgroundColor: member.accentColor || "#f97316", color: "white" }}
+                                >
+                                    ▶ 活動報告
+                                </span>
+                            </a>
+                        ))}
                     </div>
                 </div>
             </section>

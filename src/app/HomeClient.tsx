@@ -171,7 +171,7 @@ export default function HomeClient() {
             </section>
 
             {/* 7人の声を聞く */}
-            <section className="py-12 bg-gradient-to-b from-primary-950 to-primary-900">
+            <section className="py-12 bg-primary-900">
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-8">
                         <h2 className="text-2xl md:text-4xl font-black text-white tracking-tight mb-2">

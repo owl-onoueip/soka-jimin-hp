@@ -39,8 +39,10 @@ export default function ContactPage() {
         if (zip1.length !== 3 || zip2.length !== 4) return;
         setZipLoading(true);
         setZipError("");
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 5000);
         try {
-            const res = await fetch(`/api/zipcode?zipcode=${zip1}${zip2}`);
+            const res = await fetch(`https://zipcloud.ibsrv.net/api/search?zipcode=${zip1}${zip2}`, { signal: controller.signal });
             const data = await res.json() as { results: { address1: string; address2: string; address3: string }[] | null };
             if (data.results && data.results.length > 0) {
                 const r = data.results[0];
@@ -49,8 +51,9 @@ export default function ContactPage() {
                 setZipError("該当する住所が見つかりませんでした");
             }
         } catch {
-            setZipError("住所の取得に失敗しました");
+            setZipError("住所を自動取得できませんでした。手動で入力してください");
         } finally {
+            clearTimeout(timer);
             setZipLoading(false);
         }
     };

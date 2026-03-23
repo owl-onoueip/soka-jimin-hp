@@ -66,7 +66,7 @@ ${body.address || "未記入"}
           {
             to: [
               // TODO: 実際の届け先メールアドレスに変更してください
-              { email: "dummy@example.com", name: "草加自民党 事務局" },
+              { email: "i.onoue@gmail.com", name: "草加自民党 事務局" },
             ],
           },
         ],

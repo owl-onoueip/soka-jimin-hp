@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import MembersClient from "./MembersClient";
+import MembersPageWrapper from "./MembersPageWrapper";
 
 export const metadata: Metadata = {
   title: "議員紹介 | 草加自民党・無所属の会",
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function MembersPage() {
-  return <MembersClient />;
+  return <MembersPageWrapper />;
 }

@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
 import dynamic from "next/dynamic";
 
 // 古いブラウザにはframer-motionを読み込まない（クラッシュ防止）
 const MembersClient = dynamic(() => import("./MembersClient"), { ssr: false });
-const MembersSimple = dynamic(() => import("./MembersSimple"), { ssr: false });
 
 function isOldBrowser(): boolean {
     if (typeof navigator === "undefined") return false;
@@ -17,8 +16,14 @@ function isOldBrowser(): boolean {
 }
 
 export default function MembersPageWrapper() {
-    const [old] = useState(() => isOldBrowser());
+    useEffect(() => {
+        if (isOldBrowser()) {
+            window.location.replace("/members-simple.html");
+        }
+    }, []);
 
-    if (old) return <MembersSimple />;
+    // 古いブラウザの場合はMembersClientを描画しない（framer-motion読み込み防止）
+    if (typeof navigator !== "undefined" && isOldBrowser()) return null;
+
     return <MembersClient />;
 }

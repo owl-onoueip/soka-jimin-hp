@@ -295,7 +295,7 @@ export const members: Member[] = [
     id: "6",
     name: "木村 忠義",
     nameKana: "きむら ただよし",
-    photo: "/images/members/kimura.jpg",
+    photo: "/images/members/kimura.webp",
     photoAnime: "/images/members/kimura2.gif",
     area: "草加地区",
     position: "幹事長",

@@ -7,7 +7,7 @@ import Link from "next/link";
 // 議員役職（令和8年新春号・最新）
 const memberRoles = [
     { name: "田中 宣光", role: "団長", photo: "/images/members/tanaka.jpg", color: "bg-primary-600", emoji: "👑" },
-    { name: "木村 忠義", role: "幹事長", photo: "/images/members/kimura.jpg", color: "bg-blue-600", emoji: "⭐" },
+    { name: "木村 忠義", role: "幹事長", photo: "/images/members/kimura.webp", color: "bg-blue-600", emoji: "⭐" },
     { name: "矢部 正平", role: "会計", photo: "/images/members/YABE.webp", color: "bg-indigo-600", emoji: "💼" },
     { name: "小川 利八", role: "議会改革特別委員会委員長", photo: "/images/members/ogawa.webp", color: "bg-purple-600", emoji: "🏛️" },
     { name: "芝野 勝利", role: "団員", photo: "/images/members/shibano.webp", color: "bg-green-600", emoji: "🌿" },

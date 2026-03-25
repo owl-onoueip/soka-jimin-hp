@@ -47,7 +47,7 @@ export interface Member {
 export const members: Member[] = [
   {
     id: "1",
-    name: "芝野 勝利",
+    name: "しばの 勝利",
     nameKana: "しばの かつとし",
     photo: "/images/members/shibano.webp",
     photoAnime: "/images/members/shibano2.gif",
@@ -77,7 +77,7 @@ export const members: Member[] = [
       title: "震災15年、そして草加の未来へ（約2分15秒）",
       audioSrc: "/slides/shibano/sss2026-03-20 10-30-14.mp3",
       slides: [
-        { id: 1, title: "震災から15年",                   content: "草加市議会議員・元会派団長の芝野勝利です。今日は令和8年3月11日。東日本大震災から15年が経ちました。",                                           startTime: 0,  endTime: 8,   icon: "🌊" },
+        { id: 1, title: "震災から15年",                   content: "草加市議会議員・元会派団長のしばの勝利です。今日は令和8年3月11日。東日本大震災から15年が経ちました。",                                           startTime: 0,  endTime: 8,   icon: "🌊" },
         { id: 2, title: "復興への敬意",                   content: "街の復興は続いていますが、心の傷は癒えません。それでも一歩一歩前に進む皆さんに、深く敬意を表します。私たちも精一杯応援してまいります。",         startTime: 8,  endTime: 29,  icon: "🙏" },
         { id: 3, title: "私自身の3.11",                   content: "15年前、埼玉でも統一地方選挙がありました。3.11の影響を受け、私にとって非常に厳しい選挙結果となりました。",                                   startTime: 29, endTime: 47,  icon: "📋" },
         { id: 4, title: "支えてくれた皆様への感謝",       content: "それでも市議に復活できたのは、支え理解してくださった多くの方々のおかげです。その感謝が今の私の礎。これからも皆様への感謝を胸に活動を続けます。", startTime: 47, endTime: 66,  icon: "❤️" },

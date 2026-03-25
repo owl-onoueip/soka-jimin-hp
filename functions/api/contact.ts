@@ -1,5 +1,5 @@
 interface Env {
-  // 必要に応じて環境変数を追加
+  DKIM_PRIVATE_KEY: string;
 }
 
 interface ContactForm {
@@ -58,9 +58,11 @@ ${body.address || "未記入"}
         personalizations: [
           {
             to: [
-              // TODO: 実際の届け先メールアドレスに変更してください
               { email: "i.onoue@gmail.com", name: "草加自民党 事務局" },
             ],
+            dkim_domain: "soka-jsg.com",
+            dkim_selector: "mailchannels",
+            dkim_private_key: context.env.DKIM_PRIVATE_KEY,
           },
         ],
         from: {

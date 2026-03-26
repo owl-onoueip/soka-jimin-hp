@@ -32,7 +32,7 @@ const allNews = [
     {
         date: "2025.03",
         category: "議会",
-        title: "議会改革特別委員会が設置・小川利八議員が委員長に就任",
+        title: "議会改革特別委員会が設置・小川としや議員が委員長に就任",
         tagColor: "bg-blue-500",
         link: "/reports#r7-spring",
         isPdf: false,

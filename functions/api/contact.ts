@@ -1,5 +1,6 @@
 interface Env {
   DKIM_PRIVATE_KEY: string;
+  MAILCHANNELS_API_KEY: string;
 }
 
 interface ContactForm {
@@ -53,7 +54,10 @@ ${body.address || "未記入"}
     // MailChannels 送信
     const response = await fetch("https://api.mailchannels.net/tx/v1/send", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${context.env.MAILCHANNELS_API_KEY}`,
+      },
       body: JSON.stringify({
         personalizations: [
           {

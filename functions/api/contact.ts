@@ -54,7 +54,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         personalizations: [
           {
             to: [
-              { email: "attack.norimitsu@gmail.com", name: "草加自民党 事務局" },
+              { email: "i.onoue@gmail.com", name: "草加自民党 事務局" },
             ],
             dkim_domain: "soka-jsg.com",
             dkim_selector: "mailchannels",

@@ -272,7 +272,7 @@ export default function HomeClient() {
             {/* 実績 (モーション・グラフィックス報告) */}
             <VisualReport />
 
-            {/* 後援会CTA */}
+            {/* 後援会CTA 一時非表示（復活予定） */}
             <section className="py-16 md:py-24 bg-white text-center px-4">
                 <div className="max-w-2xl mx-auto">
                     <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-6 tracking-tight">
@@ -280,18 +280,12 @@ export default function HomeClient() {
                     </h2>
                     <p className="text-gray-500 font-medium mb-10 leading-relaxed text-sm md:text-base">
                         草加自民党・無所属の会は、市民参加型の政治を目指しています。<br className="hidden md:block" />
-                        後援会へのご入会、ご連絡をお待ちしております。
+                        ご意見・ご相談はお気軽にお問い合わせください。
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Link
-                            href="/support"
-                            className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-4 px-10 rounded-full shadow-xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2"
-                        >
-                            後援会のご案内
-                        </Link>
-                        <Link
                             href="/contact"
-                            className="bg-white border-2 border-primary-100 text-primary-600 font-bold py-4 px-10 rounded-full hover:bg-primary-50 transition-all flex items-center justify-center gap-2"
+                            className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-4 px-10 rounded-full shadow-xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2"
                         >
                             お問い合わせ
                         </Link>

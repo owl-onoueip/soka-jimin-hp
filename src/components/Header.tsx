@@ -12,7 +12,7 @@ const navItems = [
   { href: "/news", label: "お知らせ" },
   { href: "/reports", label: "会派ニュース" },
   { href: "/contact", label: "お問い合わせ" },
-  { href: "/support", label: "後援会" },
+  // { href: "/support", label: "後援会" }, // 後援会ページ一時非表示（復活予定）
 ];
 
 export default function Header() {
@@ -44,22 +44,26 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
+            {/* ご支援ボタン一時非表示（後援会ページ復活予定）
             <Link
               href="/support"
               className="bg-accent-500 hover:bg-accent-600 text-white px-5 py-2.5 rounded-full text-sm font-black transition-all shadow-md hover:shadow-lg"
             >
               ご支援はこちら
             </Link>
+            */}
           </nav>
 
           {/* モバイルメニューボタン */}
           <div className="flex items-center gap-3 lg:hidden">
+            {/* モバイルご支援ボタン一時非表示（後援会ページ復活予定）
             <Link
               href="/support"
               className="bg-accent-500 text-white text-xs font-bold px-3 py-2 rounded-full shadow-md"
             >
               ご支援
             </Link>
+            */}
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"

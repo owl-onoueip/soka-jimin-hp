@@ -80,7 +80,7 @@ ${body.address || "未記入"}
         subject: `【お問い合わせ】${body.categories.join("・")} - ${body.name} 様`,
         content: [
           {
-            type: "text/plain",
+            type: "text/plain; charset=utf-8",
             value: mailBody,
           },
         ],

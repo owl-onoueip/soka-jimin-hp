@@ -25,31 +25,23 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       });
     }
 
-    // メール本文
-    const mailBody = `
-草加自民党・無所属の会 お問い合わせフォームより
-
-■ お問い合わせの種別
-${body.categories.join("、")}
-
-■ お問い合わせ内容
-${body.message}
-
-■ お名前
-${body.name}
-
-■ メールアドレス
-${body.email}
-
-■ 電話番号
-${body.tel || "未記入"}
-
-■ 住所
-${body.address || "未記入"}
-
----
-このメールは草加自民党・無所属の会 公式サイトから自動送信されました。
-    `.trim();
+    // メール本文 (HTML)
+    const mailBody = `<!DOCTYPE html>
+<html lang="ja">
+<head><meta charset="utf-8"></head>
+<body style="font-family:sans-serif;font-size:14px;color:#333;line-height:1.8;">
+<p>草加自民党・無所属の会 お問い合わせフォームより</p>
+<hr>
+<p><strong>■ お問い合わせの種別</strong><br>${body.categories.join("、")}</p>
+<p><strong>■ お問い合わせ内容</strong><br>${body.message.replace(/\n/g, "<br>")}</p>
+<p><strong>■ お名前</strong><br>${body.name}</p>
+<p><strong>■ メールアドレス</strong><br>${body.email}</p>
+<p><strong>■ 電話番号</strong><br>${body.tel || "未記入"}</p>
+<p><strong>■ 住所</strong><br>${body.address || "未記入"}</p>
+<hr>
+<p style="color:#999;font-size:12px;">このメールは草加自民党・無所属の会 公式サイトから自動送信されました。</p>
+</body>
+</html>`;
 
     // MailChannels 送信
     const response = await fetch("https://api.mailchannels.net/tx/v1/send", {
@@ -62,7 +54,7 @@ ${body.address || "未記入"}
         personalizations: [
           {
             to: [
-              { email: "i.onoue@gmail.com", name: "草加自民党 事務局" },
+              { email: "attack.norimitsu@gmail.com", name: "草加自民党 事務局" },
             ],
             dkim_domain: "soka-jsg.com",
             dkim_selector: "mailchannels",
@@ -80,7 +72,7 @@ ${body.address || "未記入"}
         subject: `【お問い合わせ】${body.categories.join("・")} - ${body.name} 様`,
         content: [
           {
-            type: "text/plain; charset=utf-8",
+            type: "text/html",
             value: mailBody,
           },
         ],

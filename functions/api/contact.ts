@@ -55,6 +55,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
           {
             to: [
               { email: "i.onoue@gmail.com", name: "草加自民党 事務局" },
+              { email: "attacknorimitsu@gmail.com", name: "田中団長" },
             ],
             dkim_domain: "soka-jsg.com",
             dkim_selector: "mailchannels",
@@ -101,3 +102,4 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     });
   }
 };
+は

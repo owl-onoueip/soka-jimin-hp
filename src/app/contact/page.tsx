@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Phone, MapPin, ExternalLink, Send, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 
-const SOKA_AREAS = ["新田地区", "中央地区", "谷塚地区", "松原地区", "新栄地区", "草加地区", "柳島地区", "その他"];
+const SOKA_AREAS = ["谷塚東部地区", "谷塚中央地区", "谷塚西部地区", "草加東部地区", "草加西部地区", "新田東部地区", "新田西部地区", "草加安行地区", "草加川柳地区", "草加稲荷地区", "その他"];
 
 export default function ContactPage() {
     const [submitted, setSubmitted] = useState(false);

@@ -350,29 +350,7 @@ export default function MemberDetailClient({ member }: { member: any }) {
                                 </motion.div>
                             )}
 
-                            {/* 後援会入会CTA */}
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                className="card bg-accent-500 p-8 text-center border-none shadow-2xl relative overflow-hidden group"
-                            >
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-700" />
-                                <div className="relative z-10 flex flex-col items-center text-center">
-                                    <h3 className="text-xl font-black text-white mb-2">
-                                        {member.name}を<br />応援しませんか？
-                                    </h3>
-                                    <p className="text-white/80 text-sm font-bold mb-6 leading-relaxed">
-                                        草加市の未来を創る活動に、<br />あなたの力を貸してください。
-                                    </p>
-                                    <Link
-                                        href="/support"
-                                        className="inline-block w-full bg-white text-accent-600 font-extrabold px-6 py-4 rounded-2xl hover:bg-gray-50 transition-all shadow-xl hover:-translate-y-1"
-                                    >
-                                        後援会に入会する
-                                    </Link>
-                                </div>
-                            </motion.div>
+                            {/* 後援会入会CTA - 一時非表示 */}
 
                             {/* [NEW] PC版 ショート動画セクション */}
                             {member.videos && member.videos.length > 0 && (
@@ -650,13 +628,7 @@ export default function MemberDetailClient({ member }: { member: any }) {
                 {/* 固定アクションボタン (スマホのみ) */}
                 <div className="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black to-transparent z-50">
                     <div className="flex gap-3">
-                        <Link
-                            href="/support"
-                            className="flex-1 bg-accent-500 text-white py-4 px-6 rounded-2xl font-black text-center shadow-2xl active:scale-95 transition-transform flex items-center justify-center gap-2"
-                        >
-                            <Award size={20} />
-                            後援会に入会する
-                        </Link>
+                        {/* 後援会入会ボタン - 一時非表示 */}
                         {member.sns?.website && (
                             <Link
                                 href={member.sns.website}

@@ -56,7 +56,7 @@ ${body.address || "未記入"}
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${context.env.MAILCHANNELS_API_KEY}`,
+        "X-Api-Key": context.env.MAILCHANNELS_API_KEY,
       },
       body: JSON.stringify({
         personalizations: [

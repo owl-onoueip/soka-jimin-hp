@@ -217,7 +217,7 @@ export const members: Member[] = [
       title: "完全版：議会改革への想いと具体案（約3分40秒）",
       audioSrc: "/slides/ogawa/audio/unified_audio.mp3",
       slides: [
-        { id: 1,  title: "小川敏也です",                   content: "皆さん、こんにちは。小川敏也でございます。",                                                                                                                                                                                 startTime: 0,   endTime: 5,   icon: "👋" },
+        { id: 1,  title: "小川としやです",                   content: "皆さん、こんにちは。小川としやでございます。",                                                                                                                                                                                 startTime: 0,   endTime: 5,   icon: "👋" },
         { id: 2,  title: "ご視聴ありがとうございます",     content: "本日はこの動画までたどり着いていただきまして、ありがとうございます。",                                                                                                                                                   startTime: 5,   endTime: 9,   icon: "🙏" },
         { id: 3,  title: "7期目を務めさせていただいております", content: "現在7期目を務めさせていただいております。",                                                                                                                                                                     startTime: 9,   endTime: 13,  icon: "📋" },
         { id: 4,  title: "ご支援に感謝申し上げます",       content: "4年前の選挙の折には、本当に多くの皆さんにご支援いただき、また、本日までいろんな方に支えていただいたことを、まず感謝申し上げます。",                                                                               startTime: 13,  endTime: 24,  icon: "❤️" },

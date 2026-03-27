@@ -145,8 +145,10 @@ function MemberCard({ member }: { member: typeof members[0] }) {
                 )}
 
                 {/* 地区バッジ */}
-                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur text-primary-800 text-xs font-black px-2 py-1 rounded shadow-sm z-10">
-                    {member.area}
+                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur text-primary-800 text-xs font-black px-2 py-1 rounded shadow-sm z-10 text-center leading-tight">
+                    {member.area.endsWith('地区') ? (
+                        <><span className="block">{member.area.slice(0, -2)}</span><span className="block">地区</span></>
+                    ) : member.area}
                 </div>
 
                 {/* グラデーションオーバーレイ */}

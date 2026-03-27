@@ -309,7 +309,7 @@ export default function MobileRadikoMembers() {
                         style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
                         <div>
                             <p className="text-xl font-black">{activeMember?.name} の政策</p>
-                            <p className="text-xs opacity-60 mt-0.5">{activeMember?.area} 担当 · {activeMember?.term}</p>
+                            <p className="text-xs opacity-60 mt-0.5">{activeMember?.area.endsWith('地区') ? activeMember.area.slice(0, -2) + '\u200B地区' : activeMember?.area} 担当 · {activeMember?.term}</p>
                         </div>
                         <Link
                             href={`/members/${activeMember?.id}`}

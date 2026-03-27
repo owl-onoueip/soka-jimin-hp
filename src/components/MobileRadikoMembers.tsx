@@ -369,17 +369,7 @@ export default function MobileRadikoMembers() {
                 </div>
             </div>
 
-            {/* 固定CTAボタン */}
-            <div className="fixed bottom-0 left-0 right-0 z-30 px-5 pb-6 pt-3"
-                style={{ background: "linear-gradient(transparent, rgba(0,0,0,0.8))" }}>
-                <Link
-                    href="/support"
-                    className="block w-full text-center font-black text-base py-4 rounded-2xl shadow-2xl active:scale-95 transition-transform"
-                    style={{ background: themeColors[activeIndex], border: "1px solid rgba(255,255,255,0.15)" }}
-                >
-                    後援会に入会する
-                </Link>
-            </div>
+            {/* 固定CTAボタン - 一時非表示 */}
         </div>
     );
 }

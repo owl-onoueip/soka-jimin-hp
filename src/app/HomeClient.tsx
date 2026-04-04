@@ -170,6 +170,18 @@ export default function HomeClient() {
                 </div>
             </section>
 
+            {/* 会派集合写真 */}
+            <section className="py-12 bg-white">
+                <div className="container mx-auto px-4 text-center">
+                    <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-6">草加自民党・無所属の会 メンバー</h2>
+                    <img
+                        src="/images/members/スクリーンショット 2026-04-04 215300.jpg"
+                        alt="草加自民党・無所属の会 7人の議員"
+                        className="mx-auto rounded-2xl shadow-xl max-w-full md:max-w-3xl w-full"
+                    />
+                </div>
+            </section>
+
             {/* 7人の声を聞く */}
             <section className="py-12 bg-primary-900">
                 <div className="container mx-auto px-4">

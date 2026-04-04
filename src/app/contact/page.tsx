@@ -177,6 +177,15 @@ export default function ContactPage() {
                                 議員一覧を見る
                             </a>
                         </motion.div>
+
+                        {/* ジブリ風イラスト ワンポイント */}
+                        <div className="mt-6 text-center">
+                            <img
+                                src="/images/members/group-ghibli.webp"
+                                alt="草加自民党・無所属の会"
+                                className="mx-auto w-48 rounded-2xl opacity-90"
+                            />
+                        </div>
                     </div>
 
                     {/* 右：フォーム */}

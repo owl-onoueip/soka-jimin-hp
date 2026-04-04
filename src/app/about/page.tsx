@@ -65,7 +65,16 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            <div className="container mx-auto px-4 -mt-10 relative z-10 max-w-5xl space-y-16">
+            {/* ジブリ風集合イラスト */}
+            <div className="container mx-auto px-4 mt-8 relative z-10 max-w-4xl">
+                <img
+                    src="/images/members/group-ghibli.webp"
+                    alt="草加自民党・無所属の会 7人のイラスト"
+                    className="mx-auto rounded-3xl shadow-2xl w-full"
+                />
+            </div>
+
+            <div className="container mx-auto px-4 mt-8 relative z-10 max-w-5xl space-y-16">
 
                 {/* 団長挨拶 */}
                 <motion.div

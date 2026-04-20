@@ -1,0 +1,18 @@
+name: Boost Likes Scheduler
+
+on:
+  schedule:
+    # 毎日UTCで、03:00（日本時間 午前12:00）、12:00（日本時間 午後21:00）の2回実行
+    - cron: '0 3,12 * * *'
+  workflow_dispatch: # 手動実行用ボタン（GitHubのActionsタブから実行可能にするため）
+
+jobs:
+  boost-likes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hit Boost Likes API
+        # secrets.BOOST_SECRET が設定されていればそれを使用し、なければ直接文字列を使用します。
+        # 本番環境のURL（例：https://soka-jsg.com）を指定します。
+        run: |
+          curl -s -o response.json "https://soka-jsg.com/api/boost-likes?secret=${{ secrets.BOOST_SECRET || 'Soka_Random_Boost_2026' }}"
+          cat response.json

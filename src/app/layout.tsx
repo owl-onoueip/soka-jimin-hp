@@ -5,11 +5,14 @@ import FixedCTA from "@/components/FixedCTA";
 import BrowserWarning from "@/components/BrowserWarning";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://soka-jsg.com"),
   title: "草加自民党・無所属の会 | 公式サイト",
   description: "草加市議会 草加自民党・無所属の会の公式ホームページです。草加市の未来を共に創る7人の議員が、市民の皆様の声を市政に届けます。",
   keywords: "草加市, 市議会, 自民党, 議員, 選挙, 政策",
   alternates: {
-    canonical: "https://soka-jsg.com",
+    languages: {
+      "ja-JP": "/",
+    },
   },
   openGraph: {
     title: "草加自民党・無所属の会",

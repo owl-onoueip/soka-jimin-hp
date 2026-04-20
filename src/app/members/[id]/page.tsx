@@ -15,6 +15,9 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   return {
     title: `${member.name} | 草加自民党・無所属の会`,
     description: member.message,
+    alternates: {
+      canonical: `/members/${params.id}`,
+    },
   };
 }
 

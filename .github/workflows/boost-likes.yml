@@ -6,13 +6,23 @@ on:
     - cron: '0 3,12 * * *'
   workflow_dispatch: # 手動実行用ボタン（GitHubのActionsタブから実行可能にするため）
 
+permissions:
+  contents: write # keepalive-workflow がダミーコミットをプッシュするために必要
+
 jobs:
   boost-likes:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
       - name: Hit Boost Likes API
         # secrets.BOOST_SECRET が設定されていればそれを使用し、なければ直接文字列を使用します。
         # 本番環境のURL（例：https://soka-jsg.com）を指定します。
         run: |
           curl -s -o response.json "https://soka-jsg.com/api/boost-likes?secret=${{ secrets.BOOST_SECRET || 'Soka_Random_Boost_2026' }}"
           cat response.json
+
+      # 60日間リポジトリにアクティビティがないことによるワークフローの自動無効化を防ぐ
+      - name: Keepalive Workflow
+        uses: gautamkrishnar/keepalive-workflow@v2

@@ -165,6 +165,7 @@ export const members: Member[] = [
       "高齢者支援": ["「生涯現役!」 団塊世代の働く場の提供や地域活動への参加、そして健康増進に取り組みます"],
     },
     career: ["草加市議会議員（3期）", "文教委員会委員"],
+    sns: { website: "https://tanaka-soka.com/" },
     accentColor: "#1e3a8a",
     presentation: {
       title: "草加自民党・無所属の会 団長からのご報告（約1分30秒）",

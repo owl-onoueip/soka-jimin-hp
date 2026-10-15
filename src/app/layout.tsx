@@ -53,6 +53,7 @@ export default function RootLayout({
             }
           })();
         ` }} />
+        <script defer src="https://site-analytics.i-onoue.workers.dev/a.js" data-site="soka-jimin" />
       </head>
       <body className="min-h-screen bg-gray-50">
         <Header />

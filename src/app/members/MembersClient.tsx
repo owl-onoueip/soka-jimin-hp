@@ -38,7 +38,7 @@ export default function MembersClient() {
                             議員紹介
                         </h1>
                         <p className="text-lg md:text-xl text-blue-200 font-bold opacity-80 max-w-2xl mx-auto leading-relaxed">
-                            草加の未来を拓く、7名の情熱。一人一人が市民の皆様の代弁者として、現場の声に徹底してこだわります。
+                            草加の未来を拓く、5名の情熱。一人一人が市民の皆様の代弁者として、現場の声に徹底してこだわります。
                         </p>
                     </motion.div>
                 </div>
@@ -80,7 +80,7 @@ export default function MembersClient() {
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
-                                <div className="text-accent-500 text-3xl font-black mb-2">7</div>
+                                <div className="text-accent-500 text-3xl font-black mb-2">5</div>
                                 <div className="text-sm font-bold text-blue-200">所属議員数</div>
                             </div>
                             <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">

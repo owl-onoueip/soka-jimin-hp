@@ -12,7 +12,7 @@ export default function MembersSimple() {
                 <div style={{ background: "#1e3a6e", borderRadius: 12, padding: "24px 20px", marginBottom: 24, textAlign: "center" }}>
                     <p style={{ color: "#fbbf24", fontSize: 12, fontWeight: 900, letterSpacing: "0.15em", margin: "0 0 8px" }}>OUR MEMBERS</p>
                     <h1 style={{ color: "#fff", fontSize: 28, fontWeight: 900, margin: "0 0 8px" }}>議員紹介</h1>
-                    <p style={{ color: "#bfdbfe", fontSize: 14, margin: 0 }}>草加の未来を拓く、7名の情熱</p>
+                    <p style={{ color: "#bfdbfe", fontSize: 14, margin: 0 }}>草加の未来を拓く、5名の情熱</p>
                 </div>
 
                 {/* 議員グリッド */}
@@ -67,7 +67,7 @@ export default function MembersSimple() {
                 {/* フッターメッセージ */}
                 <div style={{ marginTop: 32, background: "#1e3a6e", borderRadius: 12, padding: "20px", textAlign: "center" }}>
                     <p style={{ color: "#fff", fontWeight: 900, fontSize: 16, margin: "0 0 8px" }}>草加自民党・無所属の会</p>
-                    <p style={{ color: "#bfdbfe", fontSize: 13, margin: "0 0 16px" }}>7名の議員が草加市民の声を市政に届けます</p>
+                    <p style={{ color: "#bfdbfe", fontSize: 13, margin: "0 0 16px" }}>5名の議員が草加市民の声を市政に届けます</p>
                     <Link
                         href="/support"
                         style={{ display: "inline-block", background: "#fbbf24", color: "#1e3a6e", fontWeight: 900, fontSize: 14, padding: "10px 24px", borderRadius: 8, textDecoration: "none" }}

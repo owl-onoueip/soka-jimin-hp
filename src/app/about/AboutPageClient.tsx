@@ -9,9 +9,7 @@ const memberRoles = [
     { name: "田中 宣光", role: "団長", photo: "/images/members/tanaka.jpg", color: "bg-primary-600", emoji: "👑" },
     { name: "木村 忠義", role: "幹事長", photo: "/images/members/kimura.webp", color: "bg-blue-600", emoji: "⭐" },
     { name: "矢部 正平", role: "会計", photo: "/images/members/YABE.webp", color: "bg-indigo-600", emoji: "💼" },
-    { name: "小川 としや", role: "議会改革特別委員会委員長", photo: "/images/members/ogawa.webp", color: "bg-purple-600", emoji: "🏛️" },
     { name: "しばの 勝利", role: "団員", photo: "/images/members/shibano.webp", color: "bg-green-600", emoji: "🌿" },
-    { name: "松井 優美子", role: "団員", photo: "/images/members/matui.webp", color: "bg-pink-500", emoji: "🌸" },
     { name: "白石 孝雄", role: "団員", photo: "/images/members/shiraishi.webp", color: "bg-orange-500", emoji: "🌟" },
 ];
 
@@ -31,7 +29,7 @@ const pillars = [
         border: "border-t-4 border-green-400",
         titleColor: "text-green-800",
         title: "着実に実行する",
-        text: "7名が一丸となり、温めてきた思いや計画を着実に実行に移します。柔軟な発想と周囲との縁を大切に、スピード感をもって前進します。",
+        text: "5名が一丸となり、温めてきた思いや計画を着実に実行に移します。柔軟な発想と周囲との縁を大切に、スピード感をもって前進します。",
     },
     {
         emoji: "🌸",
@@ -92,7 +90,7 @@ export default function AboutPageClient() {
                             <p className="text-gray-700 font-bold leading-loose text-sm md:text-base">
                                 市民の皆様、草加自民党・無所属の会の団長を務めております、田中宣光です。<br /><br />
                                 私たちは「市民の声を市政に届ける」をモットーに、日々の議会活動に取り組んでおります。市民生活上、何かお困りのことがあれば、会派の議員にどうぞお気軽にお声がけください。<br /><br />
-                                令和7年度も、<span className="text-primary-700 font-black">市民の声を直接聞き、事業の優先順位を見直し、提言</span>していくことを、七名全員一丸となって進めてまいります。引き続き、皆様のご協力・ご理解をよろしくお願いいたします。
+                                令和7年度も、<span className="text-primary-700 font-black">市民の声を直接聞き、事業の優先順位を見直し、提言</span>していくことを、五名全員一丸となって進めてまいります。引き続き、皆様のご協力・ご理解をよろしくお願いいたします。
                             </p>
                         </div>
                     </div>

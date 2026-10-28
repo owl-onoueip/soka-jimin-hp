@@ -14,10 +14,8 @@ const MEMBER_LABELS: Record<string, string> = {
   shibano: "芝野 勝利",
   shiraishi: "白石 孝雄",
   tanaka: "田中 宣光",
-  ogawa: "小川 としや",
   yabe: "矢部 正平",
   kimura: "木村 忠義",
-  matsui: "松井 優美子",
   all: "会派全体",
 };
 

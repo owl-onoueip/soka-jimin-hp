@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import MemberCarousel from "@/components/MemberCarousel";
@@ -75,7 +75,7 @@ export default function HomeClient() {
                     transition={{ duration: 5.0, ease: "easeOut" }}
                     className="absolute inset-0 bg-cover bg-bottom"
                     style={{
-                        backgroundImage: `url('/images/hero-normal.webp')`,
+                        backgroundImage: `url('/images/hero-group.jpg')`,
                         filter: 'brightness(0.4) contrast(1.1)'
                     }}
                 />
@@ -151,7 +151,7 @@ export default function HomeClient() {
                             <h2 className="text-2xl md:text-4xl font-black text-primary-900 tracking-tight">
                                 Our Members
                             </h2>
-                            <p className="text-gray-500 text-xs md:text-sm font-bold mt-1">草加を変える5人の実行力</p>
+                            <p className="text-gray-500 text-xs md:text-sm font-bold mt-1">草加を変える7人の実行力</p>
                         </div>
                         <Link
                             href="/members"
@@ -170,29 +170,20 @@ export default function HomeClient() {
                 </div>
             </section>
 
-            {/* 会派集合写真 */}
-            <section className="py-12 bg-white">
-                <div className="container mx-auto px-4 text-center">
-                    <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-6">草加自民党・無所属の会 メンバー</h2>
-                    <img
-                        src="/images/members/group-photo.webp"
-                        alt="草加自民党・無所属の会 5人の議員"
-                        className="mx-auto rounded-2xl shadow-xl max-w-full md:max-w-3xl w-full"
-                    />
-                </div>
-            </section>
+            {/* 会派集合写真 → 動画（セピア→カラー） */}
+            <SepiaToColorVideo />
 
-            {/* 5人の声を聞く */}
+            {/* 7人の声を聞く */}
             <section className="py-12 bg-primary-900">
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-8">
                         <h2 className="text-2xl md:text-4xl font-black text-white tracking-tight mb-2">
-                            🎙 5人の声を聞く
+                            🎙 7人の声を聞く
                         </h2>
                         <p className="text-primary-300 text-sm">各議員の活動報告をスライドでお届けします</p>
                     </div>
                     <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-                        {members.filter(m => m.presentation).map(member => (
+                        {members.filter(m => m.presentation || (m.presentations && m.presentations.length > 0)).map(member => (
                             <a
                                 key={member.id}
                                 href={`/members/${member.id}/presentation`}
@@ -305,5 +296,88 @@ export default function HomeClient() {
                 </div>
             </section>
         </div>
+    );
+}
+
+function SepiaToColorVideo() {
+    const sectionRef = useRef<HTMLDivElement>(null);
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const [phase, setPhase] = useState<"still" | "playing" | "ended">("still");
+
+    useEffect(() => {
+        const el = sectionRef.current;
+        if (!el) return;
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting && phase === "still") {
+                    setPhase("playing");
+                    videoRef.current?.play().catch(() => {});
+                }
+            },
+            { threshold: 0.3 }
+        );
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, [phase]);
+
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+        const onEnded = () => setPhase("ended");
+        video.addEventListener("ended", onEnded);
+        return () => video.removeEventListener("ended", onEnded);
+    }, []);
+
+    return (
+        <section className="py-12 bg-white" ref={sectionRef}>
+            <div className="container mx-auto px-4 text-center">
+                <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-6">
+                    草加自民党・無所属の会 メンバー
+                </h2>
+                <div className="relative mx-auto max-w-full md:max-w-3xl w-full rounded-2xl shadow-xl overflow-hidden">
+                    {/* 開始：セピアの静止画 */}
+                    <img
+                        src="/images/hero-group.jpg"
+                        alt="草加自民党・無所属の会 7人の議員"
+                        className="w-full block absolute top-0 left-0"
+                        style={{
+                            filter: phase === "still" ? "sepia(1)" : "sepia(0)",
+                            opacity: phase === "still" ? 1 : 0,
+                            transitionProperty: "filter, opacity",
+                            transitionDuration: "1.5s, 1.5s",
+                            transitionTimingFunction: "ease-out",
+                        }}
+                    />
+                    {/* 終了：カラーの正面集合写真 */}
+                    <img
+                        src="/images/group-chamber-still.jpg"
+                        alt="草加自民党・無所属の会 7人の議員"
+                        className="w-full block absolute top-0 left-0"
+                        style={{
+                            opacity: phase === "ended" ? 1 : 0,
+                            transitionProperty: "opacity",
+                            transitionDuration: "2s",
+                            transitionTimingFunction: "ease-out",
+                        }}
+                    />
+                    <video
+                        ref={videoRef}
+                        src="/images/group-chamber-video.mp4"
+                        muted
+                        playsInline
+                        preload="metadata"
+                        className="w-full block"
+                        style={{
+                            filter: phase !== "still" ? "sepia(0)" : "sepia(1)",
+                            opacity: phase === "playing" ? 1 : 0,
+                            transitionProperty: "filter, opacity",
+                            transitionDuration: phase === "ended" ? "1s, 2s" : "2s, 1.5s",
+                            transitionDelay: phase === "playing" ? "0.5s, 0s" : "0s, 0s",
+                            transitionTimingFunction: "ease-out",
+                        }}
+                    />
+                </div>
+            </div>
+        </section>
     );
 }

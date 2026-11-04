@@ -181,7 +181,7 @@ export default function ContactPageClient() {
                         {/* ジブリ風イラスト ワンポイント */}
                         <div className="mt-6 text-center">
                             <img
-                                src="/images/members/group-ghibli.webp"
+                                src="/images/group-chamber.jpg"
                                 alt="草加自民党・無所属の会"
                                 className="mx-auto w-48 rounded-2xl opacity-90"
                             />

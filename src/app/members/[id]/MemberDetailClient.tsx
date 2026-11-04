@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowLeft, MapPin, Award, Target, Briefcase, Twitter, Facebook, Instagram, Globe, ChevronRight, Heart, ChevronDown } from "lucide-react";
+import { ArrowLeft, MapPin, Award, Target, Briefcase, Twitter, Facebook, Instagram, Globe, Mail, ChevronRight, Heart, ChevronDown } from "lucide-react";
 
 const CATEGORY_ICONS: Record<string, string> = {
     "子育て・教育": "👶",
@@ -135,7 +135,7 @@ export default function MemberDetailClient({ member }: { member: any }) {
                         {/* メインコンテンツ */}
                         <div className="lg:col-span-2 space-y-8">
                             {/* 活動報告スライド（対象議員のみ） */}
-                            {member.presentation && (
+                            {(member.presentation || (member.presentations && member.presentations.length > 0)) && (
                                 <motion.div
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
@@ -150,7 +150,6 @@ export default function MemberDetailClient({ member }: { member: any }) {
                                             <div>
                                                 <p className="text-purple-400 text-xs font-black tracking-widest uppercase mb-1">Activity Report</p>
                                                 <p className="text-white font-black text-lg">活動報告スライドを見る</p>
-                                                <p className="text-white/50 text-xs font-bold">前編：議会改革への想い（1分50秒）</p>
                                             </div>
                                         </div>
                                         <ChevronRight size={24} className="text-purple-400 group-hover:translate-x-1 transition-transform" />
@@ -346,6 +345,12 @@ export default function MemberDetailClient({ member }: { member: any }) {
                                                 <span className="text-sm font-bold">Official Web</span>
                                             </Link>
                                         )}
+                                        {member.sns.email && (
+                                            <Link href={`mailto:${member.sns.email}`} className="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/10">
+                                                <Mail size={20} className="text-emerald-400" />
+                                                <span className="text-sm font-bold">Email</span>
+                                            </Link>
+                                        )}
                                     </div>
                                 </motion.div>
                             )}
@@ -439,7 +444,7 @@ export default function MemberDetailClient({ member }: { member: any }) {
                 </div>
 
                 {/* 活動報告スライド（対象議員のみ） */}
-                {member.presentation && (
+                {(member.presentation || (member.presentations && member.presentations.length > 0)) && (
                     <div className="px-4 pt-4">
                         <Link
                             href={`/members/${member.id}/presentation`}
@@ -504,6 +509,12 @@ export default function MemberDetailClient({ member }: { member: any }) {
                                     <Link href={member.sns.website} className="flex items-center gap-3 p-4 rounded-2xl bg-white/5 border border-white/10 active:bg-white/10 transition-colors">
                                         <Globe size={18} className="text-accent-500" />
                                         <span className="text-xs font-black">Official Web</span>
+                                    </Link>
+                                )}
+                                {member.sns.email && (
+                                    <Link href={`mailto:${member.sns.email}`} className="flex items-center gap-3 p-4 rounded-2xl bg-white/5 border border-white/10 active:bg-white/10 transition-colors">
+                                        <Mail size={18} className="text-emerald-400" />
+                                        <span className="text-xs font-black">Email</span>
                                     </Link>
                                 )}
                             </div>

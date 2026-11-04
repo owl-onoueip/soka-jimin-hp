@@ -2,12 +2,13 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause, RotateCcw, ChevronLeft, Volume2 } from "lucide-react";
+import { Play, Pause, RotateCcw, ChevronLeft, Volume2, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import type { Member } from "@/data/members";
+import type { Member, Presentation } from "@/data/members";
 
-export default function PresentationClient({ member }: { member: Member }) {
-  const presentation = member.presentation!;
+export default function PresentationClient({ member, presentations }: { member: Member; presentations: Presentation[] }) {
+  const [presIndex, setPresIndex] = useState(0);
+  const presentation = presentations[presIndex];
   const slides = presentation.slides;
   const accent = member.accentColor || "#f97316";
 
@@ -23,6 +24,18 @@ export default function PresentationClient({ member }: { member: Member }) {
     const slide = slides.find(s => currentTime >= s.startTime && currentTime < s.endTime);
     if (slide) setCurrentSlideId(slide.id);
   }, [currentTime, slides, isPlaying]);
+
+  const switchPresentation = (idx: number) => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+    setIsPlaying(false);
+    setCurrentTime(0);
+    setCurrentSlideId(1);
+    setDuration(0);
+    setPresIndex(idx);
+  };
 
   const togglePlay = () => {
     if (!audioRef.current) return;
@@ -51,7 +64,7 @@ export default function PresentationClient({ member }: { member: Member }) {
   return (
     <div className="min-h-screen bg-slate-950 text-white">
 
-      {/* ジブリキャラ登場アニメーション */}
+      {/* 導入アニメーション */}
       <AnimatePresence>
         {!introComplete && (
           <motion.div
@@ -119,6 +132,27 @@ export default function PresentationClient({ member }: { member: Member }) {
               <div />
             </div>
 
+            {/* 複数プレゼンの切り替えタブ */}
+            {presentations.length > 1 && (
+              <div className="border-b border-white/10 px-4 py-3">
+                <div className="flex gap-2 overflow-x-auto max-w-2xl mx-auto">
+                  {presentations.map((p, i) => (
+                    <button
+                      key={i}
+                      onClick={() => switchPresentation(i)}
+                      className="flex-shrink-0 px-4 py-2 rounded-xl text-xs font-black transition-all whitespace-nowrap"
+                      style={presIndex === i
+                        ? { backgroundColor: accent, color: "white" }
+                        : { backgroundColor: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.5)" }
+                      }
+                    >
+                      {p.title}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* スライドエリア */}
             <div className="flex-1 flex flex-col items-center justify-center px-6 py-8 max-w-2xl mx-auto w-full">
 
@@ -135,7 +169,7 @@ export default function PresentationClient({ member }: { member: Member }) {
               <div className="w-full bg-white/5 rounded-3xl border border-white/10 p-8 mb-6 min-h-[220px] flex flex-col items-center justify-center text-center">
                 <AnimatePresence mode="wait">
                   <motion.div
-                    key={currentSlideId}
+                    key={`${presIndex}-${currentSlideId}`}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
@@ -180,6 +214,7 @@ export default function PresentationClient({ member }: { member: Member }) {
               </div>
 
               <audio
+                key={presentation.audioSrc}
                 ref={audioRef}
                 src={presentation.audioSrc}
                 onTimeUpdate={() => audioRef.current && setCurrentTime(audioRef.current.currentTime)}

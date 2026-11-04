@@ -11,6 +11,8 @@ const memberRoles = [
     { name: "矢部 正平", role: "会計", photo: "/images/members/YABE.webp", color: "bg-indigo-600", emoji: "💼" },
     { name: "しばの 勝利", role: "団員", photo: "/images/members/shibano.webp", color: "bg-green-600", emoji: "🌿" },
     { name: "白石 孝雄", role: "団員", photo: "/images/members/shiraishi.webp", color: "bg-orange-500", emoji: "🌟" },
+    { name: "浅古 きょういち", role: "団員", photo: "/images/members/asako.webp", color: "bg-teal-600", emoji: "🔷" },
+    { name: "中村 りか", role: "団員", photo: "/images/members/nakamura.webp", color: "bg-rose-500", emoji: "🌸" },
 ];
 
 // 3つの柱
@@ -29,7 +31,7 @@ const pillars = [
         border: "border-t-4 border-green-400",
         titleColor: "text-green-800",
         title: "着実に実行する",
-        text: "5名が一丸となり、温めてきた思いや計画を着実に実行に移します。柔軟な発想と周囲との縁を大切に、スピード感をもって前進します。",
+        text: "7名が一丸となり、温めてきた思いや計画を着実に実行に移します。柔軟な発想と周囲との縁を大切に、スピード感をもって前進します。",
     },
     {
         emoji: "🌸",
@@ -90,7 +92,7 @@ export default function AboutPageClient() {
                             <p className="text-gray-700 font-bold leading-loose text-sm md:text-base">
                                 市民の皆様、草加自民党・無所属の会の団長を務めております、田中宣光です。<br /><br />
                                 私たちは「市民の声を市政に届ける」をモットーに、日々の議会活動に取り組んでおります。市民生活上、何かお困りのことがあれば、会派の議員にどうぞお気軽にお声がけください。<br /><br />
-                                令和7年度も、<span className="text-primary-700 font-black">市民の声を直接聞き、事業の優先順位を見直し、提言</span>していくことを、五名全員一丸となって進めてまいります。引き続き、皆様のご協力・ご理解をよろしくお願いいたします。
+                                令和8年度も、<span className="text-primary-700 font-black">市民の声を直接聞き、事業の優先順位を見直し、提言</span>していくことを、七名全員一丸となって進めてまいります。引き続き、皆様のご協力・ご理解をよろしくお願いいたします。
                             </p>
                         </div>
                     </div>
@@ -125,6 +127,23 @@ export default function AboutPageClient() {
                     </div>
                 </section>
 
+                {/* 集合写真 */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="rounded-3xl overflow-hidden shadow-xl"
+                >
+                    <img
+                        src="/images/group-chamber.jpg"
+                        alt="草加自民党・無所属の会 議場での集合写真"
+                        className="w-full h-auto"
+                    />
+                    <div className="bg-white px-6 py-4 text-center">
+                        <p className="text-sm font-black text-gray-500">草加市議会議場にて（令和8年）</p>
+                    </div>
+                </motion.div>
+
                 {/* 議員役職一覧 */}
                 <section>
                     <motion.div
@@ -135,7 +154,7 @@ export default function AboutPageClient() {
                     >
                         <h2 className="text-2xl md:text-3xl font-black text-primary-900 mb-2">議員役職一覧</h2>
                         <div className="w-16 h-1.5 bg-accent-500 rounded-full" />
-                        <p className="text-sm text-gray-500 font-bold mt-2">令和7年 現在</p>
+                        <p className="text-sm text-gray-500 font-bold mt-2">令和8年 現在</p>
                     </motion.div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

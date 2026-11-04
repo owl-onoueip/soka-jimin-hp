@@ -73,7 +73,7 @@ export default function HomeClient() {
                         scale: isAnimeMode ? 1.1 : 1.0
                     }}
                     transition={{ duration: 5.0, ease: "easeOut" }}
-                    className="absolute inset-0 bg-cover bg-bottom"
+                    className="absolute inset-0 bg-cover bg-[center_10%]"
                     style={{
                         backgroundImage: `url('/images/hero-group.jpg')`,
                         filter: 'brightness(0.4) contrast(1.1)'

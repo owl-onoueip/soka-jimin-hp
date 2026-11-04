@@ -64,7 +64,7 @@ export default function HomeClient() {
                 date={news[0].date}
             />
             {/* ヒーローセクション (高さ短縮・モバイル最適化) */}
-            <section className="relative h-[70vh] min-h-[500px] md:h-[80vh] flex items-center justify-center overflow-hidden">
+            <section className="relative h-[45vh] min-h-[300px] md:h-[80vh] flex items-center justify-center overflow-hidden">
                 {/* 通常背景 */}
                 <motion.div
                     initial={{ opacity: 1, scale: 1.1 }}

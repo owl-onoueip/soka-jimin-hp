@@ -334,12 +334,12 @@ function SepiaToColorVideo() {
                 <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-6">
                     自民党・無所属の会 メンバー
                 </h2>
-                <div className="relative mx-auto max-w-full md:max-w-3xl w-full rounded-2xl shadow-xl overflow-hidden">
+                <div className="relative mx-auto max-w-full md:max-w-3xl w-full rounded-2xl shadow-xl overflow-hidden" style={{ aspectRatio: "16/9" }}>
                     {/* 開始：セピアの静止画 */}
                     <img
                         src="/images/hero-group.jpg"
                         alt="自民党・無所属の会 7人の議員"
-                        className="w-full block absolute top-0 left-0"
+                        className="w-full h-full object-cover block absolute top-0 left-0"
                         style={{
                             filter: phase === "still" ? "sepia(1)" : "sepia(0)",
                             opacity: phase === "still" ? 1 : 0,
@@ -352,7 +352,7 @@ function SepiaToColorVideo() {
                     <img
                         src="/images/group-chamber-still.jpg"
                         alt="自民党・無所属の会 7人の議員"
-                        className="w-full block absolute top-0 left-0"
+                        className="w-full h-full object-cover block absolute top-0 left-0"
                         style={{
                             opacity: phase === "ended" ? 1 : 0,
                             transitionProperty: "opacity",
@@ -366,7 +366,9 @@ function SepiaToColorVideo() {
                         muted
                         playsInline
                         preload="metadata"
-                        className="w-full block"
+                        width={1280}
+                        height={720}
+                        className="w-full h-full object-cover block absolute top-0 left-0"
                         style={{
                             filter: phase !== "still" ? "sepia(0)" : "sepia(1)",
                             opacity: phase === "playing" ? 1 : 0,

@@ -65,7 +65,7 @@ export default function MembersClient() {
                         <div>
                             <div className="flex items-center gap-4 mb-8">
                                 <Users size={48} className="text-accent-500" />
-                                <h2 className="text-3xl font-black">草加自民党・無所属の会</h2>
+                                <h2 className="text-3xl font-black">自民党・無所属の会</h2>
                             </div>
                             <p className="text-lg text-blue-100 leading-loose font-bold mb-10">
                                 私たちの会派は、草加市議会において市民生活の向上と草加市の発展のために一丸となって活動しています。現場の声を大切にし、実行力のある政策提言を行っています。

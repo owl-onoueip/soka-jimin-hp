@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   if (!member) return { title: "議員が見つかりません" };
 
   return {
-    title: `${member.name} | 草加自民党・無所属の会`,
+    title: `${member.name} | 自民党・無所属の会`,
     description: member.message,
     alternates: {
       canonical: `/members/${params.id}`,

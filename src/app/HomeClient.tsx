@@ -282,7 +282,7 @@ export default function HomeClient() {
                         あなたの声を、<br />私たちに託してください。
                     </h2>
                     <p className="text-gray-500 font-medium mb-10 leading-relaxed text-sm md:text-base">
-                        草加自民党・無所属の会は、市民参加型の政治を目指しています。<br className="hidden md:block" />
+                        自民党・無所属の会は、市民参加型の政治を目指しています。<br className="hidden md:block" />
                         ご意見・ご相談はお気軽にお問い合わせください。
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -332,13 +332,13 @@ function SepiaToColorVideo() {
         <section className="py-12 bg-white" ref={sectionRef}>
             <div className="container mx-auto px-4 text-center">
                 <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-6">
-                    草加自民党・無所属の会 メンバー
+                    自民党・無所属の会 メンバー
                 </h2>
                 <div className="relative mx-auto max-w-full md:max-w-3xl w-full rounded-2xl shadow-xl overflow-hidden">
                     {/* 開始：セピアの静止画 */}
                     <img
                         src="/images/hero-group.jpg"
-                        alt="草加自民党・無所属の会 7人の議員"
+                        alt="自民党・無所属の会 7人の議員"
                         className="w-full block absolute top-0 left-0"
                         style={{
                             filter: phase === "still" ? "sepia(1)" : "sepia(0)",
@@ -351,7 +351,7 @@ function SepiaToColorVideo() {
                     {/* 終了：カラーの正面集合写真 */}
                     <img
                         src="/images/group-chamber-still.jpg"
-                        alt="草加自民党・無所属の会 7人の議員"
+                        alt="自民党・無所属の会 7人の議員"
                         className="w-full block absolute top-0 left-0"
                         style={{
                             opacity: phase === "ended" ? 1 : 0,

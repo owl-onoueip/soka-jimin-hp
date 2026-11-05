@@ -66,7 +66,7 @@ export default function MembersSimple() {
 
                 {/* フッターメッセージ */}
                 <div style={{ marginTop: 32, background: "#1e3a6e", borderRadius: 12, padding: "20px", textAlign: "center" }}>
-                    <p style={{ color: "#fff", fontWeight: 900, fontSize: 16, margin: "0 0 8px" }}>草加自民党・無所属の会</p>
+                    <p style={{ color: "#fff", fontWeight: 900, fontSize: 16, margin: "0 0 8px" }}>自民党・無所属の会</p>
                     <p style={{ color: "#bfdbfe", fontSize: 13, margin: "0 0 16px" }}>7名の議員が草加市民の声を市政に届けます</p>
                     <Link
                         href="/support"

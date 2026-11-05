@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "プライバシーポリシー | 草加自民党・無所属の会",
-  description: "草加自民党・無所属の会の個人情報の取り扱いについて定めています。",
+  title: "プライバシーポリシー | 自民党・無所属の会",
+  description: "自民党・無所属の会の個人情報の取り扱いについて定めています。",
   alternates: {
     canonical: "/privacy",
   },
@@ -92,7 +92,7 @@ export default function PrivacyPage() {
           </section>
 
           <p className="text-xs text-gray-400 font-bold pt-4 border-t border-gray-100">
-            草加自民党・無所属の会　制定：令和7年（2025年）
+            自民党・無所属の会　制定：令和7年（2025年）
           </p>
         </div>
       </div>

@@ -123,7 +123,8 @@ export const members: Member[] = [
     photo: "/images/members/shiraishi.webp",
     photoAnime: "/images/members/shiraishi2.gif",
     area: "新田西部地区",
-    term: "3期目",
+    position: "団長",
+    term: "4期目",
     birthYear: "1965年",
     catchphrase: "市民の「声なき声」を市政へ反映",
     message: `「市民の声なき声」にしっかりと耳を傾けて、大きく市政に反映させていくことこそが私の今後の歩みの中での責任であります。その責任を果たすために全力をつくしてまいります。`,
@@ -178,8 +179,7 @@ export const members: Member[] = [
     photo: "/images/members/tanaka.jpg",
     photoAnime: "/images/members/tanaka2.gif",
     area: "新田東部地区",
-    position: "団長",
-    term: "3期目",
+    term: "4期目",
     birthYear: "1970年",
     catchphrase: "草加に Attack！ 課題解決に率先して行動",
     message: `課題解決に向けて、議員として質問や提案を行い、市民と共に考え、解決に取り組んでまいりました。今後も市民の声に耳を傾け、課題解決に向けて率先して行動してまいります。
@@ -222,7 +222,7 @@ export const members: Member[] = [
         title: "選挙前メッセージ — 団長からのご挨拶（約46秒）",
         audioSrc: "/slides/tanaka/audio_old.mp3",
         slides: [
-          { id: 1, title: "団長のご挨拶", content: "草加自民党・無所属の会の団長を務めます、草加市議会議員の田中宣光です。", startTime: 0, endTime: 5.2, icon: "👋" },
+          { id: 1, title: "団長のご挨拶", content: "自民党・無所属の会の団長を務めます、草加市議会議員の田中宣光です。", startTime: 0, endTime: 5.2, icon: "👋" },
           { id: 2, title: "日頃のご支援に感謝", content: "日頃より我が会派、そして私個人に対しまして、多くの皆さんのご支援ご協力をいただき、改めまして感謝申し上げます。", startTime: 5.2, endTime: 15, icon: "🙏" },
           { id: 3, title: "国・県・市一貫の政策提案", content: "私ども会派は藤田誠代議士を筆頭に、国・県・市が一貫した政策提案を行ってまいります。", startTime: 15, endTime: 23.2, icon: "🏛️" },
           { id: 4, title: "草加モデルの政策を発信", content: "これまでにも多くの政策を披露してまいりましたが、引き続き草加モデルの政策を私自身の感性で、課題に向き合いながら発信してまいります。", startTime: 23.2, endTime: 37.8, icon: "📋" },
@@ -233,7 +233,7 @@ export const members: Member[] = [
         title: "団長からのご報告（約1分30秒）",
         audioSrc: "/slides/tanaka/tttPXL_20260311_030653637.mp3",
         slides: [
-          { id: 1, title: "団長 田中宣光です",               content: "草加自民党・無所属の会の団長を務めております。田中宣光です。",                                                                                   startTime: 2,  endTime: 6,  icon: "👋" },
+          { id: 1, title: "団長 田中宣光です",               content: "自民党・無所属の会の団長を務めております。田中宣光です。",                                                                                   startTime: 2,  endTime: 6,  icon: "👋" },
           { id: 2, title: "衆議院総選挙のご支援に感謝",       content: "先の第51回衆議院総選挙において、皆様から多大なるご支援をいただきました。誠にありがとうございました。",                                         startTime: 6,  endTime: 15, icon: "🙏" },
           { id: 3, title: "草加に自民党の国会議員が誕生",     content: "ついに草加から自民党の国会議員を誕生させることができました。市議会でも自民党の議席を多数確保しています。",                                   startTime: 15, endTime: 26, icon: "🎉" },
           { id: 4, title: "草加市の深刻な財政状況",           content: "国・県・市が一体となって取り組む必要があります。草加市の経常収支率は100.7%を超え、新規事業がほとんどできない深刻な状況です。",             startTime: 26, endTime: 53, icon: "💰" },
@@ -296,7 +296,7 @@ export const members: Member[] = [
         title: "選挙前メッセージ — 最大会派の力で市政を動かす（約4分50秒）",
         audioSrc: "/slides/yabe/audio_old.mp3",
         slides: [
-          { id: 1, title: "4年間の振り返り", content: "草加市議会議員の矢部正平です。この4年間、草加自民党・無所属の会、最大会派として草加市政に携わってまいりました。", startTime: 0, endTime: 14, icon: "👋" },
+          { id: 1, title: "4年間の振り返り", content: "草加市議会議員の矢部正平です。この4年間、自民党・無所属の会、最大会派として草加市政に携わってまいりました。", startTime: 0, endTime: 14, icon: "👋" },
           { id: 2, title: "最大会派で実現できたこと", content: "最大会派は初めての経験でしたが、執行部に対しての提案ができたと感じています。数の力、多数決の世界で物事を動かす重要性を実感しました。", startTime: 14, endTime: 68, icon: "🏛️" },
           { id: 3, title: "賛成の裏側にある議論", content: "賛成をする裏側では、会派の控え室で議論を重ね、反対意見は市長や執行部に持っていき調整をしたうえで、最終的に議案を通しています。", startTime: 68, endTime: 115, icon: "🗣️" },
           { id: 4, title: "市民サービスを着実に", content: "予算を否定すれば住民票の発行もできなくなる。市民の課題を行政にアプローチしつつ、予算編成の要望書を市長に届けながら市民サービスを進めています。", startTime: 115, endTime: 158, icon: "📋" },

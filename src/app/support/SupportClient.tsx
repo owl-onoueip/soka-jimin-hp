@@ -110,7 +110,7 @@ export default function SupportClient() {
                                 後援会とは
                             </h2>
                             <p className="text-gray-700 leading-relaxed font-medium mb-8">
-                                後援会は、草加自民党・無所属の会の活動に共感し、応援してくださる市民の皆様のネットワークです。あなたの参加が、より良い草加市を創る大きな力になります。
+                                後援会は、自民党・無所属の会の活動に共感し、応援してくださる市民の皆様のネットワークです。あなたの参加が、より良い草加市を創る大きな力になります。
                             </p>
 
                             <div className="grid grid-cols-1 gap-6">

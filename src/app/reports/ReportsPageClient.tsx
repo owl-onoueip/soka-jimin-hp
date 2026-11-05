@@ -34,7 +34,7 @@ const reports = [
         id: "r7-newyear",
         title: "会派ニュース 令和7年 新春号",
         date: "令和7年（2025年）1月",
-        file: "/pdf/草加自民党・無所属の会202501.pdf",
+        file: "/pdf/自民党・無所属の会202501.pdf",
         badge: "会派ニュース",
         badgeColor: "bg-primary-500",
         points: [
@@ -86,7 +86,7 @@ export default function ReportsPageClient() {
                             会派ニュース
                         </h1>
                         <p className="text-lg md:text-xl text-blue-200 font-bold opacity-80 max-w-2xl mx-auto leading-relaxed">
-                            草加自民党・無所属の会が発行する<br className="hidden md:block" />
+                            自民党・無所属の会が発行する<br className="hidden md:block" />
                             会派ニュースのバックナンバーをご覧いただけます。
                         </p>
                     </motion.div>

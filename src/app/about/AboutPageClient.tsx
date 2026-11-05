@@ -58,7 +58,7 @@ export default function AboutPageClient() {
                             会派について
                         </h1>
                         <p className="text-lg md:text-xl text-blue-200 font-bold opacity-80 max-w-2xl mx-auto leading-relaxed">
-                            草加自民党・無所属の会は、<br className="hidden md:block" />
+                            自民党・無所属の会は、<br className="hidden md:block" />
                             市民お一人おひとりの声を大切に、草加の未来を切り拓きます。
                         </p>
                     </motion.div>
@@ -90,7 +90,7 @@ export default function AboutPageClient() {
                                 ご挨拶
                             </div>
                             <p className="text-gray-700 font-bold leading-loose text-sm md:text-base">
-                                市民の皆様、草加自民党・無所属の会の団長を務めております、田中宣光です。<br /><br />
+                                市民の皆様、自民党・無所属の会の団長を務めております、田中宣光です。<br /><br />
                                 私たちは「市民の声を市政に届ける」をモットーに、日々の議会活動に取り組んでおります。市民生活上、何かお困りのことがあれば、会派の議員にどうぞお気軽にお声がけください。<br /><br />
                                 令和8年度も、<span className="text-primary-700 font-black">市民の声を直接聞き、事業の優先順位を見直し、提言</span>していくことを、七名全員一丸となって進めてまいります。引き続き、皆様のご協力・ご理解をよろしくお願いいたします。
                             </p>
@@ -136,7 +136,7 @@ export default function AboutPageClient() {
                 >
                     <img
                         src="/images/group-chamber.jpg"
-                        alt="草加自民党・無所属の会 議場での集合写真"
+                        alt="自民党・無所属の会 議場での集合写真"
                         className="w-full h-auto"
                     />
                     <div className="bg-white px-6 py-4 text-center">
@@ -203,7 +203,7 @@ export default function AboutPageClient() {
                                 <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center shrink-0 text-lg">🏛️</div>
                                 <div>
                                     <p className="text-xs font-black text-blue-300 mb-1 uppercase tracking-widest">会派名</p>
-                                    <p className="font-black text-lg">草加自民党・無所属の会</p>
+                                    <p className="font-black text-lg">自民党・無所属の会</p>
                                 </div>
                             </div>
                             <div className="flex gap-4 items-start">

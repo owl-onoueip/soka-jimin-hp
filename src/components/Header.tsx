@@ -25,11 +25,11 @@ export default function Header() {
           {/* ロゴ */}
           <Link href="/" className="flex items-center gap-3 group">
             <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-accent-500 group-hover:scale-105 transition-transform shrink-0">
-              <img src="/images/ROGO49.gif" alt="草加自民党・無所属の会" className="w-full h-full object-cover" />
+              <img src="/images/ROGO49.gif" alt="自民党・無所属の会" className="w-full h-full object-cover" />
             </div>
             <div className="flex flex-col">
               <span className="text-xs opacity-70 font-medium tracking-wider">市議会会派</span>
-              <span className="text-base md:text-lg font-bold leading-none">草加自民党・無所属の会</span>
+              <span className="text-base md:text-lg font-bold leading-none">自民党・無所属の会</span>
             </div>
           </Link>
 

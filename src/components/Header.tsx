@@ -28,7 +28,7 @@ export default function Header() {
               <img src="/images/ROGO49.gif" alt="自民党・無所属の会" className="w-full h-full object-cover" />
             </div>
             <div className="flex flex-col">
-              <span className="text-xs opacity-70 font-medium tracking-wider">市議会会派</span>
+              <span className="text-xs opacity-70 font-medium tracking-wider">草加市議会会派</span>
               <span className="text-base md:text-lg font-bold leading-none">自民党・無所属の会</span>
             </div>
           </Link>

@@ -6,11 +6,11 @@ import Link from "next/link";
 
 // 議員役職（令和8年新春号・最新）
 const memberRoles = [
-    { name: "田中 宣光", role: "団長", photo: "/images/members/tanaka.jpg", color: "bg-primary-600", emoji: "👑" },
+    { name: "白石 孝雄", role: "団長", photo: "/images/members/shiraishi.webp", color: "bg-primary-600", emoji: "👑" },
     { name: "木村 忠義", role: "幹事長", photo: "/images/members/kimura.webp", color: "bg-blue-600", emoji: "⭐" },
     { name: "矢部 正平", role: "会計", photo: "/images/members/YABE.webp", color: "bg-indigo-600", emoji: "💼" },
-    { name: "しばの 勝利", role: "団員", photo: "/images/members/shibano.webp", color: "bg-green-600", emoji: "🌿" },
-    { name: "白石 孝雄", role: "団員", photo: "/images/members/shiraishi.webp", color: "bg-orange-500", emoji: "🌟" },
+    { name: "田中 宣光", role: "団員", photo: "/images/members/tanaka.jpg", color: "bg-green-600", emoji: "🌿" },
+    { name: "しばの 勝利", role: "団員", photo: "/images/members/shibano.webp", color: "bg-orange-500", emoji: "🌟" },
     { name: "浅古 きょういち", role: "団員", photo: "/images/members/asako.webp", color: "bg-teal-600", emoji: "🔷" },
     { name: "中村 りか", role: "団員", photo: "/images/members/nakamura.webp", color: "bg-rose-500", emoji: "🌸" },
 ];
@@ -79,20 +79,20 @@ export default function AboutPageClient() {
                             <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-primary-200 mx-auto mb-3 shadow-lg">
                                 <div
                                     className="w-full h-full bg-cover bg-center bg-top"
-                                    style={{ backgroundImage: `url(/images/members/tanaka.jpg)` }}
+                                    style={{ backgroundImage: `url(/images/members/shiraishi.webp)` }}
                                 />
                             </div>
                             <p className="text-xs font-black text-gray-400 tracking-widest">団長</p>
-                            <p className="text-base font-black text-primary-900">田中 宣光</p>
+                            <p className="text-base font-black text-primary-900">白石 孝雄</p>
                         </div>
                         <div>
                             <div className="inline-block text-xs font-black text-primary-600 bg-primary-50 px-3 py-1 rounded-full mb-4">
                                 ご挨拶
                             </div>
                             <p className="text-gray-700 font-bold leading-loose text-sm md:text-base">
-                                市民の皆様、自民党・無所属の会の団長を務めております、田中宣光です。<br /><br />
+                                市民の皆様、自民党・無所属の会の団長を務めております、白石孝雄です。<br /><br />
                                 私たちは「市民の声を市政に届ける」をモットーに、日々の議会活動に取り組んでおります。市民生活上、何かお困りのことがあれば、会派の議員にどうぞお気軽にお声がけください。<br /><br />
-                                令和8年度も、<span className="text-primary-700 font-black">市民の声を直接聞き、事業の優先順位を見直し、提言</span>していくことを、七名全員一丸となって進めてまいります。引き続き、皆様のご協力・ご理解をよろしくお願いいたします。
+                                これからも、<span className="text-primary-700 font-black">市民の声を直接聞き、事業の優先順位を見直し、提言</span>していくことを、七名全員一丸となって進めてまいります。引き続き、皆様のご協力・ご理解をよろしくお願いいたします。
                             </p>
                         </div>
                     </div>
